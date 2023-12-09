@@ -16,6 +16,10 @@
         <meta-data
             android:name="org.godotengine.plugin.v2.${godotPluginName}"
             android:value="${godotPluginPackageName}.GodotAndroidPlugin"/>
+
+        <!-- Google Play Game Services -->
+        <meta-data android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/game_services_project_id"/>
     </application>
 
 </manifest>

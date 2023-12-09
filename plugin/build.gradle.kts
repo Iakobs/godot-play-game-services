@@ -5,11 +5,9 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
-// TODO: Update value to your plugin's name.
-val pluginName = "GodotAndroidPluginTemplate"
+val pluginName = "GodotPlayGameServices"
 
-// TODO: Update value to match your plugin's package name.
-val pluginPackageName = "org.godotengine.plugin.android.template"
+val pluginPackageName = "com.jacobibanez.plugin.android.godotplaygameservices"
 
 android {
     namespace = pluginPackageName
@@ -38,6 +36,8 @@ android {
 }
 
 dependencies {
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.android.gms:play-services-games-v2:19.0.0")
     implementation("org.godotengine:godot:4.2.0.stable")
 }
 

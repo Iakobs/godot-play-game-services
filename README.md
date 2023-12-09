@@ -1,50 +1,60 @@
-# Godot Android Plugin Template
-This repository serves as a quickstart template for building a Godot Android plugin for Godot 4.2+.
+# Godot Play Game Services
+Godot 4.2+ Android plugin for integration of the latest version of [Google Play Game Services SDK](https://developers.google.com/games/services/android/quickstart).
 
-## Contents
-* An illustrative simple Godot project: [`plugin/demo`](plugin/demo)
-* Preconfigured gradle build file to build and package the contents for the Android plugin: 
-  [`plugin/build.gradle.kts`](plugin/build.gradle.kts)
-* Preconfigured export scripts template: 
-  [`plugin/export_scripts_template`](plugin/export_scripts_template)
-* Preconfigured manifest for the Android plugin:
-  [`plugin/src/main/AndroidManifest.xml`](plugin/src/main/AndroidManifest.xml)
-* Preconfigured source files for the Kotlin/Java logic of the Android plugin: 
-  [`plugin/src/main/java`](plugin/src/main/java)
+---
 
-## Usage
-**Note:** [Android Studio](https://developer.android.com/studio) is the recommended IDE for
-developing Godot Android plugins. 
-You can install the latest version from https://developer.android.com/studio.
+![Plugin Header](github-social-preview.png)
 
-To use this template, log in to github and click the green "Use this template" button at the top 
-of the repository page.
-This will let you create a copy of this repository with a clean git history.
+[![Android version and API level 33](https://img.shields.io/badge/Android-API%20Level%2033-darkgreen.svg)](https://developer.android.com)
+[![Godot version 4.2](https://img.shields.io/badge/Godot%20Engine-4.2-blue.svg)](https://github.com/godotengine/godot/)
+[![Google Play Game Services version 19.0.0](https://img.shields.io/badge/Play%20Services%20Games%20v2-19.0.0-green.svg)](https://developers.google.com/games/services/android/quickstart)
 
-### Configuring the template
-After cloning your own copy to your local machine, configure the project as needed. Several 
-`TODO` have been added to the project to help identify where changes are needed; here's an 
-overview of the minimum set of modifications needed:
-* Update the name of the Android plugin. Note that the name should not contain any spaces:
-  * Open [`settings.gradle.kts`](settings.gradle.kts) and update the value for `rootProject.name`
-  * Open [`plugin/build.gradle.kts`](plugin/build.gradle.kts) and update the value for `pluginName`
-  * Open [`plugin/export_scripts_template/plugin.cfg`](plugin/export_scripts_template/plugin.cfg)
-    and update the value for `name`
-  * Open [`plugin/export_scripts_template/export_plugin.gd`](plugin/export_scripts_template/export_plugin.gd)
-    and update the value for `_plugin_name`
-* Update the package name of the Android plugin:
-  * Open [`plugin/build.gradle.kts`](plugin/build.gradle.kts) and update the value for `pluginPackageName`
-  * Make sure subdirectories under [`plugin/src/main/java`](plugin/src/main/java) match the 
-    updated package name
-  * Make sure that `package` at the top of [`GodotAndroidPlugin.kt`](plugin/src/main/java/org/godotengine/plugin/android/template/GodotAndroidPlugin.kt)
-    matches the updated package name
-* Complete the plugin configuration
-  * Open [`plugin/export_scripts_template/plugin.cfg`](plugin/export_scripts_template/plugin.cfg)
-    * Update the `description` field
-    * Update the `author` field
-    * Update the `version` field
+---
 
-### Building the configured Android plugin
+## Table of contents
+
+- [Forewords](#forewords)
+- [How to use the plugin](#how-to-use-the-plugin)
+  - [Downloading the plugin](#downloading-the-plugin)
+  - [Configuring the plugin](#configuring-the-plugin)
+  - [Building the plugin](#building-the-plugin)
+  - [Testing the plugin](#testing-the-plugin)
+- [Technical documentation](#plugin-technical-documentation)
+
+## Forewords
+
+This plugin is the updated version of the [old one](https://github.com/Iakobs/godot-google-play-game-services-android-plugin/tree/main) for Godot 3.5+.
+
+With Godot 4.2+, the way android plugins work [has changed](https://docs.godotengine.org/en/stable/tutorials/platform/android/android_plugin.html), so I had to update this plugin to match the new requirements. Now there's only one editor plugin (this one), instead of having two separate plugins like before, one android plugin and one godot plugin.
+
+## How to use the plugin
+Using the plugin requires some configuration, downloading the repository, and generating the sources. I'm working to provide a more user-friendly way of using the plugin, but for now I'm afraid this is the only way of using it.
+
+### Downloading the plugin
+To download the plugin you can use `git` or just download the repository in a zip file from Github.
+
+![Screenshot of Github's menu to download the repository as a zip file](docs/images/download_repo.png)
+
+You will need to open a command line tool and navigate to the root of the project to run the appropriate `gradle` commands in later steps.
+
+### Configuring the plugin
+Before configuring the plugin, you have to create  a **Google developer account**, which involves a one time payment to google, and then you must create a game. The explanation on how to do all of these is out of the scope of this documentation. Please [refer to Google](https://developer.android.com/distribute/console) for those steps.
+
+Once that's done, you will need to create some achievements and leaderboards in your game, that will generate some IDs. You will need those IDs later, the one that's important right now is the **Game ID**, which you can found in your game configuration, in the Google Dev Console
+
+![Screenshot of the Game ID inside the Google Dev Console](docs/images/game_id.png)
+
+This ID should be copied in the [string resources file](plugin/src/main/res/values/strings.xml), you will see there's a placeholder there to copy it:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string translatable="false" name="game_services_project_id">your Game ID goes here!</string>
+</resources>
+```
+
+### Building the plugin
 - In a terminal window, navigate to the project's root directory and run the following command:
 ```
 ./gradlew assemble
@@ -52,46 +62,16 @@ overview of the minimum set of modifications needed:
 - On successful completion of the build, the output files can be found in
   [`plugin/demo/addons`](plugin/demo/addons)
 
-### Testing the Android plugin
-You can use the included [Godot demo project](plugin/demo/project.godot) to test the built Android 
-plugin
+### Testing the plugin
+You can use the included [Godot demo project](plugin/demo/project.godot) to test the built Android plugin
 
 - Open the demo in Godot (4.2 or higher)
 - Navigate to `Project` -> `Project Settings...` -> `Plugins`, and ensure the plugin is enabled
 - Install the Godot Android build template by clicking on `Project` -> `Install Android Build Template...`
-- Open [`plugin/demo/main.gd`](plugin/demo/main.gd) and update the logic as needed to reference 
-  your plugin and its methods
 - Connect an Android device to your machine and run the demo on it
 
-#### Tips
+Also, you can copy the whole generated [addon directory](plugin/demo/addons) to your existing project, as any other plugin.
 
-##### Simplify access to the exposed Java / Kotlin APIs
+## Plugin Technical Documentation
 
-To make it easier to access the exposed Java / Kotlin APIs in the Godot Editor, it's recommended to 
-provide one (or multiple) gdscript wrapper class(es) for your plugin users to interface with.
-
-For example:
-
-```
-class_name PluginInterface extends Object
-
-## Interface used to access the functionality provided by this plugin
-
-var _plugin_name = "GDExtensionAndroidPluginTemplate"
-var _plugin_singleton
-
-func _init():
-	if Engine.has_singleton(_plugin_name):
-		_plugin_singleton = Engine.get_singleton(_plugin_name)
-	else:
-		printerr("Initialization error: unable to access the java logic")
-
-## Shows a 'Hello World' toast.
-func helloWorld():
-	if _plugin_singleton:
-		_plugin_singleton.helloWorld()
-	else:
-		printerr("Initialization error")
-
-```
-
+This is still a work in progress!
