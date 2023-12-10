@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://bx8537vuljblk"]
+
+[ext_resource type="Script" path="res://addons/GodotPlayGameServices/dock.gd" id="1_k0q71"]
+
+[node name="Godot Play Game Services" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k0q71")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="GameIdLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Game ID:"
+
+[node name="GameId" type="LineEdit" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_length = 12
+virtual_keyboard_type = 2
+clear_button_enabled = true
+
+[node name="Submit" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Submit"

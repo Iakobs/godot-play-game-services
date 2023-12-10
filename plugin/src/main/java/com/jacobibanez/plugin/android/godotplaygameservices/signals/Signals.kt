@@ -47,8 +47,7 @@ object SignInSignals {
  * Signals emitted by Achievements methods
  */
 object AchievementsSignals {
-    val incrementAchievementSuccess =
-        SignalInfo("incrementAchievementSuccess", Boolean::class.javaObjectType)
+    val incrementAchievementSuccess = SignalInfo("incrementAchievementSuccess", Boolean::class.javaObjectType)
     val incrementAchievementSuccessFailure = SignalInfo("incrementAchievementSuccessFailure")
     val loadAchievementsSuccess = SignalInfo("loadAchievementsSuccess", String::class.java)
     val loadAchievementsFailure = SignalInfo("loadAchievementsFailure")
