@@ -10,8 +10,8 @@ import com.google.android.gms.games.PlayersClient
 import com.google.android.gms.tasks.Task
 import com.google.gson.Gson
 import com.jacobibanez.plugin.android.godotplaygameservices.BuildConfig
-import com.jacobibanez.plugin.android.godotplaygameservices.loadFriendsFailure
-import com.jacobibanez.plugin.android.godotplaygameservices.loadFriendsSuccess
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.FriendSignals.loadFriendsFailure
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.FriendSignals.loadFriendsSuccess
 import org.godotengine.godot.Dictionary
 import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin.emitSignal

@@ -75,3 +75,5 @@ Also, you can copy the whole generated [addon directory](plugin/demo/addons) to 
 ## Plugin Technical Documentation
 
 This is still a work in progress!
+
+You can find Google's technical documentation of the SDK [here](https://developers.google.com/android/reference/packages).

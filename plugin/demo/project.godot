@@ -10,17 +10,26 @@ config_version=5
 
 [application]
 
-config/name="Android Plugin Demo"
-run/main_scene="res://main.tscn"
-config/features=PackedStringArray("4.2", "GL Compatibility")
+config/name="Google Play Game Services Godot Plugin"
+run/main_scene="res://MainMenu.tscn"
+config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
-[debug]
+[autoload]
 
-settings/stdout/verbose_stdout=true
+GodotPlayGameServices="*res://addons/GodotPlayGameServices/GodotPlayGameServices.gd"
+
+[display]
+
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/handheld/orientation=1
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/GodotPlayGameServices/plugin.cfg")
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true

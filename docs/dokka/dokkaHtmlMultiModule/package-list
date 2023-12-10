@@ -1,0 +1,6 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+
+module:Android Plugin
+com.jacobibanez.plugin.android.godotplaygameservices
+com.jacobibanez.plugin.android.godotplaygameservices.signals

@@ -5,8 +5,8 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.games.LeaderboardsClient
 import com.google.android.gms.games.PlayGames
 import com.jacobibanez.plugin.android.godotplaygameservices.BuildConfig
-import com.jacobibanez.plugin.android.godotplaygameservices.submitScoreFailure
-import com.jacobibanez.plugin.android.godotplaygameservices.submitScoreSuccess
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.LeaderboardSignals.submitScoreFailure
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.LeaderboardSignals.submitScoreSuccess
 import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin
 

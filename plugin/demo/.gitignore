@@ -2,3 +2,4 @@
 .godot/
 *.import
 /android/
+export_presets.cfg
