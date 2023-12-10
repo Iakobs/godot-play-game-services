@@ -38,7 +38,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          # Upload entire repository
+          # Upload dokka output directory
           path: 'docs/dokka/dokkaHtmlMultiModule'
       - name: Deploy to GitHub Pages
         id: deployment
