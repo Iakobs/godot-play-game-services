@@ -57,7 +57,7 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
      * Use this method to check if the user is already authenticated. If the user is authenticated,
      * a popup will be shown on screen.
      *
-     * The method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.SignInSignals.isUserAuthenticated] signal.
+     * The method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.SignInSignals.userAuthenticated] signal.
      */
     @UsedByGodot
     fun isAuthenticated() = signInProxy.isAuthenticated()
@@ -65,7 +65,7 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
     /**
      * Use this method to provide a manual way to the user for signing in.
      *
-     * The method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.SignInSignals.isUserSignedIn] signal.
+     * The method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.SignInSignals.userSignedIn] signal.
      */
     @UsedByGodot
     fun signIn() = signInProxy.signIn()
@@ -74,26 +74,54 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
      * Use this method to increment a given achievement in the given amount. For normal achievements,
      * use the [unlockAchievement] method instead.
      *
-     * The method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.isAchievementUnlocked] signal.
+     * The method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.achievementUnlocked] signal.
      *
-     * @param achievementId The achievement Id.
+     * @param achievementId The achievement id.
      * @param amount The number of steps to increment by. Must be greater than 0.
      */
     @UsedByGodot
     fun incrementAchievement(achievementId: String, amount: Int) =
         achievementsProxy.incrementAchievement(achievementId, amount)
 
+    /**
+     * Call this method and subscribe to the emitted signal to receive the list of the game
+     * achievements in JSON format. The JSON received from the [com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.achievementsLoaded]
+     * signal contains a representation of the [com.google.android.gms.games.achievement.Achievement](https://developers.google.com/android/reference/com/google/android/gms/games/achievement/Achievement) class.
+     *
+     * @param forceReload If true, this call will clear any locally cached data and attempt to fetch
+     * the latest data from the server.
+     */
     @UsedByGodot
     fun loadAchievements(forceReload: Boolean) =
         achievementsProxy.loadAchievements(forceReload)
 
+    /**
+     * Use this method to reveal a hidden achievement to the current signed player. If the achievement
+     * is already unlocked, this method will have no effect.
+     *
+     * The method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.achievementRevealed] signal.
+     *
+     * @param achievementId The achievement id.
+     */
     @UsedByGodot
     fun revealAchievement(achievementId: String) =
         achievementsProxy.revealAchievement(achievementId)
 
+    /**
+     * Use this method to open a new window with the achievements of the game, and the progress of
+     * the player to unlock those achievements.
+     */
     @UsedByGodot
     fun showAchievements() = achievementsProxy.showAchievements()
 
+    /**
+     * Immediately unlocks the given achievement for the signed in player. If the achievement is
+     * secret, it will be revealed to the player.
+     *
+     * The method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.achievementUnlocked] signal.
+     *
+     * @param achievementId The achievement id.
+     */
     @UsedByGodot
     fun unlockAchievement(achievementId: String) =
         achievementsProxy.unlockAchievement(achievementId)

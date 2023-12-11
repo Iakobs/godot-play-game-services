@@ -4,16 +4,12 @@ import org.godotengine.godot.plugin.SignalInfo
 
 /** @suppress */
 fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
-    SignInSignals.isUserAuthenticated,
-    SignInSignals.isUserSignedIn,
+    SignInSignals.userAuthenticated,
+    SignInSignals.userSignedIn,
 
-    AchievementsSignals.isAchievementUnlocked,
-    AchievementsSignals.loadAchievementsSuccess,
-    AchievementsSignals.loadAchievementsFailure,
-    AchievementsSignals.revealAchievementSuccess,
-    AchievementsSignals.revealAchievementFailure,
-    AchievementsSignals.unlockAchievementSuccess,
-    AchievementsSignals.unlockAchievementFailure,
+    AchievementsSignals.achievementUnlocked,
+    AchievementsSignals.achievementsLoaded,
+    AchievementsSignals.achievementRevealed,
 
     LeaderboardSignals.submitScoreSuccess,
     LeaderboardSignals.submitScoreFailure,
@@ -31,7 +27,7 @@ object SignInSignals {
      *
      * @return `true` if the user is authenticated. `false` otherwise.
      */
-    val isUserAuthenticated = SignalInfo("isUserAuthenticated", Boolean::class.javaObjectType)
+    val userAuthenticated = SignalInfo("userAuthenticated", Boolean::class.javaObjectType)
 
     /**
      * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.signIn] method.
@@ -39,7 +35,7 @@ object SignInSignals {
      * @return `true` if the user is signed in. `false` otherwise.
      *
      */
-    val isUserSignedIn = SignalInfo("isUserSignedIn", Boolean::class.javaObjectType)
+    val userSignedIn = SignalInfo("userSignedIn", Boolean::class.javaObjectType)
 }
 
 /**
@@ -47,17 +43,26 @@ object SignInSignals {
  */
 object AchievementsSignals {
     /**
-     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.incrementAchievement] method.
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.incrementAchievement]
+     * or [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.unlockAchievement] methods.
      *
      * @return `true` if the achievement is unlocked. `false` otherwise.
      */
-    val isAchievementUnlocked = SignalInfo("isAchievementUnlocked", Boolean::class.javaObjectType)
-    val loadAchievementsSuccess = SignalInfo("loadAchievementsSuccess", String::class.java)
-    val loadAchievementsFailure = SignalInfo("loadAchievementsFailure")
-    val revealAchievementSuccess = SignalInfo("revealAchievement")
-    val revealAchievementFailure = SignalInfo("revealAchievement")
-    val unlockAchievementSuccess = SignalInfo("unlockAchievementSuccess")
-    val unlockAchievementFailure = SignalInfo("unlockAchievementFailure")
+    val achievementUnlocked = SignalInfo("achievementUnlocked", Boolean::class.javaObjectType)
+
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadAchievements] method.
+     *
+     * @return A JSON with a list of [com.google.android.gms.games.achievement.Achievement](https://developers.google.com/android/reference/com/google/android/gms/games/achievement/Achievement).
+     */
+    val achievementsLoaded = SignalInfo("achievementsLoaded", String::class.java)
+
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.revealAchievement] method.
+     *
+     * @return `true` if the achievement is revealed. `false` otherwise.
+     */
+    val achievementRevealed = SignalInfo("achievementRevealed", Boolean::class.javaObjectType)
 }
 
 /**

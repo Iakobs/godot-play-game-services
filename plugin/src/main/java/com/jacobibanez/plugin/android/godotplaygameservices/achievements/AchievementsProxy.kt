@@ -6,13 +6,9 @@ import com.google.android.gms.games.AchievementsClient
 import com.google.android.gms.games.PlayGames
 import com.google.gson.Gson
 import com.jacobibanez.plugin.android.godotplaygameservices.BuildConfig
-import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.isAchievementUnlocked
-import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.loadAchievementsFailure
-import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.loadAchievementsSuccess
-import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.revealAchievementFailure
-import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.revealAchievementSuccess
-import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.unlockAchievementFailure
-import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.unlockAchievementSuccess
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.achievementUnlocked
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.achievementsLoaded
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.achievementRevealed
 import org.godotengine.godot.Dictionary
 import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin.emitSignal
@@ -34,14 +30,14 @@ class AchievementsProxy(
                     tag,
                     "Achievement $achievementId incremented successfully. Unlocked? ${task.result}"
                 )
-                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, isAchievementUnlocked, task.result)
+                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, achievementUnlocked, task.result)
             } else {
                 Log.e(
                     tag,
                     "Achievement $achievementId not incremented. Cause: ${task.exception}",
                     task.exception
                 )
-                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, isAchievementUnlocked, false)
+                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, achievementUnlocked, false)
             }
         }
     }
@@ -62,10 +58,11 @@ class AchievementsProxy(
                         emptyList()
                     }
 
-                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, loadAchievementsSuccess, Gson().toJson(achievements))
+                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, achievementsLoaded, Gson().toJson(achievements))
             } else {
                 Log.e(tag, "Failed to load achievements. Cause: ${task.exception}", task.exception)
-                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, loadAchievementsFailure)
+                val emptyResponse: List<Dictionary> = listOf(Dictionary())
+                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, achievementsLoaded, Gson().toJson(emptyResponse))
             }
         }
     }
@@ -75,14 +72,14 @@ class AchievementsProxy(
         achievementsClient.revealImmediate(achievementId).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Log.d(tag, "Achievement $achievementId revealed")
-                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, revealAchievementSuccess)
+                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, achievementRevealed, true)
             } else {
                 Log.e(
                     tag,
                     "Achievement $achievementId not revealed. Cause: ${task.exception}",
                     task.exception
                 )
-                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, revealAchievementFailure)
+                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, achievementRevealed, false)
             }
         }
     }
@@ -102,14 +99,14 @@ class AchievementsProxy(
         achievementsClient.unlockImmediate(achievementId).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Log.d(tag, "Achievement with id $achievementId unlocked")
-                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, unlockAchievementSuccess)
+                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, achievementUnlocked, true)
             } else {
                 Log.e(
                     tag,
                     "Error unlocking achievement $achievementId. Cause: ${task.exception}",
                     task.exception
                 )
-                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, unlockAchievementFailure)
+                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, achievementUnlocked, false)
             }
         }
     }

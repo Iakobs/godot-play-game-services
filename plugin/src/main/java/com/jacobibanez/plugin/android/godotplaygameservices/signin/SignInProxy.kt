@@ -4,8 +4,8 @@ import android.util.Log
 import com.google.android.gms.games.GamesSignInClient
 import com.google.android.gms.games.PlayGames
 import com.jacobibanez.plugin.android.godotplaygameservices.BuildConfig
-import com.jacobibanez.plugin.android.godotplaygameservices.signals.SignInSignals.isUserAuthenticated
-import com.jacobibanez.plugin.android.godotplaygameservices.signals.SignInSignals.isUserSignedIn
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.SignInSignals.userAuthenticated
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.SignInSignals.userSignedIn
 import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin.emitSignal
 
@@ -24,7 +24,7 @@ class SignInProxy(
                 emitSignal(
                     godot,
                     BuildConfig.GODOT_PLUGIN_NAME,
-                    isUserAuthenticated,
+                    userAuthenticated,
                     task.result.isAuthenticated
                 )
             } else {
@@ -32,7 +32,7 @@ class SignInProxy(
                 emitSignal(
                     godot,
                     BuildConfig.GODOT_PLUGIN_NAME,
-                    isUserAuthenticated,
+                    userAuthenticated,
                     false
                 )
             }
@@ -44,10 +44,10 @@ class SignInProxy(
         gamesSignInClient.signIn().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Log.d(tag, "User signed in: ${task.result.isAuthenticated}")
-                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, isUserSignedIn, task.result.isAuthenticated)
+                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, userSignedIn, task.result.isAuthenticated)
             } else {
                 Log.e(tag, "User not signed in. Cause: ${task.exception}", task.exception)
-                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, isUserSignedIn, false)
+                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, userSignedIn, false)
             }
         }
     }
