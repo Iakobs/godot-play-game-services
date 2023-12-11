@@ -7,8 +7,7 @@ fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
     SignInSignals.isUserAuthenticated,
     SignInSignals.isUserSignedIn,
 
-    AchievementsSignals.incrementAchievementSuccess,
-    AchievementsSignals.incrementAchievementSuccessFailure,
+    AchievementsSignals.isAchievementUnlocked,
     AchievementsSignals.loadAchievementsSuccess,
     AchievementsSignals.loadAchievementsFailure,
     AchievementsSignals.revealAchievementSuccess,
@@ -47,8 +46,12 @@ object SignInSignals {
  * Signals emitted by Achievements methods
  */
 object AchievementsSignals {
-    val incrementAchievementSuccess = SignalInfo("incrementAchievementSuccess", Boolean::class.javaObjectType)
-    val incrementAchievementSuccessFailure = SignalInfo("incrementAchievementSuccessFailure")
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.incrementAchievement] method.
+     *
+     * @return `true` if the achievement is unlocked. `false` otherwise.
+     */
+    val isAchievementUnlocked = SignalInfo("isAchievementUnlocked", Boolean::class.javaObjectType)
     val loadAchievementsSuccess = SignalInfo("loadAchievementsSuccess", String::class.java)
     val loadAchievementsFailure = SignalInfo("loadAchievementsFailure")
     val revealAchievementSuccess = SignalInfo("revealAchievement")

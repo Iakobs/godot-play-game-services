@@ -70,6 +70,15 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
     @UsedByGodot
     fun signIn() = signInProxy.signIn()
 
+    /**
+     * Use this method to increment a given achievement in the given amount. For normal achievements,
+     * use the [unlockAchievement] method instead.
+     *
+     * The method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.isAchievementUnlocked] signal.
+     *
+     * @param achievementId The achievement Id.
+     * @param amount The number of steps to increment by. Must be greater than 0.
+     */
     @UsedByGodot
     fun incrementAchievement(achievementId: String, amount: Int) =
         achievementsProxy.incrementAchievement(achievementId, amount)

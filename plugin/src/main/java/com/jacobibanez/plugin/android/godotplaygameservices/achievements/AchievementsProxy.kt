@@ -6,8 +6,7 @@ import com.google.android.gms.games.AchievementsClient
 import com.google.android.gms.games.PlayGames
 import com.google.gson.Gson
 import com.jacobibanez.plugin.android.godotplaygameservices.BuildConfig
-import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.incrementAchievementSuccess
-import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.incrementAchievementSuccessFailure
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.isAchievementUnlocked
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.loadAchievementsFailure
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.loadAchievementsSuccess
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.revealAchievementFailure
@@ -35,14 +34,14 @@ class AchievementsProxy(
                     tag,
                     "Achievement $achievementId incremented successfully. Unlocked? ${task.result}"
                 )
-                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, incrementAchievementSuccess, task.result)
+                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, isAchievementUnlocked, task.result)
             } else {
                 Log.e(
                     tag,
                     "Achievement $achievementId not incremented. Cause: ${task.exception}",
                     task.exception
                 )
-                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, incrementAchievementSuccessFailure)
+                emitSignal(godot, BuildConfig.GODOT_PLUGIN_NAME, isAchievementUnlocked, false)
             }
         }
     }
