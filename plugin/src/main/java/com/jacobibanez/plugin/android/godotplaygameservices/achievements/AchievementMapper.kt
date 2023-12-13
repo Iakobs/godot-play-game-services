@@ -1,6 +1,5 @@
 package com.jacobibanez.plugin.android.godotplaygameservices.achievements
 
-import android.annotation.SuppressLint
 import com.google.android.gms.games.achievement.Achievement
 import com.google.android.gms.games.achievement.Achievement.STATE_HIDDEN
 import com.google.android.gms.games.achievement.Achievement.STATE_REVEALED
@@ -9,7 +8,6 @@ import com.google.android.gms.games.achievement.Achievement.TYPE_INCREMENTAL
 import com.google.android.gms.games.achievement.Achievement.TYPE_STANDARD
 import org.godotengine.godot.Dictionary
 
-@SuppressLint("VisibleForTests")
 fun fromAchievement(achievement: Achievement?): Dictionary = if (achievement != null) {
     Dictionary().apply {
         put("achievementId", achievement.achievementId)
@@ -18,6 +16,8 @@ fun fromAchievement(achievement: Achievement?): Dictionary = if (achievement != 
         put("type", getType(achievement.type))
         put("state", getState(achievement.state))
         put("xpValue", achievement.xpValue)
+        put("revealedImageUri", achievement.revealedImageUri.toString())
+        put("unlockedImageUri", achievement.unlockedImageUri.toString())
         put("currentSteps", if (achievement.type == 1) achievement.currentSteps else 0)
         put("totalSteps", if (achievement.type == 1) achievement.totalSteps else 0)
         put(
@@ -34,14 +34,12 @@ fun fromAchievement(achievement: Achievement?): Dictionary = if (achievement != 
     Dictionary()
 }
 
-@SuppressLint("VisibleForTests")
 private fun getType(type: Int): String = when (type) {
     TYPE_STANDARD -> "TYPE_STANDARD"
     TYPE_INCREMENTAL -> "TYPE_INCREMENTAL"
     else -> ""
 }
 
-@SuppressLint("VisibleForTests")
 private fun getState(state: Int): String = when (state) {
     STATE_UNLOCKED -> "STATE_UNLOCKED"
     STATE_REVEALED -> "STATE_REVEALED"

@@ -1,5 +1,15 @@
 extends Node
+## Main Autoload of the plugin, which contains a reference to the android plugin itself.
+##
+## This Autoload contains the entrypoint to the android code, but you don't need
+## to use it directly. Some autoloads exposing the plugin functionality, as a wrapper
+## for GDScript code, are also loaded with the plugin.[br]
+## [br]
+## This Autoload also calls the [code]initialize()[/code] method of the plugin,
+## checking if the user is authenticated.
 
+## This is the main entry point to the android plugin. With this object,
+## you can call the kotlin methods directly.
 var android_plugin: Object
 
 func _ready() -> void:

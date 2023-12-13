@@ -3,38 +3,47 @@ extends EditorPlugin
 
 const PLUGIN_AUTOLOAD := "GodotPlayGameServices"
 const SIGN_IN_AUTOLOAD := "SignInClient"
+const ACHIEVEMENTS_AUTOLOAD := "AchievementsClient"
 
-# A class member to hold the editor export plugin during its lifecycle.
-var export_plugin : AndroidExportPlugin
-# A class member to hold the dock during the plugin life cycle.
-var dock : Node
+var _export_plugin : AndroidExportPlugin
+var _dock : Node
 
 func _enter_tree():
-	# Initialization of the plugin goes here.
-	export_plugin = AndroidExportPlugin.new()
-	add_export_plugin(export_plugin)
-	
-	# Load the dock scene and instantiate it.
-	dock = preload("res://addons/GodotPlayGameServices/godot_play_game_services_dock.tscn").instantiate()
-	# Add the loaded scene to the docks.
-	add_control_to_bottom_panel(dock, "Godot Play Game Services")
-	
-	#Add autoloads
-	add_autoload_singleton(PLUGIN_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/godot_play_game_services.gd")
-	add_autoload_singleton(SIGN_IN_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/sign_in_client.gd")
+	_add_plugin()
+	_add_docks()
+	_add_autoloads()
 
 func _exit_tree():
-	# Clean-up of the plugin goes here.
-	remove_export_plugin(export_plugin)
-	export_plugin = null
-	
-	# Remove the dock.
-	remove_control_from_bottom_panel(dock)
-	# Erase the control from the memory.
-	dock.free()
-	
-	#Remove autoloads
+	_remove_plugin()
+	_remove_docks()
+	_remove_autoloads()
+
+func _add_plugin() -> void:
+	_export_plugin = AndroidExportPlugin.new()
+	add_export_plugin(_export_plugin)
+
+func _remove_plugin() -> void:
+	remove_export_plugin(_export_plugin)
+	_export_plugin = null
+
+func _add_docks() -> void:
+	var dock_name := "Godot Play Game Services"
+	_dock = preload("res://addons/GodotPlayGameServices/godot_play_game_services_dock.tscn").instantiate()
+	add_control_to_bottom_panel(_dock, dock_name)
+
+func _remove_docks() -> void:
+	remove_control_from_bottom_panel(_dock)
+	_dock.free()
+
+func _add_autoloads() -> void:
+	add_autoload_singleton(PLUGIN_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/godot_play_game_services.gd")
+	add_autoload_singleton(SIGN_IN_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/sign_in_client.gd")
+	add_autoload_singleton(ACHIEVEMENTS_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/achievements_client.gd")
+
+func _remove_autoloads() -> void:
 	remove_autoload_singleton(PLUGIN_AUTOLOAD)
+	remove_autoload_singleton(SIGN_IN_AUTOLOAD)
+	remove_autoload_singleton(ACHIEVEMENTS_AUTOLOAD)
 
 class AndroidExportPlugin extends EditorExportPlugin:
 	var _plugin_name = "GodotPlayGameServices"

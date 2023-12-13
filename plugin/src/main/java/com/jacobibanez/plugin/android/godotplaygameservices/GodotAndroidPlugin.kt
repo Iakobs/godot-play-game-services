@@ -14,7 +14,7 @@ import org.godotengine.godot.plugin.UsedByGodot
 
 /**
  * This is the main Godot Plugin class exposing the interfaces to use with Godot. In this class you
- * will find all the methods that can be called in your game via GDScript or C#.
+ * will find all the methods that can be called in your game via GDScript.
  */
 class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
 

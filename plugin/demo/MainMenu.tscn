@@ -12,22 +12,25 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_smv14")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Button" type="Button" parent="VBoxContainer/CenterContainer"]
+[node name="Achievements" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 200)
 layout_mode = 2
 size_flags_vertical = 2
 theme = ExtResource("2_aajnr")
-text = "Show leaderboards"
+text = "Achievements"

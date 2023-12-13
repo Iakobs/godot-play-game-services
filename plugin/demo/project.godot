@@ -13,11 +13,13 @@ config_version=5
 config/name="Google Play Game Services Godot Plugin"
 run/main_scene="res://MainMenu.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
 
 [autoload]
 
-GodotPlayGameServices="*res://addons/GodotPlayGameServices/GodotPlayGameServices.gd"
+GodotPlayGameServices="*res://addons/GodotPlayGameServices/autoloads/godot_play_game_services.gd"
+SignInClient="*res://addons/GodotPlayGameServices/autoloads/sign_in_client.gd"
+AchievementsClient="*res://addons/GodotPlayGameServices/autoloads/achievements_client.gd"
 
 [display]
 

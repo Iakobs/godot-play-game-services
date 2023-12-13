@@ -1,6 +1,5 @@
 package com.jacobibanez.plugin.android.godotplaygameservices.friends
 
-import android.annotation.SuppressLint
 import com.google.android.gms.games.Player
 import com.google.android.gms.games.Player.FriendsListVisibilityStatus.FEATURE_UNAVAILABLE
 import com.google.android.gms.games.Player.FriendsListVisibilityStatus.REQUEST_REQUIRED
@@ -13,7 +12,6 @@ import com.google.android.gms.games.PlayerLevel
 import com.google.android.gms.games.PlayerLevelInfo
 import org.godotengine.godot.Dictionary
 
-@SuppressLint("VisibleForTests")
 fun fromPlayer(player: Player?): Dictionary = if (player != null) {
     Dictionary().apply {
         put("bannerImageLandscapeUri", player.bannerImageLandscapeUri.toString())
@@ -67,7 +65,6 @@ fun fromPlayerLevel(playerLevel: PlayerLevel?): Dictionary = if (playerLevel != 
     Dictionary()
 }
 
-@SuppressLint("VisibleForTests")
 private fun getVisibilityStatus(state: Int): String = when (state) {
     FEATURE_UNAVAILABLE -> "FEATURE_UNAVAILABLE"
     REQUEST_REQUIRED -> "REQUEST_REQUIRED"
@@ -76,7 +73,6 @@ private fun getVisibilityStatus(state: Int): String = when (state) {
     else -> ""
 }
 
-@SuppressLint("VisibleForTests")
 private fun getFriendStatus(state: Int): String = when (state) {
     FRIEND -> "FRIEND"
     NO_RELATIONSHIP -> "NO_RELATIONSHIP"

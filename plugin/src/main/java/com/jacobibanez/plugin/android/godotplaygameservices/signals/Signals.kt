@@ -46,9 +46,10 @@ object AchievementsSignals {
      * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.incrementAchievement]
      * or [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.unlockAchievement] methods.
      *
-     * @return `true` if the achievement is unlocked. `false` otherwise.
+     * @return `true` if the achievement is unlocked. `false` otherwise. Also returns the id of the achievement.
      */
-    val achievementUnlocked = SignalInfo("achievementUnlocked", Boolean::class.javaObjectType)
+    val achievementUnlocked =
+        SignalInfo("achievementUnlocked", Boolean::class.javaObjectType, String::class.java)
 
     /**
      * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadAchievements] method.
@@ -60,9 +61,10 @@ object AchievementsSignals {
     /**
      * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.revealAchievement] method.
      *
-     * @return `true` if the achievement is revealed. `false` otherwise.
+     * @return `true` if the achievement is revealed. `false` otherwise. Also returns the id of the achievement.
      */
-    val achievementRevealed = SignalInfo("achievementRevealed", Boolean::class.javaObjectType)
+    val achievementRevealed =
+        SignalInfo("achievementRevealed", Boolean::class.javaObjectType, String::class.java)
 }
 
 /**
