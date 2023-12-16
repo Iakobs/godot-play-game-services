@@ -18,7 +18,10 @@ Godot 4.2+ plugin for integration of the latest version of [Google Play Game Ser
   - [Building the plugin](#building-the-plugin)
   - [Testing the plugin](#testing-the-plugin)
   - [Configuring the plugin](#configuring-the-plugin)
-- [Technical documentation](#technical-documentation)
+- [Documentation](#documentation)
+  - [Kotlin Code](#kotlin-code)
+  - [GDScript Code](#gdscript-code)
+  - [Google](#google)
 
 ## Forewords
 The whole project started as a collaboration with [Rafa Laguna](https://github.com/rafalagoon), and this plugin is the updated version of the [old one](https://github.com/Iakobs/godot-google-play-game-services-android-plugin/tree/main) for Godot 3.5+.
@@ -29,9 +32,9 @@ With Godot 4.2+, the way android plugins work [has changed](https://docs.godoten
 Using the plugin requires downloading the repository, and generating the sources. I'm working to provide a more user-friendly way of using the plugin, but for now I'm afraid this is the only way of using it.
 
 ### Downloading the plugin
-To download the plugin you can use `git` to clone it, or just download the repository in a zip file from Github.
+To download the plugin you can use `git` to clone it, or just download the repository in a zip file from GitHub.
 
-![Screenshot of Github's menu to download the repository as a zip file](docs/images/download_repo.png)
+![Screenshot of GitHub's menu to download the repository as a zip file](docs/images/download_repo.png)
 
 ### Building the plugin
 In a terminal window, navigate to the project's root directory and run the following command:
@@ -69,7 +72,17 @@ An additional configuration has to be made in order to connect with Google Game 
 
 ![Screenshot of the relevant section inside the export configuration for Android in the Godot editor](docs/images/android_export.png)
 
-## Technical Documentation
-You can find the technical documentation of the kotlin code in the [Github Pages](https://iakobs.github.io/godot-play-game-services/) of the repository.
+## Documentation
 
-You can find Google's technical documentation of the SDK [here](https://developers.google.com/android/reference/packages).
+### Kotlin Code
+You can find the technical documentation of the kotlin code in the [GitHub Pages](https://iakobs.github.io/godot-play-game-services/) of this repository. It's generated with [Dokka](https://kotlinlang.org/docs/dokka-introduction.html) from the [KDocs](https://kotlinlang.org/docs/kotlin-doc.html) documentation on the source code.
+
+### GDScript Code
+The GDScript code is documented in the code itself, so you can access it via the Godot Editor. I'm working to publish it in a static webpage too.
+
+### Google
+Google provides lots of documentation for integrating with Google Play Game Services, creating an app, etc.
+
+The main page for Game Services is [this one](https://developers.google.com/games/services). There you can find the [Guides](https://developers.google.com/games/services/common/concepts/achievements) section and the [Reference](https://developers.google.com/games/services/reference) section, which contains the technical documentation of their API.
+
+When it comes to Google Play Console, the main page is [here](https://developer.android.com/distribute/console), but the Google Play Game Services documentation also provides a good setup guide [here](https://developers.google.com/games/services/console/enabling).
