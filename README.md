@@ -22,6 +22,7 @@ Godot 4.2+ plugin for integration of the latest version of [Google Play Game Ser
   - [Kotlin Code](#kotlin-code)
   - [GDScript Code](#gdscript-code)
   - [Google](#google)
+- [Contact me](#contact-me)
 
 ## Forewords
 The whole project started as a collaboration with [Rafa Laguna](https://github.com/rafalagoon), and this plugin is the updated version of the [old one](https://github.com/Iakobs/godot-google-play-game-services-android-plugin/tree/main) for Godot 3.5+.
@@ -29,7 +30,7 @@ The whole project started as a collaboration with [Rafa Laguna](https://github.c
 With Godot 4.2+, the way android plugins work [has changed](https://docs.godotengine.org/en/stable/tutorials/platform/android/android_plugin.html), so I had to update this plugin to match the new requirements. Now there's only one editor plugin (this one), instead of having two separate plugins like before, one android plugin and one godot plugin.
 
 ## How to use the plugin
-Using the plugin requires downloading the repository, and generating the sources. I'm working to provide a more user-friendly way of using the plugin, but for now I'm afraid this is the only way of using it.
+Using the plugin requires downloading the repository, generating the sources, and making some configuration steps. I'm working to provide a more user-friendly way of using the plugin, but for now I'm afraid this is the only way of using it.
 
 ### Downloading the plugin
 To download the plugin you can use `git` to clone it, or just download the repository in a zip file from GitHub.
@@ -48,9 +49,9 @@ You can also use the included [Godot demo project](plugin/demo/project.godot) to
 
 - Open the demo in Godot (4.2 or higher)
 - Navigate to `Project` -> `Project Settings...` -> `Plugins`, and ensure the plugin is enabled
+- Follow the steps on [Configuring the plugin](#configuring-the-plugin)
 - Install the Godot Android build template by clicking on `Project` -> `Install Android Build Template...`
 - Connect an Android device to your machine and run the demo on it
-- Follow the steps on [Configuring the plugin](#configuring-the-plugin)
 
 ### Configuring the plugin
 Before configuring the plugin, you have to create  a **Google developer account**, which involves a one time payment to google, and then you must create a game. The explanation on how to do all of these is out of the scope of this documentation. Please [refer to Google](https://developer.android.com/distribute/console) for those steps.
@@ -66,7 +67,7 @@ In order to make the configuration easier, the plugin adds a new dock to the bot
 > :warning: Beware of not changing the Game Id and submitting by mistake, since that will break the integration with Google Game Services.
 
 ### Export configuration
-To be able to use the plugin, you need to use a **custom gradle build**. The steps to do so, are explained with detail in the [Godot Documentation](https://docs.godotengine.org/en/stable/tutorials/export/android_gradle_build.html).
+To be able to use the plugin, you need to use a **custom gradle build**. Please note that The steps to do so, are explained with detail in the [Godot Documentation](https://docs.godotengine.org/en/stable/tutorials/export/android_gradle_build.html).
 
 An additional configuration has to be made in order to connect with Google Game Services. In the Google App, you have to configure an **Android OAuth client**. Google describes the steps [here](https://developers.google.com/games/services/console/enabling#step_3_generate_an_oauth_20_client_id), but at some point you have to introduce the **package name** of your game, as well as the **SHA-1 of your signing key**. Both things need to be introduced also in the Godot Export configuration for Android:
 
@@ -86,3 +87,10 @@ Google provides lots of documentation for integrating with Google Play Game Serv
 The main page for Game Services is [this one](https://developers.google.com/games/services). There you can find the [Guides](https://developers.google.com/games/services/common/concepts/achievements) section and the [Reference](https://developers.google.com/games/services/reference) section, which contains the technical documentation of their API.
 
 When it comes to Google Play Console, the main page is [here](https://developer.android.com/distribute/console), but the Google Play Game Services documentation also provides a good setup guide [here](https://developers.google.com/games/services/console/enabling).
+
+## Contact me
+If you have any questions or want to propose changes, features, or found a bug, please feel free to [open an issue](https://github.com/Iakobs/godot-play-game-services/issues/new).
+
+I try to answer in the same day and provide all help I can, even if it's out of scope of the plugin, like guiding over some Google configurations, etc.
+
+Please, be kind and respectful when creating issues.
