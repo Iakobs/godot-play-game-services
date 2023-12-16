@@ -12,6 +12,9 @@ fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
     AchievementsSignals.achievementRevealed,
 
     LeaderboardSignals.scoreSubmitted,
+    LeaderboardSignals.scoreLoaded,
+    LeaderboardSignals.allLeaderboardsLoaded,
+    LeaderboardSignals.leaderboardLoaded,
 
     FriendSignals.loadFriendsSuccess,
     FriendSignals.loadFriendsFailure
