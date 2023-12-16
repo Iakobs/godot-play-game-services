@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.games.AchievementsClient
 import com.google.android.gms.games.PlayGames
+import com.google.android.gms.games.achievement.AchievementBuffer
 import com.google.gson.Gson
 import com.jacobibanez.plugin.android.godotplaygameservices.BuildConfig
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.AchievementsSignals.achievementRevealed
@@ -13,6 +14,7 @@ import org.godotengine.godot.Dictionary
 import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin.emitSignal
 
+/** @suppress */
 class AchievementsProxy(
     private val godot: Godot,
     private val achievementsClient: AchievementsClient = PlayGames.getAchievementsClient(godot.getActivity()!!)
@@ -62,10 +64,11 @@ class AchievementsProxy(
                     tag,
                     "Achievements loaded successfully. Achievements are stale? ${task.result.isStale}"
                 )
-                val achievementsCount = task.result.get()!!.count
+                val safeBuffer: AchievementBuffer = task.result.get()!!
+                val achievementsCount = safeBuffer.count
                 val achievements: List<Dictionary> =
-                    if (task.result.get() != null && achievementsCount > 0) {
-                        task.result.get()!!.map { fromAchievement(it) }.toList()
+                    if (achievementsCount > 0) {
+                        safeBuffer.map { fromAchievement(it) }.toList()
                     } else {
                         emptyList()
                     }
@@ -78,12 +81,11 @@ class AchievementsProxy(
                 )
             } else {
                 Log.e(tag, "Failed to load achievements. Cause: ${task.exception}", task.exception)
-                val emptyResponse: List<Dictionary> = listOf(Dictionary())
                 emitSignal(
                     godot,
                     BuildConfig.GODOT_PLUGIN_NAME,
                     achievementsLoaded,
-                    Gson().toJson(emptyResponse)
+                    Gson().toJson(emptyList<Dictionary>())
                 )
             }
         }

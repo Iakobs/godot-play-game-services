@@ -88,7 +88,7 @@ tasks.dokkaHtmlPartial {
 
     dokkaSourceSets.configureEach {
         perPackageOption {
-            matchingRegex.set(".*achievements|.*friends|.*leaderboards|.*signin")
+            matchingRegex.set(".*friends|.*signin")
             suppress.set(true)
         }
     }

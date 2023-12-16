@@ -126,17 +126,38 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
     fun unlockAchievement(achievementId: String) =
         achievementsProxy.unlockAchievement(achievementId)
 
+    /**
+     * Shows a new screen with all the leaderboards for the game.
+     */
     @UsedByGodot
     fun showAllLeaderboards() = leaderboardsProxy.showAllLeaderboards()
 
+    /**
+     * Shows a new screen for a specific leaderboard.
+     *
+     * @param leaderboardId The leaderboard id.
+     */
     @UsedByGodot
     fun showLeaderboard(leaderboardId: String) =
         leaderboardsProxy.showLeaderboard(leaderboardId)
 
+    /**
+     * Shows a specific leaderboard for a given span of time.
+     *
+     * @param leaderboardId The leaderboard id.
+     * @param timeSpan The time span for the leaderboard refresh. It can be any of the [com.jacobibanez.plugin.android.godotplaygameservices.leaderboards.TimeSpan] values.
+     */
     @UsedByGodot
     fun showLeaderboardForTimeSpan(leaderboardId: String, timeSpan: Int) =
         leaderboardsProxy.showLeaderboardForTimeSpan(leaderboardId, timeSpan)
 
+    /**
+     * Shows a specific leaderboard for a given span of time and a specific type of collection.
+     *
+     * @param leaderboardId The leaderboard id.
+     * @param timeSpan The time span for the leaderboard refresh. It can be any of the [com.jacobibanez.plugin.android.godotplaygameservices.leaderboards.TimeSpan] values.
+     * @param collection The collection type for the leaderboard. It can be any of the [[com.jacobibanez.plugin.android.godotplaygameservices.leaderboards.Collection]] values.
+     */
     @UsedByGodot
     fun showLeaderboardForTimeSpanAndCollection(
         leaderboardId: String,
@@ -146,9 +167,59 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
         leaderboardId, timeSpan, collection
     )
 
+    /**
+     * Submits the score to the leaderboard for the currently signed-in player. The score is ignored
+     * if it is worse (as defined by the leaderboard configuration) than a previously submitted
+     * score for the same player.
+     *
+     * @param leaderboardId The leaderboard id.
+     * @param score The raw score value. For more details, please [see this page](https://developers.google.com/games/services/common/concepts/leaderboards).
+     */
     @UsedByGodot
     fun submitScore(leaderboardId: String, score: Int) =
         leaderboardsProxy.submitScore(leaderboardId, score)
+
+    /**
+     * Call this method and subscribe to the emitted signal to receive the score of the currently
+     * signed in player for the given leaderboard, time span, and collection in JSON format.
+     * The JSON received from the [com.jacobibanez.plugin.android.godotplaygameservices.signals.LeaderboardSignals.scoreLoaded]
+     * signal contains a representation of the [com.google.android.gms.games.leaderboard.LeaderboardScore](https://developers.google.com/android/reference/com/google/android/gms/games/leaderboard/LeaderboardScore) class.
+     *
+     * @param leaderboardId The leaderboard id.
+     * @param timeSpan The time span for the leaderboard refresh. It can be any of the [com.jacobibanez.plugin.android.godotplaygameservices.leaderboards.TimeSpan] values.
+     * @param collection The collection type for the leaderboard. It can be any of the [[com.jacobibanez.plugin.android.godotplaygameservices.leaderboards.Collection]] values.
+     */
+    @UsedByGodot
+    fun loadPlayerScore(
+        leaderboardId: String,
+        timeSpan: Int,
+        collection: Int
+    ) = leaderboardsProxy.loadPlayerScore(leaderboardId, timeSpan, collection)
+
+    /**
+     * Call this method and subscribe to the emitted signal to receive all leaderboards for the
+     * game in JSON format. The JSON received from the [com.jacobibanez.plugin.android.godotplaygameservices.signals.LeaderboardSignals.allLeaderboardsLoaded]
+     * signal, contains a list of elements representing the [com.google.android.gms.games.leaderboard.Leaderboard](https://developers.google.com/android/reference/com/google/android/gms/games/leaderboard/Leaderboard) class.
+     *
+     * @param forceReload If true, this call will clear any locally cached data and attempt to fetch
+     * the latest data from the server.
+     */
+    @UsedByGodot
+    fun loadAllLeaderboards(forceReload: Boolean) =
+        leaderboardsProxy.loadAllLeaderboards(forceReload)
+
+    /**
+     * Call this method and subscribe to the emitted signal to receive the specific leaderboard in
+     * JSON format. The JSON received from the [com.jacobibanez.plugin.android.godotplaygameservices.signals.LeaderboardSignals.leaderboardLoaded]
+     * signal, contains a representation of the [com.google.android.gms.games.leaderboard.Leaderboard](https://developers.google.com/android/reference/com/google/android/gms/games/leaderboard/Leaderboard) class.
+     *
+     * @param leaderboardId The leaderboard id.
+     * @param forceReload If true, this call will clear any locally cached data and attempt to fetch
+     * the latest data from the server.
+     */
+    @UsedByGodot
+    fun loadLeaderboard(leaderboardId: String, forceReload: Boolean) =
+        leaderboardsProxy.loadLeaderboard(leaderboardId, forceReload)
 
     @UsedByGodot
     fun loadFriends(pageSize: Int, forceReload: Boolean) =

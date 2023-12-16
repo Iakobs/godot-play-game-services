@@ -11,8 +11,7 @@ fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
     AchievementsSignals.achievementsLoaded,
     AchievementsSignals.achievementRevealed,
 
-    LeaderboardSignals.submitScoreSuccess,
-    LeaderboardSignals.submitScoreFailure,
+    LeaderboardSignals.scoreSubmitted,
 
     FriendSignals.loadFriendsSuccess,
     FriendSignals.loadFriendsFailure
@@ -71,8 +70,33 @@ object AchievementsSignals {
  * Signals emitted by Leaderboards methods
  */
 object LeaderboardSignals {
-    val submitScoreSuccess = SignalInfo("submitScoreSuccess")
-    val submitScoreFailure = SignalInfo("submitScoreFailure")
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.submitScore] method.
+     *
+     * @return `true` if the score is submitted. `false` otherwise. Also returns the id of the leaderboard.
+     */
+    val scoreSubmitted = SignalInfo("scoreSubmitted", Boolean::class.javaObjectType, String::class.java)
+
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadPlayerScore] method.
+     *
+     * @return A JSON with a [com.google.android.gms.games.leaderboard.LeaderboardScore](https://developers.google.com/android/reference/com/google/android/gms/games/leaderboard/LeaderboardScore).
+     */
+    val scoreLoaded = SignalInfo("scoreLoaded", String::class.java)
+
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadAllLeaderboards] method.
+     *
+     * @return A JSON with a list of [com.google.android.gms.games.leaderboard.Leaderboard](https://developers.google.com/android/reference/com/google/android/gms/games/leaderboard/Leaderboard).
+     */
+    val allLeaderboardsLoaded = SignalInfo("allLeaderboardsLoaded", String::class.java)
+
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadLeaderboard] method.
+     *
+     * @return A JSON with a [com.google.android.gms.games.leaderboard.Leaderboard](https://developers.google.com/android/reference/com/google/android/gms/games/leaderboard/Leaderboard).
+     */
+    val leaderboardLoaded = SignalInfo("leaderboardLoaded", String::class.java)
 }
 
 /**
