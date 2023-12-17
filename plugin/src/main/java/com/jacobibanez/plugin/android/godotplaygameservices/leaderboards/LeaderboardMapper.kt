@@ -14,8 +14,8 @@ fun fromLeaderboardScore(score: LeaderboardScore): Dictionary = Dictionary().app
     put("rawScore", score.rawScore)
     put("scoreHolder", fromPlayer(score.scoreHolder))
     put("scoreHolderDisplayName", score.scoreHolderDisplayName)
-    put("scoreHolderHiResImageUri", score.scoreHolderHiResImageUri.toString())
-    put("scoreHolderIconImageUri", score.scoreHolderIconImageUri.toString())
+    put("scoreHolderHiResImageUri", score.scoreHolderHiResImageUri?.toString())
+    put("scoreHolderIconImageUri", score.scoreHolderIconImageUri?.toString())
     put("scoreTag", score.scoreTag)
     put("timestampMillis", score.timestampMillis)
 }
@@ -24,7 +24,7 @@ fun fromLeaderboardScore(score: LeaderboardScore): Dictionary = Dictionary().app
 fun fromLeaderboard(leaderboard: Leaderboard): Dictionary = Dictionary().apply {
     put("leaderboardId", leaderboard.leaderboardId)
     put("displayName", leaderboard.displayName)
-    put("iconImageUri", leaderboard.iconImageUri.toString())
+    put("iconImageUri", leaderboard.iconImageUri?.toString())
     ScoreOrder.fromOrder(leaderboard.scoreOrder)?.let {
         put("scoreOrder", it.name)
     }

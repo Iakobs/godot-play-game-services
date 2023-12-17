@@ -18,8 +18,8 @@ fun fromAchievement(achievement: Achievement): Dictionary = Dictionary().apply {
         put("state", it.name)
     }
     put("xpValue", achievement.xpValue)
-    put("revealedImageUri", achievement.revealedImageUri.toString())
-    put("unlockedImageUri", achievement.unlockedImageUri.toString())
+    put("revealedImageUri", achievement.revealedImageUri?.toString())
+    put("unlockedImageUri", achievement.unlockedImageUri?.toString())
     put("currentSteps", if (achievement.type == 1) achievement.currentSteps else 0)
     put("totalSteps", if (achievement.type == 1) achievement.totalSteps else 0)
     put(

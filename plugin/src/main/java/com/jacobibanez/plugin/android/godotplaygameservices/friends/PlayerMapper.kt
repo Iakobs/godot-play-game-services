@@ -14,8 +14,8 @@ import org.godotengine.godot.Dictionary
 
 fun fromPlayer(player: Player?): Dictionary = if (player != null) {
     Dictionary().apply {
-        put("bannerImageLandscapeUri", player.bannerImageLandscapeUri.toString())
-        put("bannerImagePortraitUri", player.bannerImagePortraitUri.toString())
+        put("bannerImageLandscapeUri", player.bannerImageLandscapeUri?.toString())
+        put("bannerImagePortraitUri", player.bannerImagePortraitUri?.toString())
         put(
             "friendsListVisibilityStatus", if (player.currentPlayerInfo != null) {
                 getVisibilityStatus(player.currentPlayerInfo!!.friendsListVisibilityStatus)
@@ -24,7 +24,7 @@ fun fromPlayer(player: Player?): Dictionary = if (player != null) {
             }
         )
         put("displayName", player.displayName)
-        put("hiResImageUri", player.hiResImageUri.toString())
+        put("hiResImageUri", player.hiResImageUri?.toString())
         put("levelInfo", fromPlayerLevelInfo(player.levelInfo))
         put("playerId", player.playerId)
         put(
