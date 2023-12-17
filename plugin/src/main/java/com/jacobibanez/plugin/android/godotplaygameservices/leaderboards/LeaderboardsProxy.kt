@@ -138,6 +138,7 @@ class LeaderboardsProxy(
                     godot,
                     BuildConfig.GODOT_PLUGIN_NAME,
                     scoreLoaded,
+                    leaderboardId,
                     Gson().toJson(score)
                 )
             } else {
@@ -146,6 +147,7 @@ class LeaderboardsProxy(
                     godot,
                     BuildConfig.GODOT_PLUGIN_NAME,
                     scoreLoaded,
+                    leaderboardId,
                     Gson().toJson(null)
                 )
             }
