@@ -33,10 +33,11 @@ func _ready() -> void:
 func _set_up_display_score() -> void:
 	if _score == null:
 		_load_player_score()
-	LeaderboardsClient.score_loaded.connect(func(leaderboard_id: String, score: LeaderboardsClient.Score):
-		if leaderboard_id == leaderboard.leaderboard_id:
-			_score = score
-			_refresh_score_data()
+	LeaderboardsClient.score_loaded.connect(
+		func(leaderboard_id: String, score: LeaderboardsClient.Score):
+			if leaderboard_id == leaderboard.leaderboard_id:
+				_score = score
+				_refresh_score_data()
 	)
 
 func _set_up_submit_score() -> void:
@@ -104,7 +105,7 @@ func _refresh_score_data() -> void:
 
 func _refresh_submit_score_button() -> void:
 	if _new_raw_score == _EMPTY_SCORE:
-		submit_score_button.text = "Submit to score"
+		submit_score_button.text = "Type a score"
 		submit_score_button.disabled = true
 	else:
 		submit_score_button.text = "Submit %s to score" % _new_raw_score

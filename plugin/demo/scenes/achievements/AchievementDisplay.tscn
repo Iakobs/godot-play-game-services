@@ -1,0 +1,149 @@
+[gd_scene load_steps=3 format=3 uid="uid://doslufapsqkju"]
+
+[ext_resource type="Theme" uid="uid://bmm3mvq11y045" path="res://theme.tres" id="1_2bksq"]
+[ext_resource type="Script" path="res://scenes/achievements/AchievementDisplay.gd" id="1_px2ti"]
+
+[node name="AchievementDisplay" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_2bksq")
+script = ExtResource("1_px2ti")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Id" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Id"]
+layout_mode = 2
+text = "ID:"
+
+[node name="IdLabel" type="Label" parent="MarginContainer/VBoxContainer/Id"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+
+[node name="Name" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Name"]
+layout_mode = 2
+text = "Name:"
+
+[node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer/Name"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+
+[node name="Description" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Description"]
+layout_mode = 2
+text = "Description:"
+
+[node name="DescriptionLabel" type="Label" parent="MarginContainer/VBoxContainer/Description"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+
+[node name="Type" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Type"]
+layout_mode = 2
+text = "Type:"
+
+[node name="TypeLabel" type="Label" parent="MarginContainer/VBoxContainer/Type"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+
+[node name="State" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/State"]
+layout_mode = 2
+text = "State:"
+
+[node name="StateLabel" type="Label" parent="MarginContainer/VBoxContainer/State"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+
+[node name="XPValue" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/XPValue"]
+layout_mode = 2
+text = "XP Value:"
+
+[node name="XPValueLabel" type="Label" parent="MarginContainer/VBoxContainer/XPValue"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+
+[node name="CurrentStepsHolder" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/CurrentStepsHolder"]
+layout_mode = 2
+text = "Current Steps:"
+
+[node name="CurrentStepsLabel" type="Label" parent="MarginContainer/VBoxContainer/CurrentStepsHolder"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+
+[node name="TotalStepsHolder" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TotalStepsHolder"]
+layout_mode = 2
+text = "Total Steps:"
+
+[node name="TotalStepsLabel" type="Label" parent="MarginContainer/VBoxContainer/TotalStepsHolder"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="UnlockHolder" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="UnlockButton" type="Button" parent="MarginContainer/VBoxContainer/UnlockHolder"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("1_2bksq")
+disabled = true
+text = "Unlock"
+text_overrun_behavior = 3
