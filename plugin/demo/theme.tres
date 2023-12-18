@@ -1,4 +1,17 @@
-[gd_resource type="Theme" format=3 uid="uid://bmm3mvq11y045"]
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bmm3mvq11y045"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_4da3r"]
+content_margin_left = 4.0
+content_margin_top = 0.0
+content_margin_right = 4.0
+content_margin_bottom = 0.0
+color = Color(0.5, 0.5, 0.5, 1)
+thickness = 5
 
 [resource]
-Button/font_sizes/font_size = 36
+Button/font_sizes/font_size = 56
+HSeparator/constants/separation = 12
+HSeparator/styles/separator = SubResource("StyleBoxLine_4da3r")
+Label/font_sizes/font_size = 56
+LineEdit/font_sizes/font_size = 56
+PopupMenu/font_sizes/font_size = 56

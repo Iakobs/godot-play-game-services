@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://bxnmbeo2w51s3"]
 
-[ext_resource type="Script" path="res://MainMenu.gd" id="1_smv14"]
+[ext_resource type="Script" path="res://scenes/MainMenu.gd" id="1_smv14"]
 [ext_resource type="Theme" uid="uid://bmm3mvq11y045" path="res://theme.tres" id="2_aajnr"]
 
-[node name="Control" type="Control"]
+[node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,11 +26,27 @@ theme_override_constants/margin_bottom = 50
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="NavBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/NavBar"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme = ExtResource("2_aajnr")
+text = "Main Menu"
 
 [node name="Achievements" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 200)
 layout_mode = 2
-size_flags_vertical = 2
 theme = ExtResource("2_aajnr")
 text = "Achievements"
+
+[node name="Leaderboards" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 2
+theme = ExtResource("2_aajnr")
+text = "Leaderboads"

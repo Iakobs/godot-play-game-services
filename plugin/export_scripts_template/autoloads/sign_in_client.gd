@@ -7,13 +7,13 @@ extends Node
 ## a check at startup, so usually you don't have to use these methods. Use them only 
 ## to provide a manual way for the user to sign in.
 
-## Signal emitted after calling the [code]is_authenticated()[/code] method.[br]
-##
-## [br][param is_authenticated]: Indicates if the user is authenticated or not.
+## Signal emitted after calling the [method is_authenticated] method.[br]
+## [br]
+## [param is_authenticated]: Indicates if the user is authenticated or not.
 signal user_authenticated(is_authenticated: bool)
-## Signal emitted after calling the [code]sign_in()[/code] method.[br]
-##
-## [br][param is_signed_in]: Indicates if the user is signed in or not.
+## Signal emitted after calling the [method sign_in] method.[br]
+## [br]
+## [param is_signed_in]: Indicates if the user is signed in or not.
 signal user_signed_in(is_signed_in: bool)
 
 func _ready() -> void:
@@ -30,15 +30,15 @@ func _connect_signals() -> void:
 
 ## Use this method to check if the user is already authenticated. If the user is authenticated,
 ## a popup will be shown on screen.[br]
-## 
-## [br]The method emits the [code]user_authenticated[/code] signal.
+## [br]
+## The method emits the [signal user_authenticated] signal.
 func is_authenticated() -> void:
 	if GodotPlayGameServices.android_plugin:
 		GodotPlayGameServices.android_plugin.isAuthenticated()
 
 ## Use this method to provide a manual way to the user for signing in.[br]
-##
-## [br]The method emits the [code]user_signed_in[/code] signal.
+## [br]
+## The method emits the [signal user_signed_in] signal.
 func sign_in() -> void:
 	if GodotPlayGameServices.android_plugin:
 		GodotPlayGameServices.android_plugin.signIn()

@@ -1,0 +1,140 @@
+[gd_scene load_steps=3 format=3 uid="uid://sf02uyky2w1b"]
+
+[ext_resource type="Theme" uid="uid://bmm3mvq11y045" path="res://theme.tres" id="1_oo2te"]
+[ext_resource type="Script" path="res://scenes/leaderboards/LeaderboardDisplay.gd" id="2_13i4k"]
+
+[node name="LeaderboardDisplay" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_oo2te")
+script = ExtResource("2_13i4k")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="LeaderboardId" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/LeaderboardId"]
+layout_mode = 2
+text = "Leaderboard ID:"
+
+[node name="LeaderboardId" type="Label" parent="MarginContainer/VBoxContainer/LeaderboardId"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+
+[node name="LeaderboardName" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/LeaderboardName"]
+layout_mode = 2
+text = "Leaderboard Name:"
+
+[node name="LeaderboardName" type="Label" parent="MarginContainer/VBoxContainer/LeaderboardName"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+
+[node name="PlayerRank" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PlayerRank"]
+layout_mode = 2
+text = "Player Rank:"
+
+[node name="PlayerRank" type="Label" parent="MarginContainer/VBoxContainer/PlayerRank"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PlayerScore" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PlayerScore"]
+layout_mode = 2
+text = "Player Score:"
+
+[node name="PlayerScore" type="Label" parent="MarginContainer/VBoxContainer/PlayerScore"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SubmitScore" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="NewScore" type="VBoxContainer" parent="MarginContainer/VBoxContainer/SubmitScore"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/SubmitScore/NewScore"]
+layout_mode = 2
+text = "New score:"
+horizontal_alignment = 1
+
+[node name="NewScore" type="LineEdit" parent="MarginContainer/VBoxContainer/SubmitScore/NewScore"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+virtual_keyboard_type = 2
+clear_button_enabled = true
+
+[node name="SubmitScore" type="Button" parent="MarginContainer/VBoxContainer/SubmitScore"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("1_oo2te")
+disabled = true
+text = "Submit to score"
+text_overrun_behavior = 3
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Variants" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="TimeSpan" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Variants"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Variants/TimeSpan"]
+layout_mode = 2
+text = "Time Span"
+
+[node name="TimeSpan" type="OptionButton" parent="MarginContainer/VBoxContainer/Variants/TimeSpan"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Collection" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Variants"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Variants/Collection"]
+layout_mode = 2
+text = "Collection"
+
+[node name="Collection" type="OptionButton" parent="MarginContainer/VBoxContainer/Variants/Collection"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ShowVariant" type="Button" parent="MarginContainer/VBoxContainer/Variants"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("1_oo2te")
+disabled = true
+text = "Show Leaderboard Variant"
+text_overrun_behavior = 3
