@@ -11,6 +11,7 @@ fun fromPlayer(player: Player): Dictionary = Dictionary().apply {
     put("bannerImagePortraitUri", player.bannerImagePortraitUri?.toString())
     put("displayName", player.displayName)
     put("hiResImageUri", player.hiResImageUri?.toString())
+    put("iconImageUri", player.iconImageUri?.toString())
     put("playerId", player.playerId)
     put("retrievedTimestamp", player.retrievedTimestamp)
     put("title", player.title)

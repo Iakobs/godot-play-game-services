@@ -17,6 +17,7 @@ fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
     LeaderboardSignals.leaderboardLoaded,
 
     PlayerSignals.friendsLoaded,
+    PlayerSignals.playerSearched,
 )
 
 /**
@@ -77,7 +78,8 @@ object LeaderboardSignals {
      *
      * @return `true` if the score is submitted. `false` otherwise. Also returns the id of the leaderboard.
      */
-    val scoreSubmitted = SignalInfo("scoreSubmitted", Boolean::class.javaObjectType, String::class.java)
+    val scoreSubmitted =
+        SignalInfo("scoreSubmitted", Boolean::class.javaObjectType, String::class.java)
 
     /**
      * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadPlayerScore] method.
@@ -111,4 +113,12 @@ object PlayerSignals {
      * @return A JSON with a list of [com.google.android.gms.games.Player](https://developers.google.com/android/reference/com/google/android/gms/games/Player).
      */
     val friendsLoaded = SignalInfo("friendsLoaded", String::class.java)
+
+    /**
+     * This signal is emitted when selecting a player in the search window that is being displayed after
+     * calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.searchPlayer] method.
+     *
+     * @return A JSON with a [com.google.android.gms.games.Player](https://developers.google.com/android/reference/com/google/android/gms/games/Player).
+     */
+    val playerSearched = SignalInfo("playerSearched", String::class.java)
 }

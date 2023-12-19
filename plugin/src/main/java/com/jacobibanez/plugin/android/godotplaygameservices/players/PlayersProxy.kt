@@ -1,13 +1,18 @@
 package com.jacobibanez.plugin.android.godotplaygameservices.players
 
+import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.games.FriendsResolutionRequiredException
 import com.google.android.gms.games.PlayGames
+import com.google.android.gms.games.Player
 import com.google.android.gms.games.PlayersClient
+import com.google.android.gms.games.PlayersClient.EXTRA_PLAYER_SEARCH_RESULTS
 import com.google.gson.Gson
 import com.jacobibanez.plugin.android.godotplaygameservices.BuildConfig
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.PlayerSignals.friendsLoaded
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.PlayerSignals.playerSearched
 import org.godotengine.godot.Dictionary
 import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin.emitSignal
@@ -23,6 +28,31 @@ class PlayersProxy(
     private val showSharingFriendsConsentRequestCode = 9006
     private val compareProfileRequestCode = 9007
     private val compareProfileWithAlternativeNameHintsRequestCode = 9008
+    private val searchPlayerCode = 9009
+
+    /** @suppress */
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == searchPlayerCode && resultCode == Activity.RESULT_OK) {
+            data?.let { intent ->
+                try {
+                    val players = intent
+                        .extras?.get(EXTRA_PLAYER_SEARCH_RESULTS) as ArrayList<Player>
+                    Log.d(tag, "Players selected from search: $players")
+                    emitSignal(
+                        godot,
+                        BuildConfig.GODOT_PLUGIN_NAME,
+                        playerSearched,
+                        Gson().toJson(fromPlayer(players.first()))
+                    )
+                } catch (exception: Exception) {
+                    Log.e(
+                        tag,
+                        "Error while receiving player from search: ${exception.localizedMessage}"
+                    )
+                }
+            }
+        }
+    }
 
     fun loadFriends(pageSize: Int, forceReload: Boolean, askForPermission: Boolean) {
         Log.d(tag, "Loading friends with page size of $pageSize and forceReload = $forceReload")
@@ -96,6 +126,18 @@ class PlayersProxy(
                 godot.getActivity()!!,
                 intent,
                 compareProfileWithAlternativeNameHintsRequestCode,
+                null
+            )
+        }
+    }
+
+    fun searchPlayer() {
+        Log.d(tag, "Opening search intent.")
+        playersClient.playerSearchIntent.addOnSuccessListener { intent ->
+            ActivityCompat.startActivityForResult(
+                godot.getActivity()!!,
+                intent,
+                searchPlayerCode,
                 null
             )
         }

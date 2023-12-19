@@ -1,10 +1,13 @@
 package com.jacobibanez.plugin.android.godotplaygameservices
 
+import android.app.Activity
+import android.content.Intent
 import android.util.Log
+import android.view.View
 import com.google.android.gms.games.PlayGamesSdk
 import com.jacobibanez.plugin.android.godotplaygameservices.achievements.AchievementsProxy
-import com.jacobibanez.plugin.android.godotplaygameservices.players.PlayersProxy
 import com.jacobibanez.plugin.android.godotplaygameservices.leaderboards.LeaderboardsProxy
+import com.jacobibanez.plugin.android.godotplaygameservices.players.PlayersProxy
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.getSignals
 import com.jacobibanez.plugin.android.godotplaygameservices.signin.SignInProxy
 import org.godotengine.godot.Godot
@@ -29,6 +32,20 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
     /** @suppress */
     override fun getPluginSignals(): MutableSet<SignalInfo> {
         return getSignals()
+    }
+
+    /** @suppress */
+    override fun onMainCreate(activity: Activity?): View? {
+        Thread.setDefaultUncaughtExceptionHandler { _, exception ->
+            Log.e(pluginName, "Uncaught Exception! ${exception.message}")
+        }
+        return super.onMainCreate(activity)
+    }
+
+    /** @suppress */
+    override fun onMainActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onMainActivityResult(requestCode, resultCode, data)
+        playersProxy.onActivityResult(requestCode, resultCode, data)
     }
 
     /**
@@ -268,4 +285,12 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
         otherPlayerInGameName,
         currentPlayerInGameName
     )
+
+    /**
+     * Displays a screen where the user can search for players. If the user selects a player, then
+     * the [com.jacobibanez.plugin.android.godotplaygameservices.signals.PlayerSignals.playerSearched]
+     * signal will be emitted, returning the selected player.
+     */
+    @UsedByGodot
+    fun searchPlayer() = playersProxy.searchPlayer()
 }
