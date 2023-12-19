@@ -10,6 +10,12 @@ extends Node
 ## The array will be empty if there was an error loading the friends list.
 signal friends_loaded(friends: Array[Player])
 
+## Signal emitted after selecting a player in the search window opened by the
+## [method search_player] method.[br]
+## [br]
+## [param player]: The selected player.
+signal player_searched(player: Player)
+
 ## Friends list visibility statuses.
 enum FriendsListVisibilityStatus {
 	FEATURE_UNAVAILABLE = 3, ## The friends list is currently unavailable for the game.
@@ -37,6 +43,10 @@ func _connect_signals() -> void:
 				friends.append(Player.new(dictionary))
 			
 			friends_loaded.emit(friends)
+		)
+		GodotPlayGameServices.android_plugin.playerSearched.connect(func(friend_json: String):
+			var safe_dictionary := GodotPlayGameServices.json_marshaller.safe_parse_dictionary(friend_json)
+			player_searched.emit(Player.new(safe_dictionary))
 		)
 
 ## Use this method and subscribe to the emitted signal to receive the list of friends
@@ -92,6 +102,13 @@ func compare_profile_with_alternative_name_hints(
 			current_player_in_game_name
 		)
 
+## Displays a screen where the user can search for players. If the user selects 
+## a player, then the [signal player_searched] signal will be emitted, returning
+## the selected player.
+func search_player() -> void:
+	if GodotPlayGameServices.android_plugin:
+		GodotPlayGameServices.android_plugin.searchPlayer()
+
 ## Player information.
 class Player:
 	var banner_image_landscape_uri: String ## Banner image of the player in landscape.
@@ -99,6 +116,7 @@ class Player:
 	var friends_list_visibility_status: FriendsListVisibilityStatus ## Visibility status of this player's friend list.
 	var display_name: String ## The display name of the player.
 	var hi_res_image_uri: String ## The hi-res image of the player.
+	var icon_image_uri: String ## The icon image of the player.
 	var level_info: PlayerLevelInfo ## Information about the player level.
 	var player_id: String ## The player id.
 	var friend_status: PlayerFriendStatus ## The friend status of this player with the signed in player.
@@ -113,6 +131,7 @@ class Player:
 		if dictionary.has("friendsListVisibilityStatus"): friends_list_visibility_status = FriendsListVisibilityStatus.get(dictionary.friendsListVisibilityStatus)
 		if dictionary.has("displayName"): display_name = dictionary.displayName
 		if dictionary.has("hiResImageUri"): hi_res_image_uri = dictionary.hiResImageUri
+		if dictionary.has("iconImageUri"): icon_image_uri = dictionary.iconImageUri
 		if dictionary.has("levelInfo"): level_info = PlayerLevelInfo.new(dictionary.levelInfo)
 		if dictionary.has("playerId"): player_id = dictionary.playerId
 		if dictionary.has("friendStatus"): friend_status = PlayerFriendStatus.get(dictionary.friendStatus)
@@ -129,6 +148,7 @@ class Player:
 		result.append("friends_list_visibility_status: %s" % FriendsListVisibilityStatus.find_key(friends_list_visibility_status))
 		result.append("display_name: %s" % display_name)
 		result.append("hi_res_image_uri: %s" % hi_res_image_uri)
+		result.append("icon_image_uri: %s" % icon_image_uri)
 		result.append("level_info: {%s}" % str(level_info))
 		result.append("player_id: %s" % player_id)
 		result.append("friend_status: %s" % PlayerFriendStatus.find_key(friend_status))

@@ -43,28 +43,40 @@ layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="ScrollChild" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 25
 
-[node name="ShowAchievements" type="Button" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Search" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="SearchButton" type="Button" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild/Search"]
 unique_name_in_owner = true
-visible = false
 custom_minimum_size = Vector2(500, 200)
 layout_mode = 2
 theme = ExtResource("1_i7feq")
-text = "Show Achievements"
+text = "Search Players"
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="SearchDisplay" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild/Search"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild"]
+layout_mode = 2
+
+[node name="Friends" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild/Friends"]
 layout_mode = 2
 text = "Friends"
 horizontal_alignment = 1
 
-[node name="FriendsDisplay" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="FriendsDisplay" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild/Friends"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 theme_override_constants/separation = 25
