@@ -3,7 +3,7 @@ package com.jacobibanez.plugin.android.godotplaygameservices.leaderboards
 import com.google.android.gms.games.leaderboard.Leaderboard
 import com.google.android.gms.games.leaderboard.LeaderboardScore
 import com.google.android.gms.games.leaderboard.LeaderboardVariant
-import com.jacobibanez.plugin.android.godotplaygameservices.friends.fromPlayer
+import com.jacobibanez.plugin.android.godotplaygameservices.players.fromPlayer
 import org.godotengine.godot.Dictionary
 
 /** @suppress */
@@ -12,7 +12,11 @@ fun fromLeaderboardScore(score: LeaderboardScore): Dictionary = Dictionary().app
     put("displayScore", score.displayScore)
     put("rank", score.rank)
     put("rawScore", score.rawScore)
-    put("scoreHolder", fromPlayer(score.scoreHolder))
+
+    score.scoreHolder?.let {
+        put("scoreHolder", fromPlayer(it))
+    }
+
     put("scoreHolderDisplayName", score.scoreHolderDisplayName)
     put("scoreHolderHiResImageUri", score.scoreHolderHiResImageUri?.toString())
     put("scoreHolderIconImageUri", score.scoreHolderIconImageUri?.toString())

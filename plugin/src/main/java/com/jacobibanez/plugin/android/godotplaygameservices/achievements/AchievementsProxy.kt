@@ -62,7 +62,7 @@ class AchievementsProxy(
             if (task.isSuccessful) {
                 Log.d(
                     tag,
-                    "Achievements loaded successfully. Achievements are stale? ${task.result.isStale}"
+                    "Achievements loaded successfully. Data is stale? ${task.result.isStale}"
                 )
                 val safeBuffer: AchievementBuffer = task.result.get()!!
                 val achievementsCount = safeBuffer.count

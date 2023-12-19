@@ -29,8 +29,8 @@ func _set_up_display() -> void:
 	id_label.text = achievement.achievement_id
 	name_label.text = achievement.achievement_name
 	description_label.text = achievement.description
-	type_label.text = AchievementsClient.Type.keys()[achievement.type]
-	state_label.text = AchievementsClient.State.keys()[achievement.state]
+	type_label.text = AchievementsClient.Type.find_key(achievement.type)
+	state_label.text = AchievementsClient.State.find_key(achievement.state)
 	xp_value_label.text = str(achievement.xp_value)
 	
 	if achievement.type == AchievementsClient.Type.TYPE_INCREMENTAL:

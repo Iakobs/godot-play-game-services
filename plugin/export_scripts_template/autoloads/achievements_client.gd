@@ -1,5 +1,5 @@
 extends Node
-## Client with  achievements functionality.
+## Client with achievements functionality.
 ##
 ## This autoload exposes methods and signals to control the game achievements for
 ## the currently signed in player.
@@ -49,8 +49,6 @@ func _connect_signals() -> void:
 			var achievements: Array[Achievement] = []
 			for dictionary: Dictionary in safe_array:
 				achievements.append(Achievement.new(dictionary))
-			
-			print("Achievements loaded! %s" % str(achievements))
 			
 			achievements_loaded.emit(achievements)
 		)
@@ -113,7 +111,7 @@ class Achievement:
 	var achievement_id: String ## The achievement id.
 	var achievement_name: String ## The achievement name.
 	var description: String ## The description of the achievement.
-	#var player: Player ## The player associated to this achievement.
+	var player: PlayersClient.Player ## The player associated to this achievement.
 	var type: Type ## The achievement type.
 	var state: State ## The achievement state.
 	var xp_value: int ## The XP value of this achievement.
@@ -139,34 +137,20 @@ class Achievement:
 	
 	## Constructor that creates an Achievement from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
-		if dictionary.has("achievementId"):
-			achievement_id = dictionary.achievementId
-		if dictionary.has("name"):
-			achievement_name = dictionary.name
-		if dictionary.has("description"):
-			description = dictionary.description
-		#if dictionary.has("player"):
-			#player = dictionary.player
-		if dictionary.has("type"):
-			type = Type[dictionary.type]
-		if dictionary.has("state"):
-			state = State[dictionary.state]
-		if dictionary.has("xpValue"):
-			xp_value = dictionary.xpValue
-		if dictionary.has("revealedImageUri"):
-			revealed_image_uri = dictionary.revealedImageUri
-		if dictionary.has("unlockedImageUri"):
-			unlocked_image_uri = dictionary.unlockedImageUri
-		if dictionary.has("currentSteps"):
-			current_steps = dictionary.currentSteps
-		if dictionary.has("totalSteps"):
-			total_steps = dictionary.totalSteps
-		if dictionary.has("formattedCurrentSteps"):
-			formatted_current_steps = dictionary.formattedCurrentSteps
-		if dictionary.has("formattedTotalSteps"):
-			formatted_total_steps = dictionary.formattedTotalSteps
-		if dictionary.has("lastUpdatedTimestamp"):
-			last_updated_timestamp = dictionary.lastUpdatedTimestamp
+		if dictionary.has("achievementId"): achievement_id = dictionary.achievementId
+		if dictionary.has("name"): achievement_name = dictionary.name
+		if dictionary.has("description"): description = dictionary.description
+		if dictionary.has("player"): player = PlayersClient.Player.new(dictionary.player)
+		if dictionary.has("type"): type = Type[dictionary.type]
+		if dictionary.has("state"): state = State[dictionary.state]
+		if dictionary.has("xpValue"): xp_value = dictionary.xpValue
+		if dictionary.has("revealedImageUri"): revealed_image_uri = dictionary.revealedImageUri
+		if dictionary.has("unlockedImageUri"): unlocked_image_uri = dictionary.unlockedImageUri
+		if dictionary.has("currentSteps"): current_steps = dictionary.currentSteps
+		if dictionary.has("totalSteps"): total_steps = dictionary.totalSteps
+		if dictionary.has("formattedCurrentSteps"): formatted_current_steps = dictionary.formattedCurrentSteps
+		if dictionary.has("formattedTotalSteps"): formatted_total_steps = dictionary.formattedTotalSteps
+		if dictionary.has("lastUpdatedTimestamp"): last_updated_timestamp = dictionary.lastUpdatedTimestamp
 	
 	func _to_string() -> String:
 		var result := PackedStringArray()
@@ -174,7 +158,7 @@ class Achievement:
 		result.append("achievement_id: %s" % achievement_id)
 		result.append("achievement_name: %s" % achievement_name)
 		result.append("description: %s" % description)
-		#result.append("player: %s" % str(player)
+		result.append("player: {%s}" % str(player))
 		result.append("type: %s" % Type.find_key(type))
 		result.append("state: %s" % State.find_key(state))
 		result.append("xp_value: %s" % xp_value)

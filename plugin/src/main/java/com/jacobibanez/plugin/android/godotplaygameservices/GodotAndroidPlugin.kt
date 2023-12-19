@@ -3,7 +3,7 @@ package com.jacobibanez.plugin.android.godotplaygameservices
 import android.util.Log
 import com.google.android.gms.games.PlayGamesSdk
 import com.jacobibanez.plugin.android.godotplaygameservices.achievements.AchievementsProxy
-import com.jacobibanez.plugin.android.godotplaygameservices.friends.FriendsProxy
+import com.jacobibanez.plugin.android.godotplaygameservices.players.PlayersProxy
 import com.jacobibanez.plugin.android.godotplaygameservices.leaderboards.LeaderboardsProxy
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.getSignals
 import com.jacobibanez.plugin.android.godotplaygameservices.signin.SignInProxy
@@ -24,7 +24,7 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
     private val signInProxy = SignInProxy(godot)
     private val achievementsProxy = AchievementsProxy(godot)
     private val leaderboardsProxy = LeaderboardsProxy(godot)
-    private val friendsProxy = FriendsProxy(godot)
+    private val playersProxy = PlayersProxy(godot)
 
     /** @suppress */
     override fun getPluginSignals(): MutableSet<SignalInfo> {
@@ -221,19 +221,49 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
     fun loadLeaderboard(leaderboardId: String, forceReload: Boolean) =
         leaderboardsProxy.loadLeaderboard(leaderboardId, forceReload)
 
+    /**
+     * Call this method and subscribe to the emitted signal to receive the list of friends for the
+     * currently signed in player in JSON format. The JSON received from the [com.jacobibanez.plugin.android.godotplaygameservices.signals.PlayerSignals.friendsLoaded]
+     * signal, contains a list of elements representing the [com.google.android.gms.games.Player](https://developers.google.com/android/reference/com/google/android/gms/games/Player) class.
+     *
+     * @param pageSize The number of entries to request for this initial page.
+     * @param forceReload If true, this call will clear any locally cached data and attempt to fetch
+     * the latest data from the server.
+     * @param askForPermission If the user has not granted access to their friends list, and this
+     * is set to true, a new window will open asking the user for permission to their friends list.
+     */
     @UsedByGodot
-    fun loadFriends(pageSize: Int, forceReload: Boolean) =
-        friendsProxy.loadFriends(pageSize, forceReload)
+    fun loadFriends(pageSize: Int, forceReload: Boolean, askForPermission: Boolean) =
+        playersProxy.loadFriends(pageSize, forceReload, askForPermission)
 
+    /**
+     * Displays a screen where the user can see a comparison of their own profile against another
+     * player's profile.
+     *
+     * @param otherPlayerId The player ID of the player to compare with.
+     */
     @UsedByGodot
-    fun compareProfile(otherPlayerId: String) = friendsProxy.compareProfile(otherPlayerId)
+    fun compareProfile(otherPlayerId: String) = playersProxy.compareProfile(otherPlayerId)
 
+    /**
+     * Displays a screen where the user can see a comparison of their own profile against another
+     * player's profile.
+     *
+     * Should be used when the game has its own player names separate from the Play Games Services
+     * gamer tag. These names will be used in the profile display and only sent to the server if the
+     * player initiates a friend invitation to the profile being viewed, so that the sender and
+     * recipient have context relevant to their game experience.
+     *
+     * @param otherPlayerId The player ID of the player to compare with.
+     * @param otherPlayerInGameName The game's own display name of the player referred to by otherPlayerId.
+     * @param currentPlayerInGameName The game's own display name of the current player.
+     */
     @UsedByGodot
     fun compareProfileWithAlternativeNameHints(
         otherPlayerId: String,
         otherPlayerInGameName: String,
         currentPlayerInGameName: String
-    ) = friendsProxy.compareProfileWithAlternativeNameHints(
+    ) = playersProxy.compareProfileWithAlternativeNameHints(
         otherPlayerId,
         otherPlayerInGameName,
         currentPlayerInGameName

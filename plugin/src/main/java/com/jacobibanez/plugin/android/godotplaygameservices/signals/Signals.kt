@@ -16,12 +16,11 @@ fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
     LeaderboardSignals.allLeaderboardsLoaded,
     LeaderboardSignals.leaderboardLoaded,
 
-    FriendSignals.loadFriendsSuccess,
-    FriendSignals.loadFriendsFailure
+    PlayerSignals.friendsLoaded,
 )
 
 /**
- * Signals emitted by Sign In methods
+ * Signals emitted by Sign In methods.
  */
 object SignInSignals {
     /**
@@ -41,7 +40,7 @@ object SignInSignals {
 }
 
 /**
- * Signals emitted by Achievements methods
+ * Signals emitted by Achievements methods.
  */
 object AchievementsSignals {
     /**
@@ -70,7 +69,7 @@ object AchievementsSignals {
 }
 
 /**
- * Signals emitted by Leaderboards methods
+ * Signals emitted by Leaderboards methods.
  */
 object LeaderboardSignals {
     /**
@@ -103,9 +102,13 @@ object LeaderboardSignals {
 }
 
 /**
- * Signals emitted by Friends methods
+ * Signals emitted by Players methods.
  */
-object FriendSignals {
-    val loadFriendsSuccess = SignalInfo("loadFriendsSuccess", String::class.java)
-    val loadFriendsFailure = SignalInfo("loadFriendsFailure")
+object PlayerSignals {
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadFriends] method.
+     *
+     * @return A JSON with a list of [com.google.android.gms.games.Player](https://developers.google.com/android/reference/com/google/android/gms/games/Player).
+     */
+    val friendsLoaded = SignalInfo("friendsLoaded", String::class.java)
 }

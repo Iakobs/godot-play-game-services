@@ -2,7 +2,7 @@ package com.jacobibanez.plugin.android.godotplaygameservices.achievements
 
 import com.google.android.gms.games.achievement.Achievement
 import com.google.android.gms.games.achievement.Achievement.TYPE_INCREMENTAL
-import com.jacobibanez.plugin.android.godotplaygameservices.friends.fromPlayer
+import com.jacobibanez.plugin.android.godotplaygameservices.players.fromPlayer
 import org.godotengine.godot.Dictionary
 
 /** @suppress */

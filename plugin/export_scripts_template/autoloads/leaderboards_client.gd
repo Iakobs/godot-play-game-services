@@ -166,7 +166,7 @@ class Score:
 	var display_score: String ## Formatted string for the score of the player.
 	var rank: int ## Rank of the player.
 	var raw_score: int ## Raw score of the player.
-	#var score_holder: String ## The player object who holds the score.
+	var score_holder: PlayersClient.Player ## The player object who holds the score.
 	var score_holder_display_name: String ## Formatted string for the name of the player.
 	var score_holder_hi_res_image_uri: String ## Hi-res image of the player.
 	var score_holder_icon_image_uri: String ## Icon image of the player.
@@ -175,26 +175,16 @@ class Score:
 	
 	## Constructor that creates a Score froma [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
-		if dictionary.has("displayRank"):
-			display_rank = dictionary.displayRank 
-		if dictionary.has("displayScore"):
-			display_score = dictionary.displayScore
-		if dictionary.has("rank"):
-			rank = dictionary.rank
-		if dictionary.has("rawScore"):
-			raw_score = dictionary.rawScore
-		#if dictionary.has("scoreHolder"):
-			#score_holder = dictionary.scoreHolder
-		if dictionary.has("scoreHolderDisplayName"):
-			score_holder_display_name = dictionary.scoreHolderDisplayName
-		if dictionary.has("scoreHolderHiResImageUri"):
-			score_holder_hi_res_image_uri = dictionary.scoreHolderHiResImageUri
-		if dictionary.has("scoreHolderIconImageUri"):
-			score_holder_icon_image_uri = dictionary.scoreHolderIconImageUri
-		if dictionary.has("scoreTag"):
-			score_tag = dictionary.scoreTag
-		if dictionary.has("timestampMillis"):
-			timestamp_millis = dictionary.timestampMillis
+		if dictionary.has("displayRank"): display_rank = dictionary.displayRank 
+		if dictionary.has("displayScore"): display_score = dictionary.displayScore
+		if dictionary.has("rank"): rank = dictionary.rank
+		if dictionary.has("rawScore"): raw_score = dictionary.rawScore
+		if dictionary.has("scoreHolder"): score_holder = PlayersClient.Player.new(dictionary.scoreHolder)
+		if dictionary.has("scoreHolderDisplayName"): score_holder_display_name = dictionary.scoreHolderDisplayName
+		if dictionary.has("scoreHolderHiResImageUri"): score_holder_hi_res_image_uri = dictionary.scoreHolderHiResImageUri
+		if dictionary.has("scoreHolderIconImageUri"): score_holder_icon_image_uri = dictionary.scoreHolderIconImageUri
+		if dictionary.has("scoreTag"): score_tag = dictionary.scoreTag
+		if dictionary.has("timestampMillis"): timestamp_millis = dictionary.timestampMillis
 	
 	func _to_string() -> String:
 		var result := PackedStringArray()
@@ -203,7 +193,7 @@ class Score:
 		result.append("display_score: %s" % display_score)
 		result.append("rank: %s" % rank)
 		result.append("raw_score: %s" % raw_score)
-		#result.append("score_holder: %s" % str(score_holder)
+		result.append("score_holder: {%s}" % str(score_holder))
 		result.append("score_holder_display_name: %s" % score_holder_display_name)
 		result.append("score_holder_hi_res_image_uri: %s" % score_holder_hi_res_image_uri)
 		result.append("score_holder_icon_image_uri: %s" % score_holder_icon_image_uri)
@@ -225,15 +215,10 @@ class Leaderboard:
 	## Constructor that creates a Leaderboard from a [Dictionary] containing the
 	## properties.
 	func _init(dictionary: Dictionary) -> void:
-		if dictionary.has("leaderboardId"):
-			leaderboard_id = dictionary.leaderboardId
-		if dictionary.has("displayName"):
-			display_name = dictionary.displayName
-		if dictionary.has("iconImageUri"):
-			icon_image_uri = dictionary.iconImageUri
-		if dictionary.has("scoreOrder"):
-			score_order = ScoreOrder.get(dictionary.scoreOrder)
-		
+		if dictionary.has("leaderboardId"): leaderboard_id = dictionary.leaderboardId
+		if dictionary.has("displayName"): display_name = dictionary.displayName
+		if dictionary.has("iconImageUri"): icon_image_uri = dictionary.iconImageUri
+		if dictionary.has("scoreOrder"): score_order = ScoreOrder.get(dictionary.scoreOrder)
 		if dictionary.has("variants"):
 			for variant: Dictionary in dictionary.variants:
 				variants.append(LeaderboardVariant.new(variant))
@@ -244,7 +229,7 @@ class Leaderboard:
 		result.append("leaderboard_id: %s" % leaderboard_id)
 		result.append("display_name: %s" % display_name)
 		result.append("icon_image_uri: %s" % icon_image_uri)
-		result.append("score_order: %s" % score_order)
+		result.append("score_order: %s" % ScoreOrder.find_key(score_order))
 		
 		for variant: LeaderboardVariant in variants:
 			result.append("{%s}" % str(variant))
@@ -266,24 +251,15 @@ class LeaderboardVariant:
 	## Constructor that creates a LeaderboardVariant from a [Dictionary] containting
 	## the properties.
 	func _init(dictionary: Dictionary) -> void:
-		if dictionary.has("displayPlayerRank"):
-			display_player_rank = dictionary.displayPlayerRank
-		if dictionary.has("displayPlayerScore"):
-			display_player_score = dictionary.displayPlayerScore
-		if dictionary.has("numScores"):
-			num_scores = dictionary.numScores
-		if dictionary.has("playerRank"):
-			player_rank = dictionary.playerRank
-		if dictionary.has("playerScoreTag"):
-			player_score_tag = dictionary.playerScoreTag
-		if dictionary.has("rawPlayerScore"):
-			raw_player_score = dictionary.rawPlayerScore
-		if dictionary.has("hasPlayerInfo"):
-			has_player_info = dictionary.hasPlayerInfo
-		if dictionary.has("collection"):
-			collection = Collection.get(dictionary.collection)
-		if dictionary.has("timeSpan"):
-			time_span = TimeSpan.get(dictionary.timeSpan)
+		if dictionary.has("displayPlayerRank"): display_player_rank = dictionary.displayPlayerRank
+		if dictionary.has("displayPlayerScore"): display_player_score = dictionary.displayPlayerScore
+		if dictionary.has("numScores"): num_scores = dictionary.numScores
+		if dictionary.has("playerRank"): player_rank = dictionary.playerRank
+		if dictionary.has("playerScoreTag"): player_score_tag = dictionary.playerScoreTag
+		if dictionary.has("rawPlayerScore"): raw_player_score = dictionary.rawPlayerScore
+		if dictionary.has("hasPlayerInfo"): has_player_info = dictionary.hasPlayerInfo
+		if dictionary.has("collection"): collection = Collection.get(dictionary.collection)
+		if dictionary.has("timeSpan"): time_span = TimeSpan.get(dictionary.timeSpan)
 	
 	func _to_string() -> String:
 		var result := PackedStringArray()

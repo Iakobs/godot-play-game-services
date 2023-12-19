@@ -50,3 +50,10 @@ custom_minimum_size = Vector2(500, 200)
 layout_mode = 2
 theme = ExtResource("2_aajnr")
 text = "Leaderboads"
+
+[node name="Players" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 2
+theme = ExtResource("2_aajnr")
+text = "Players"
