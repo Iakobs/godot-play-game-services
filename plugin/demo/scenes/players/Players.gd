@@ -5,12 +5,22 @@ extends Control
 @onready var search_button: Button = %SearchButton
 @onready var search_display: VBoxContainer = %SearchDisplay
 
+@onready var current_player_display: VBoxContainer = %CurrentPlayerDisplay
+
 @onready var friends_display: VBoxContainer = %FriendsDisplay
 
+var _current_player: PlayersClient.Player
 var _friends_cache: Array[PlayersClient.Player] = []
 var _player_display := preload("res://scenes/players/PlayerDisplay.tscn")
 
 func _ready() -> void:
+	if not _current_player:
+		PlayersClient.load_current_player(true)
+	PlayersClient.current_player_loaded.connect(func(current_player: PlayersClient.Player):
+		var container := _player_display.instantiate() as Control
+		container.player = current_player
+		current_player_display.add_child(container)
+	)
 	if _friends_cache.is_empty():
 		PlayersClient.load_friends(10, true, true)
 	PlayersClient.friends_loaded.connect(

@@ -16,6 +16,12 @@ signal friends_loaded(friends: Array[Player])
 ## [param player]: The selected player.
 signal player_searched(player: Player)
 
+## Signal emitted after calling the [method load_current_player] method.[br]
+## [br]
+## [param current_player]: The currently signed-in player, or null if there where
+## any errors loading the player.
+signal current_player_loaded(current_player: Player)
+
 ## Friends list visibility statuses.
 enum FriendsListVisibilityStatus {
 	FEATURE_UNAVAILABLE = 3, ## The friends list is currently unavailable for the game.
@@ -47,6 +53,10 @@ func _connect_signals() -> void:
 		GodotPlayGameServices.android_plugin.playerSearched.connect(func(friend_json: String):
 			var safe_dictionary := GodotPlayGameServices.json_marshaller.safe_parse_dictionary(friend_json)
 			player_searched.emit(Player.new(safe_dictionary))
+		)
+		GodotPlayGameServices.android_plugin.currentPlayerLoaded.connect(func(friend_json: String):
+			var safe_dictionary := GodotPlayGameServices.json_marshaller.safe_parse_dictionary(friend_json)
+			current_player_loaded.emit(Player.new(safe_dictionary))
 		)
 
 ## Use this method and subscribe to the emitted signal to receive the list of friends
@@ -108,6 +118,19 @@ func compare_profile_with_alternative_name_hints(
 func search_player() -> void:
 	if GodotPlayGameServices.android_plugin:
 		GodotPlayGameServices.android_plugin.searchPlayer()
+
+## Use this method and subscribe to the emitted signal to receive the currently
+## signed in player.[br]
+## [br]
+## The method emits the [signal current_player_loaded] signal.[br]
+## [br]
+## [param force_reload]: If true, this call will clear any locally cached 
+## data and attempt to fetch the latest data from the server. Send it set to [code]true[/code]
+## the first time, and [code]false[/code] in subsequent calls, or when you want
+## to clear the cache.
+func load_current_player(force_reload: bool) -> void:
+	if GodotPlayGameServices.android_plugin:
+		GodotPlayGameServices.android_plugin.loadCurrentPlayer(force_reload)
 
 ## Player information.
 class Player:
