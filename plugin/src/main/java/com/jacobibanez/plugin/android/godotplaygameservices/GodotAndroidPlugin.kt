@@ -293,4 +293,15 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
      */
     @UsedByGodot
     fun searchPlayer() = playersProxy.searchPlayer()
+
+    /**
+     * Call this method and subscribe to the emitted signal to receive the currently signed in player
+     * in JSON format.The JSON received from the [com.jacobibanez.plugin.android.godotplaygameservices.signals.PlayerSignals.currentPlayerLoaded]
+     * signal, contains a representation of the [com.google.android.gms.games.Player](https://developers.google.com/android/reference/com/google/android/gms/games/Player) class.
+     *
+     * @param forceReload If true, this call will clear any locally cached data and attempt to fetch
+     * the latest data from the server.
+     */
+    @UsedByGodot
+    fun loadCurrentPlayer(forceReload: Boolean) = playersProxy.loadCurrentPlayer(forceReload)
 }

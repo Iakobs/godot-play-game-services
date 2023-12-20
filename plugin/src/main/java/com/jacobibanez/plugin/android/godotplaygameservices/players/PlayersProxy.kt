@@ -11,6 +11,7 @@ import com.google.android.gms.games.PlayersClient
 import com.google.android.gms.games.PlayersClient.EXTRA_PLAYER_SEARCH_RESULTS
 import com.google.gson.Gson
 import com.jacobibanez.plugin.android.godotplaygameservices.BuildConfig
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.PlayerSignals.currentPlayerLoaded
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.PlayerSignals.friendsLoaded
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.PlayerSignals.playerSearched
 import org.godotengine.godot.Dictionary
@@ -140,6 +141,39 @@ class PlayersProxy(
                 searchPlayerCode,
                 null
             )
+        }
+    }
+
+    fun loadCurrentPlayer(forceReload: Boolean) {
+        Log.d(tag, "Loading current player. Force reload? $forceReload")
+        playersClient.getCurrentPlayer(forceReload).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d(
+                    tag,
+                    "Current player loaded successfully. Data is stale? ${task.result.isStale}"
+                )
+                val player: Dictionary? = task.result.get()?.let {
+                    fromPlayer(it)
+                }
+                emitSignal(
+                    godot,
+                    BuildConfig.GODOT_PLUGIN_NAME,
+                    currentPlayerLoaded,
+                    Gson().toJson(player)
+                )
+            } else {
+                Log.e(
+                    tag,
+                    "Failed to load current player. Cause: ${task.exception}",
+                    task.exception
+                )
+                emitSignal(
+                    godot,
+                    BuildConfig.GODOT_PLUGIN_NAME,
+                    currentPlayerLoaded,
+                    Gson().toJson(null)
+                )
+            }
         }
     }
 

@@ -18,6 +18,7 @@ fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
 
     PlayerSignals.friendsLoaded,
     PlayerSignals.playerSearched,
+    PlayerSignals.currentPlayerLoaded,
 )
 
 /**
@@ -121,4 +122,11 @@ object PlayerSignals {
      * @return A JSON with a [com.google.android.gms.games.Player](https://developers.google.com/android/reference/com/google/android/gms/games/Player).
      */
     val playerSearched = SignalInfo("playerSearched", String::class.java)
+
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadCurrentPlayer] method.
+     *
+     * @return A JSON with a [com.google.android.gms.games.Player](https://developers.google.com/android/reference/com/google/android/gms/games/Player).
+     */
+    val currentPlayerLoaded = SignalInfo("currentPlayerLoaded", String::class.java)
 }
