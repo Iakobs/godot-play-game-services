@@ -19,6 +19,8 @@ fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
     PlayerSignals.friendsLoaded,
     PlayerSignals.playerSearched,
     PlayerSignals.currentPlayerLoaded,
+
+    HelperSignals.imageStored,
 )
 
 /**
@@ -129,4 +131,13 @@ object PlayerSignals {
      * @return A JSON with a [com.google.android.gms.games.Player](https://developers.google.com/android/reference/com/google/android/gms/games/Player).
      */
     val currentPlayerLoaded = SignalInfo("currentPlayerLoaded", String::class.java)
+}
+
+object HelperSignals {
+    /**
+     * This signal is emitted everytime an image is downloaded and saved to the local storage.
+     *
+     * @return The stored file's path.
+     */
+    val imageStored = SignalInfo("imageStored", String::class.java)
 }

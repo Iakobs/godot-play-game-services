@@ -43,7 +43,7 @@ class PlayersProxy(
                         godot,
                         BuildConfig.GODOT_PLUGIN_NAME,
                         playerSearched,
-                        Gson().toJson(fromPlayer(players.first()))
+                        Gson().toJson(fromPlayer(godot, players.first()))
                     )
                 } catch (exception: Exception) {
                     Log.e(
@@ -67,7 +67,7 @@ class PlayersProxy(
                 val friendsCount = safeBuffer.count
                 val friends: List<Dictionary> =
                     if (friendsCount > 0) {
-                        safeBuffer.map { fromPlayer(it) }.toList()
+                        safeBuffer.map { fromPlayer(godot, it) }.toList()
                     } else {
                         emptyList()
                     }
@@ -152,9 +152,7 @@ class PlayersProxy(
                     tag,
                     "Current player loaded successfully. Data is stale? ${task.result.isStale}"
                 )
-                val player: Dictionary? = task.result.get()?.let {
-                    fromPlayer(it)
-                }
+                val player: Dictionary? = task.result.get()?.let { fromPlayer(godot, it) }
                 emitSignal(
                     godot,
                     BuildConfig.GODOT_PLUGIN_NAME,

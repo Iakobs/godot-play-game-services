@@ -68,7 +68,7 @@ class AchievementsProxy(
                 val achievementsCount = safeBuffer.count
                 val achievements: List<Dictionary> =
                     if (achievementsCount > 0) {
-                        safeBuffer.map { fromAchievement(it) }.toList()
+                        safeBuffer.map { fromAchievement(godot, it) }.toList()
                     } else {
                         emptyList()
                     }

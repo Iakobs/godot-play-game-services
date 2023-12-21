@@ -1,6 +1,8 @@
 package com.jacobibanez.plugin.android.godotplaygameservices.achievements
 
 import com.google.android.gms.games.achievement.Achievement
+import com.jacobibanez.plugin.android.godotplaygameservices.achievements.Type.TYPE_INCREMENTAL
+import com.jacobibanez.plugin.android.godotplaygameservices.achievements.Type.TYPE_STANDARD
 
 /**
  * Type of achievements.

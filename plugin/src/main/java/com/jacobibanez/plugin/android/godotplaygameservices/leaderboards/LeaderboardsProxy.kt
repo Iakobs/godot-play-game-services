@@ -122,7 +122,7 @@ class LeaderboardsProxy(
 
     fun loadPlayerScore(leaderboardId: String, timeSpan: Int, collection: Int) {
         Log.d(
-            tag, "Loading placer score for leaderboard $leaderboardId, " +
+            tag, "Loading player score for leaderboard $leaderboardId, " +
                     "span ${TimeSpan.fromSpan(timeSpan)?.name} and collection " +
                     "${Collection.fromType(collection)?.name}"
         )
@@ -131,9 +131,7 @@ class LeaderboardsProxy(
         ).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Log.d(tag, "Score loaded successfully. Data is stale? ${task.result.isStale}")
-                val score: Dictionary? = task.result.get()?.let {
-                    fromLeaderboardScore(it)
-                }
+                val score: Dictionary? = task.result.get()?.let { fromLeaderboardScore(godot, it) }
                 emitSignal(
                     godot,
                     BuildConfig.GODOT_PLUGIN_NAME,
@@ -166,7 +164,7 @@ class LeaderboardsProxy(
                 val leaderboardsCount = safeBuffer.count
                 val leaderboards: List<Dictionary> =
                     if (leaderboardsCount > 0) {
-                        safeBuffer.map { fromLeaderboard(it) }.toList()
+                        safeBuffer.map { fromLeaderboard(godot, it) }.toList()
                     } else {
                         emptyList()
                     }
@@ -199,7 +197,7 @@ class LeaderboardsProxy(
                         "Leaderboard loaded successfully. Data is stale? ${task.result.isStale}"
                     )
                     val leaderboard: Dictionary? = task.result.get()?.let {
-                        fromLeaderboard(it)
+                        fromLeaderboard(godot, it)
                     }
                     emitSignal(
                         godot,
