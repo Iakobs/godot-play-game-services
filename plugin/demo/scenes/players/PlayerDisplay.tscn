@@ -24,7 +24,13 @@ theme_override_constants/margin_bottom = 25
 layout_mode = 2
 theme_override_constants/separation = 25
 
+[node name="AvatarRect" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+stretch_mode = 3
+
 [node name="Id" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Id"]
@@ -106,43 +112,4 @@ unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("1_uv4o5")
 text = "Compare"
-text_overrun_behavior = 3
-
-[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-
-[node name="Variants" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 25
-
-[node name="TimeSpan" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Variants"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Variants/TimeSpan"]
-layout_mode = 2
-text = "Time Span"
-
-[node name="TimeSpan" type="OptionButton" parent="MarginContainer/VBoxContainer/Variants/TimeSpan"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Collection" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Variants"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Variants/Collection"]
-layout_mode = 2
-text = "Collection"
-
-[node name="Collection" type="OptionButton" parent="MarginContainer/VBoxContainer/Variants/Collection"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="ShowVariant" type="Button" parent="MarginContainer/VBoxContainer/Variants"]
-unique_name_in_owner = true
-layout_mode = 2
-theme = ExtResource("1_uv4o5")
-disabled = true
-text = "Show Leaderboard Variant"
 text_overrun_behavior = 3

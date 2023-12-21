@@ -24,27 +24,33 @@ theme_override_constants/margin_bottom = 25
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="LeaderboardId" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="IconRect" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+stretch_mode = 3
+
+[node name="Id" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/LeaderboardId"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Id"]
 layout_mode = 2
-text = "Leaderboard ID:"
+text = "ID:"
 
-[node name="LeaderboardId" type="Label" parent="MarginContainer/VBoxContainer/LeaderboardId"]
+[node name="IdLabel" type="Label" parent="MarginContainer/VBoxContainer/Id"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text_overrun_behavior = 3
 
-[node name="LeaderboardName" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Name" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/LeaderboardName"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Name"]
 layout_mode = 2
-text = "Leaderboard Name:"
+text = "Name:"
 
-[node name="LeaderboardName" type="Label" parent="MarginContainer/VBoxContainer/LeaderboardName"]
+[node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer/Name"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -57,7 +63,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Player Rank:"
 
-[node name="PlayerRank" type="Label" parent="MarginContainer/VBoxContainer/PlayerRank"]
+[node name="PlayerRankLabel" type="Label" parent="MarginContainer/VBoxContainer/PlayerRank"]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -68,7 +74,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Player Score:"
 
-[node name="PlayerScore" type="Label" parent="MarginContainer/VBoxContainer/PlayerScore"]
+[node name="PlayerScoreLabel" type="Label" parent="MarginContainer/VBoxContainer/PlayerScore"]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -87,14 +93,14 @@ layout_mode = 2
 text = "New score:"
 horizontal_alignment = 1
 
-[node name="NewScore" type="LineEdit" parent="MarginContainer/VBoxContainer/SubmitScore/NewScore"]
+[node name="NewScoreLineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/SubmitScore/NewScore"]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 virtual_keyboard_type = 2
 clear_button_enabled = true
 
-[node name="SubmitScore" type="Button" parent="MarginContainer/VBoxContainer/SubmitScore"]
+[node name="SubmitScoreButton" type="Button" parent="MarginContainer/VBoxContainer/SubmitScore"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("1_oo2te")
@@ -116,7 +122,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Time Span"
 
-[node name="TimeSpan" type="OptionButton" parent="MarginContainer/VBoxContainer/Variants/TimeSpan"]
+[node name="TimeSpanOption" type="OptionButton" parent="MarginContainer/VBoxContainer/Variants/TimeSpan"]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -127,11 +133,11 @@ layout_mode = 2
 layout_mode = 2
 text = "Collection"
 
-[node name="Collection" type="OptionButton" parent="MarginContainer/VBoxContainer/Variants/Collection"]
+[node name="CollectionOption" type="OptionButton" parent="MarginContainer/VBoxContainer/Variants/Collection"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="ShowVariant" type="Button" parent="MarginContainer/VBoxContainer/Variants"]
+[node name="ShowVariantButton" type="Button" parent="MarginContainer/VBoxContainer/Variants"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("1_oo2te")

@@ -1,5 +1,7 @@
 extends Control
 
+@onready var icon_rect: TextureRect = %IconRect
+
 @onready var id_label: Label = %IdLabel
 @onready var name_label: Label = %NameLabel
 @onready var description_label: Label = %DescriptionLabel
@@ -96,8 +98,27 @@ func _connect_signals() -> void:
 					_waiting = false
 					_set_up_display()
 	)
+	GodotPlayGameServices.image_stored.connect(func(file_path: String):
+		if file_path == achievement.revealed_image_uri\
+		or file_path == achievement.unlocked_image_uri:
+			_set_up_icon()
+	)
 
 func _set_up_waiting() -> void:
 	_waiting = true
 	unlock_button.disabled = true
 	unlock_button.text = "Wait..."
+
+func _set_up_icon() -> void:
+	var property: String
+	match achievement.state:
+		AchievementsClient.State.STATE_REVEALED:
+			property = achievement.revealed_image_uri
+		AchievementsClient.State.STATE_UNLOCKED:
+			property = achievement.unlocked_image_uri
+	
+	if property and not property.is_empty():
+		GodotPlayGameServices.display_image_in_texture_rect(
+			icon_rect,
+			property
+		)

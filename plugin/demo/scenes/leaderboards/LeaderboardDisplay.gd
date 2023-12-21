@@ -1,17 +1,19 @@
 extends Control
 
-@onready var leaderboard_id_label: Label = %LeaderboardId
-@onready var leaderboard_name_label: Label = %LeaderboardName
+@onready var icon_rect: TextureRect = %IconRect
 
-@onready var player_rank_label: Label = %PlayerRank
-@onready var player_score_label: Label = %PlayerScore
+@onready var id_label: Label = %IdLabel
+@onready var name_label: Label = %NameLabel
 
-@onready var new_score_line_edit: LineEdit = %NewScore
-@onready var submit_score_button: Button = %SubmitScore
+@onready var player_rank_label: Label = %PlayerRankLabel
+@onready var player_score_label: Label = %PlayerScoreLabel
 
-@onready var time_span_option: OptionButton = %TimeSpan
-@onready var collection_option: OptionButton = %Collection
-@onready var show_variant_button: Button = %ShowVariant
+@onready var new_score_line_edit: LineEdit = %NewScoreLineEdit
+@onready var submit_score_button: Button = %SubmitScoreButton
+
+@onready var time_span_option: OptionButton = %TimeSpanOption
+@onready var collection_option: OptionButton = %CollectionOption
+@onready var show_variant_button: Button = %ShowVariantButton
 
 var leaderboard: LeaderboardsClient.Leaderboard
 
@@ -24,8 +26,15 @@ var _selected_collection: LeaderboardsClient.Collection
 
 func _ready() -> void:
 	if leaderboard:
-		leaderboard_id_label.text = leaderboard.leaderboard_id
-		leaderboard_name_label.text = leaderboard.display_name
+		GodotPlayGameServices.image_stored.connect(func(file_path: String):
+			if file_path == leaderboard.icon_image_uri:
+				GodotPlayGameServices.display_image_in_texture_rect(
+					icon_rect,
+					file_path
+				)
+		)
+		id_label.text = leaderboard.leaderboard_id
+		name_label.text = leaderboard.display_name
 		_set_up_display_score()
 		_set_up_submit_score()
 		_set_up_variants()
