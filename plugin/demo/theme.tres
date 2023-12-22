@@ -15,3 +15,4 @@ HSeparator/styles/separator = SubResource("StyleBoxLine_4da3r")
 Label/font_sizes/font_size = 56
 LineEdit/font_sizes/font_size = 56
 PopupMenu/font_sizes/font_size = 56
+TextEdit/font_sizes/font_size = 56

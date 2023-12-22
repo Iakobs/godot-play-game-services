@@ -22,6 +22,7 @@ SignInClient="*res://addons/GodotPlayGameServices/autoloads/sign_in_client.gd"
 AchievementsClient="*res://addons/GodotPlayGameServices/autoloads/achievements_client.gd"
 LeaderboardsClient="*res://addons/GodotPlayGameServices/autoloads/leaderboards_client.gd"
 PlayersClient="*res://addons/GodotPlayGameServices/autoloads/players_client.gd"
+SnapshotsClient="*res://addons/GodotPlayGameServices/autoloads/snapshots_client.gd"
 
 [display]
 

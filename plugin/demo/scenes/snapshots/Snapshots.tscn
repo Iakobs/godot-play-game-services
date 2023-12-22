@@ -1,0 +1,98 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7l7wp6mdkp3a"]
+
+[ext_resource type="Theme" uid="uid://bmm3mvq11y045" path="res://theme.tres" id="1_uo6wb"]
+[ext_resource type="Script" path="res://scenes/snapshots/Snapshots.gd" id="2_cdwya"]
+
+[node name="Snapshots" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_uo6wb")
+script = ExtResource("2_cdwya")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="NavBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="MarginContainer/VBoxContainer/NavBar"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("1_uo6wb")
+text = "Back"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ScrollChild" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 25
+
+[node name="LoadSnapshots" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="LoadButton" type="Button" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild/LoadSnapshots"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 2
+theme = ExtResource("1_uo6wb")
+text = "Load Saved Games"
+
+[node name="SaveGame" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 25
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild/SaveGame"]
+layout_mode = 2
+text = "Save Game"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild/SaveGame"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 25
+
+[node name="NameLineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild/SaveGame/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "File name..."
+
+[node name="DescriptionLineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild/SaveGame/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Description..."
+
+[node name="ValueTextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild/SaveGame/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Write something..."
+
+[node name="SaveGameButton" type="Button" parent="MarginContainer/VBoxContainer/ScrollContainer/ScrollChild/SaveGame/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Save Game"
