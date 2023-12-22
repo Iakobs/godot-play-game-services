@@ -314,4 +314,11 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
         allowDelete: Boolean,
         maxSnapshots: Int
     ) = snapshotsProxy.showSavedGames(title, allowAddButton, allowDelete, maxSnapshots)
+
+    @UsedByGodot
+    fun saveGame(
+        fileName: String,
+        saveData: String,
+        description: String
+    ) = snapshotsProxy.saveGame(fileName, saveData, description)
 }

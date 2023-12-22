@@ -20,6 +20,8 @@ fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
     PlayerSignals.playerSearched,
     PlayerSignals.currentPlayerLoaded,
 
+    SnapshotSignals.gameSaved,
+
     HelperSignals.imageStored,
 )
 
@@ -131,6 +133,10 @@ object PlayerSignals {
      * @return A JSON with a [com.google.android.gms.games.Player](https://developers.google.com/android/reference/com/google/android/gms/games/Player).
      */
     val currentPlayerLoaded = SignalInfo("currentPlayerLoaded", String::class.java)
+}
+
+object SnapshotSignals {
+    val gameSaved = SignalInfo("gameSaved", Boolean::class.javaObjectType, String::class.java, String::class.java)
 }
 
 object HelperSignals {
