@@ -307,6 +307,14 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
     @UsedByGodot
     fun loadCurrentPlayer(forceReload: Boolean) = playersProxy.loadCurrentPlayer(forceReload)
 
+    /**
+     * Opens a new window to display the saved games for the current player.
+     *
+     * @param title The title to display in the action bar of the returned Activity.
+     * @param allowAddButton Whether or not to display a "create new snapshot" option in the selection UI.
+     * @param allowDelete Whether or not to provide a delete overflow menu option for each snapshot in the selection UI.
+     * @param maxSnapshots The maximum number of snapshots to display in the UI. Use [DISPLAY_LIMIT_NONE](https://developers.google.com/android/reference/com/google/android/gms/games/SnapshotsClient#DISPLAY_LIMIT_NONE) to display all snapshots.
+     */
     @UsedByGodot
     fun showSavedGames(
         title: String,
@@ -315,6 +323,14 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
         maxSnapshots: Int
     ) = snapshotsProxy.showSavedGames(title, allowAddButton, allowDelete, maxSnapshots)
 
+    /**
+     * Saves game data to Google Cloud.
+     *
+     * @param fileName The name of the save file. Must be between 1 and 100 non-URL-reserved
+     * characters (a-z, A-Z, 0-9, or the symbols "-", ".", "_", or "~").
+     * @param saveData A String with the saved data of the game.
+     * @param description The description of the save file.
+     */
     @UsedByGodot
     fun saveGame(
         fileName: String,

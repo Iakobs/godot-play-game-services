@@ -136,6 +136,11 @@ object PlayerSignals {
 }
 
 object SnapshotSignals {
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.saveGame] method.
+     *
+     * @return A boolean indicating if the game was saved or not, and the name and description of the save file.
+     */
     val gameSaved = SignalInfo("gameSaved", Boolean::class.javaObjectType, String::class.java, String::class.java)
 }
 
