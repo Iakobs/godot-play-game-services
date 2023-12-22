@@ -10,6 +10,7 @@ import com.jacobibanez.plugin.android.godotplaygameservices.leaderboards.Leaderb
 import com.jacobibanez.plugin.android.godotplaygameservices.players.PlayersProxy
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.getSignals
 import com.jacobibanez.plugin.android.godotplaygameservices.signin.SignInProxy
+import com.jacobibanez.plugin.android.godotplaygameservices.snapshots.SnapshotsProxy
 import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin
 import org.godotengine.godot.plugin.SignalInfo
@@ -28,6 +29,7 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
     private val achievementsProxy = AchievementsProxy(godot)
     private val leaderboardsProxy = LeaderboardsProxy(godot)
     private val playersProxy = PlayersProxy(godot)
+    private val snapshotsProxy = SnapshotsProxy(godot)
 
     /** @suppress */
     override fun getPluginSignals(): MutableSet<SignalInfo> {
@@ -304,4 +306,12 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
      */
     @UsedByGodot
     fun loadCurrentPlayer(forceReload: Boolean) = playersProxy.loadCurrentPlayer(forceReload)
+
+    @UsedByGodot
+    fun showSavedGames(
+        title: String,
+        allowAddButton: Boolean,
+        allowDelete: Boolean,
+        maxSnapshots: Int
+    ) = snapshotsProxy.showSavedGames(title, allowAddButton, allowDelete, maxSnapshots)
 }

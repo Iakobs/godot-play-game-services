@@ -1,5 +1,8 @@
 ## v1.1.0
 
+### Saved Games
+- Display saved games in new window
+
 ### Save images to device
 All properties of leaderboards, achievements, scores and players containing URI to images, where pointing to the `content://` resource, which was not accessible from Godot. This has been fixed, downloading the `content://` resource to the device, in the `user:/` Godot path, making the images available from Godot.
 
