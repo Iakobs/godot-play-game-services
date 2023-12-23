@@ -48,6 +48,7 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
     override fun onMainActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onMainActivityResult(requestCode, resultCode, data)
         playersProxy.onActivityResult(requestCode, resultCode, data)
+        snapshotsProxy.onActivityResult(requestCode, resultCode, data)
     }
 
     /**
@@ -308,7 +309,9 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
     fun loadCurrentPlayer(forceReload: Boolean) = playersProxy.loadCurrentPlayer(forceReload)
 
     /**
-     * Opens a new window to display the saved games for the current player.
+     * Opens a new window to display the saved games for the current player. If you select one of the
+     * saved games, the [com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.gameLoaded]
+     * signal will be emitted.
      *
      * @param title The title to display in the action bar of the returned Activity.
      * @param allowAddButton Whether or not to display a "create new snapshot" option in the selection UI.
@@ -324,7 +327,8 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
     ) = snapshotsProxy.showSavedGames(title, allowAddButton, allowDelete, maxSnapshots)
 
     /**
-     * Saves game data to Google Cloud.
+     * Saves game data to the Google Cloud. The [com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.gameSaved]
+     * signal will be emitted after saving the game.
      *
      * @param fileName The name of the save file. Must be between 1 and 100 non-URL-reserved
      * characters (a-z, A-Z, 0-9, or the symbols "-", ".", "_", or "~").
@@ -337,4 +341,14 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
         saveData: String,
         description: String
     ) = snapshotsProxy.saveGame(fileName, saveData, description)
+
+    /**
+     * Loads game data from the Google Cloud. This method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.gameLoaded]
+     * signal.
+     *
+     * @param fileName The name of the save file. Must be between 1 and 100 non-URL-reserved
+     * characters (a-z, A-Z, 0-9, or the symbols "-", ".", "_", or "~").
+     */
+    @UsedByGodot
+    fun loadGame(fileName: String) = snapshotsProxy.loadGame(fileName)
 }

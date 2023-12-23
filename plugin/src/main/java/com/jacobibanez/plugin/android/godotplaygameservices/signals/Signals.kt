@@ -21,6 +21,7 @@ fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
     PlayerSignals.currentPlayerLoaded,
 
     SnapshotSignals.gameSaved,
+    SnapshotSignals.gameLoaded,
 
     HelperSignals.imageStored,
 )
@@ -142,6 +143,14 @@ object SnapshotSignals {
      * @return A boolean indicating if the game was saved or not, and the name and description of the save file.
      */
     val gameSaved = SignalInfo("gameSaved", Boolean::class.javaObjectType, String::class.java, String::class.java)
+
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadGame] method
+     * or after selecting a saved game in the window opened by the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.showSavedGames] method.
+     *
+     * @return The content of the saved game.
+     */
+    val gameLoaded = SignalInfo("gameLoaded", String::class.java)
 }
 
 object HelperSignals {

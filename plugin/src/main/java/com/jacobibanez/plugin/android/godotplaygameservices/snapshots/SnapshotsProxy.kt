@@ -1,14 +1,23 @@
 package com.jacobibanez.plugin.android.godotplaygameservices.snapshots
 
+import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.games.PlayGames
 import com.google.android.gms.games.SnapshotsClient
+import com.google.android.gms.games.SnapshotsClient.EXTRA_SNAPSHOT_METADATA
+import com.google.android.gms.games.SnapshotsClient.RESOLUTION_POLICY_HIGHEST_PROGRESS
+import com.google.android.gms.games.SnapshotsClient.RESOLUTION_POLICY_MOST_RECENTLY_MODIFIED
+import com.google.android.gms.games.snapshot.SnapshotMetadata
 import com.google.android.gms.games.snapshot.SnapshotMetadataChange
-import com.jacobibanez.plugin.android.godotplaygameservices.BuildConfig
+import com.jacobibanez.plugin.android.godotplaygameservices.BuildConfig.GODOT_PLUGIN_NAME
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.gameLoaded
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.gameSaved
 import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin.emitSignal
+import java.io.IOException
+
 
 /** @suppress */
 class SnapshotsProxy(
@@ -18,6 +27,18 @@ class SnapshotsProxy(
     private val tag = SnapshotsProxy::class.java.simpleName
 
     private val showSavedGamesRequestCode = 9010
+
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == showSavedGamesRequestCode && resultCode == Activity.RESULT_OK) {
+            data?.let { intent ->
+                if (intent.hasExtra(EXTRA_SNAPSHOT_METADATA)) {
+                    val snapshotMetadata = intent.extras
+                        ?.get(EXTRA_SNAPSHOT_METADATA) as SnapshotMetadata
+                    loadGame(snapshotMetadata.uniqueName)
+                }
+            }
+        }
+    }
 
     fun showSavedGames(
         title: String,
@@ -37,7 +58,7 @@ class SnapshotsProxy(
 
     fun saveGame(fileName: String, saveData: String, description: String) {
         Log.d(tag, "Saving game data with name $fileName and description ${description}.")
-        snapshotsClient.open(fileName, true, SnapshotsClient.RESOLUTION_POLICY_HIGHEST_PROGRESS)
+        snapshotsClient.open(fileName, true, RESOLUTION_POLICY_HIGHEST_PROGRESS)
             .addOnSuccessListener { dataOrConflict ->
                 if (dataOrConflict.isConflict) {
                     Log.e(
@@ -46,7 +67,7 @@ class SnapshotsProxy(
                     )
                     emitSignal(
                         godot,
-                        BuildConfig.GODOT_PLUGIN_NAME,
+                        GODOT_PLUGIN_NAME,
                         gameSaved,
                         false,
                         fileName,
@@ -63,13 +84,38 @@ class SnapshotsProxy(
                     snapshotsClient.commitAndClose(snapshot, metadata)
                     emitSignal(
                         godot,
-                        BuildConfig.GODOT_PLUGIN_NAME,
+                        GODOT_PLUGIN_NAME,
                         gameSaved,
                         true,
                         fileName,
                         description
                     )
                 }
+            }
+    }
+
+    fun loadGame(fileName: String) {
+        Log.d(tag, "Loading game.")
+        snapshotsClient.open(fileName, false, RESOLUTION_POLICY_MOST_RECENTLY_MODIFIED)
+            .addOnFailureListener { exception ->
+                Log.e(tag, "Error while opening Snapshot.", exception);
+            }.continueWith { task ->
+                task.result.data?.let { snapshot ->
+                    try {
+                        val byteArray = snapshot.snapshotContents.readFully()
+                        return@continueWith String(byteArray)
+                    } catch (e: IOException) {
+                        Log.e(tag, "Error while reading Snapshot.", e)
+                    }
+                    return@continueWith ""
+                }
+            }.addOnCompleteListener { task ->
+                emitSignal(
+                    godot,
+                    GODOT_PLUGIN_NAME,
+                    gameLoaded,
+                    task.result
+                )
             }
     }
 }
