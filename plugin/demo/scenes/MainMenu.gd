@@ -6,6 +6,10 @@ extends Control
 @onready var snapshots_button: Button = %Snapshots
 
 func _ready() -> void:
+	SignInClient.user_authenticated.connect(func(is_authenticated: bool):
+		if not is_authenticated:
+			SignInClient.sign_in()
+	)
 	achievements_button.pressed.connect(func():
 		get_tree().change_scene_to_file("res://scenes/achievements/Achievements.tscn")
 	)

@@ -18,7 +18,7 @@ func _ready() -> void:
 		get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 	)
 	load_button.pressed.connect(func():
-		SnapshotsClient.show_saved_games("Saved Games", true, true, 3)
+		SnapshotsClient.show_saved_games("Saved Games", false, true, 3)
 	)
 	_connect_save_game_data()
 
@@ -41,13 +41,22 @@ func _connect_save_game_data() -> void:
 			_current_description
 		)
 	)
+	SnapshotsClient.game_saved.connect(
+		func(is_saved: bool, save_data_name: String, save_data_description: String):
+			if is_saved and save_data_name == _current_name\
+			and save_data_description == _current_description:
+				pass
+	)
+	SnapshotsClient.game_loaded.connect(func(saved_data: String):
+		_reset_save_game_data()
+		value_text_edit.text = saved_data
+	)
 
 func _validate_save_game_data() -> void:
 	var data_is_valid := not name_line_edit.text.is_empty()\
 	and not description_line_edit.text.is_empty()\
 	and not value_text_edit.text.is_empty()
 	
-	print("data is valid? %s" % data_is_valid)
 	save_game_button.disabled = not data_is_valid
 
 func _set_current_save_game_data() -> void:
