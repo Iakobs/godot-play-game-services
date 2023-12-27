@@ -42,5 +42,8 @@ func _ready() -> void:
 ## [param texture_rect]: The texture rectangle control to display the image.[br]
 ## [param file_path]: The file path of the image, for example user://image.png.
 func display_image_in_texture_rect(texture_rect: TextureRect, file_path: String) -> void:
-	var image := Image.load_from_file(file_path)
-	texture_rect.texture = ImageTexture.create_from_image(image)
+	if FileAccess.file_exists(file_path):
+		var image := Image.load_from_file(file_path)
+		texture_rect.texture = ImageTexture.create_from_image(image)
+	else:
+		print("File %s does not exist." % file_path)

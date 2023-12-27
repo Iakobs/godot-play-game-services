@@ -22,12 +22,10 @@ func _ready() -> void:
 
 func _set_up_display() -> void:
 	GodotPlayGameServices.image_stored.connect(func(file_path: String):
-		if file_path == player.hi_res_image_uri:
-			GodotPlayGameServices.display_image_in_texture_rect(
-				avatar_rect,
-				file_path
-			)
+		if file_path == player.hi_res_image_uri and not avatar_rect.texture:
+			_display_avatar()
 	)
+	_display_avatar()
 	id_label.text = player.player_id
 	name_label.text = player.display_name
 	title_label.text = player.title
@@ -48,3 +46,9 @@ func _load_and_retry(image_uri: String) -> Image:
 			print("Error loading file!!")
 			image = null
 	return image
+
+func _display_avatar() -> void:
+	GodotPlayGameServices.display_image_in_texture_rect(
+		avatar_rect,
+		player.hi_res_image_uri
+	)

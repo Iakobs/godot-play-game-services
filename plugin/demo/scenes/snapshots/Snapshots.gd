@@ -18,7 +18,7 @@ func _ready() -> void:
 		get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 	)
 	load_button.pressed.connect(func():
-		SnapshotsClient.show_saved_games("Saved Games", false, true, 3)
+		SnapshotsClient.show_saved_games("Saved Games", false, true, SnapshotsClient.DISPLAY_LIMIT_NONE)
 	)
 	_connect_save_game_data()
 
