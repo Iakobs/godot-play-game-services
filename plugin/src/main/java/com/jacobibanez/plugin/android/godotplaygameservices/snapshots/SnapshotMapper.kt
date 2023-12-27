@@ -1,5 +1,6 @@
 package com.jacobibanez.plugin.android.godotplaygameservices.snapshots
 
+import com.google.android.gms.games.SnapshotsClient.SnapshotConflict
 import com.google.android.gms.games.snapshot.Snapshot
 import com.google.android.gms.games.snapshot.SnapshotMetadata
 import com.jacobibanez.plugin.android.godotplaygameservices.games.fromGame
@@ -7,6 +8,13 @@ import com.jacobibanez.plugin.android.godotplaygameservices.players.fromPlayer
 import com.jacobibanez.plugin.android.godotplaygameservices.utils.toStringAndSave
 import org.godotengine.godot.Dictionary
 import org.godotengine.godot.Godot
+
+/** @suppress */
+fun fromConflict(godot: Godot, conflict: SnapshotConflict) = Dictionary().apply {
+    put("conflictId", conflict.conflictId)
+    put("conflictingSnapshot", fromSnapshot(godot, conflict.conflictingSnapshot))
+    put("serverSnapshot", fromSnapshot(godot, conflict.snapshot))
+}
 
 /** @suppress */
 fun fromSnapshot(godot: Godot, snapshot: Snapshot) = Dictionary().apply {

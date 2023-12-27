@@ -13,6 +13,7 @@ import com.google.android.gms.games.SnapshotsClient.SnapshotConflict
 import com.google.android.gms.games.snapshot.SnapshotMetadata
 import com.google.android.gms.games.snapshot.SnapshotMetadataChange
 import com.jacobibanez.plugin.android.godotplaygameservices.BuildConfig.GODOT_PLUGIN_NAME
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.conflictEmitted
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.gameLoaded
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.gameSaved
 import org.godotengine.godot.Godot
@@ -117,6 +118,12 @@ class SnapshotsProxy(
             Log.e(
                 tag, "Conflict with id ${conflict.conflictId} during saving of data with " +
                         "name $fileName and description ${description}."
+            )
+            emitSignal(
+                godot,
+                GODOT_PLUGIN_NAME,
+                conflictEmitted,
+                fromConflict(godot, it)
             )
         }
     }

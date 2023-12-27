@@ -23,6 +23,7 @@ fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
 
     SnapshotSignals.gameSaved,
     SnapshotSignals.gameLoaded,
+    SnapshotSignals.conflictEmitted,
 
     HelperSignals.imageStored,
 )
@@ -149,9 +150,16 @@ object SnapshotSignals {
      * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadGame] method
      * or after selecting a saved game in the window opened by the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.showSavedGames] method.
      *
-     * @return The loaded snapshot.
+     * @return A [Dictionary] representing a [com.google.android.gms.games.snapshot.Snapshot](https://developers.google.com/android/reference/com/google/android/gms/games/snapshot/Snapshot).
      */
     val gameLoaded = SignalInfo("gameLoaded", Dictionary::class.java)
+
+    /**
+     * This signal is emitted when saving or loading a game, whenever a conflict occurs.
+     *
+     * @return A [Dictionary] representing a [com.google.android.gms.games.SnapshotsClient.SnapshotConflict](https://developers.google.com/android/reference/com/google/android/gms/games/SnapshotsClient.SnapshotConflict).
+     */
+    val conflictEmitted = SignalInfo("conflictEmitted", Dictionary::class.java)
 }
 
 object HelperSignals {
