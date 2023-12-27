@@ -8,7 +8,7 @@ import org.godotengine.godot.Dictionary
 import org.godotengine.godot.Godot
 
 /** @suppress */
-fun fromAchievement(godot: Godot, achievement: Achievement): Dictionary = Dictionary().apply {
+fun fromAchievement(godot: Godot, achievement: Achievement) = Dictionary().apply {
     put("achievementId", achievement.achievementId)
     put("name", achievement.name)
     put("description", achievement.description)

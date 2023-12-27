@@ -8,7 +8,7 @@ import org.godotengine.godot.Dictionary
 import org.godotengine.godot.Godot
 
 /** @suppress */
-fun fromPlayer(godot: Godot, player: Player): Dictionary = Dictionary().apply {
+fun fromPlayer(godot: Godot, player: Player) = Dictionary().apply {
     put("displayName", player.displayName)
     put("playerId", player.playerId)
     put("retrievedTimestamp", player.retrievedTimestamp)
@@ -70,7 +70,7 @@ fun fromPlayer(godot: Godot, player: Player): Dictionary = Dictionary().apply {
 }
 
 /** @suppress */
-fun fromPlayerLevelInfo(levelInfo: PlayerLevelInfo): Dictionary = Dictionary().apply {
+fun fromPlayerLevelInfo(levelInfo: PlayerLevelInfo) = Dictionary().apply {
     put("currentLevel", fromPlayerLevel(levelInfo.currentLevel))
     put("currentXpTotal", levelInfo.currentXpTotal)
     put("lastLevelUpTimestamp", levelInfo.lastLevelUpTimestamp)
@@ -79,7 +79,7 @@ fun fromPlayerLevelInfo(levelInfo: PlayerLevelInfo): Dictionary = Dictionary().a
 }
 
 /** @suppress */
-fun fromPlayerLevel(playerLevel: PlayerLevel): Dictionary = Dictionary().apply {
+fun fromPlayerLevel(playerLevel: PlayerLevel) = Dictionary().apply {
     put("levelNumber", playerLevel.levelNumber)
     put("maxXp", playerLevel.maxXp)
     put("minXp", playerLevel.minXp)

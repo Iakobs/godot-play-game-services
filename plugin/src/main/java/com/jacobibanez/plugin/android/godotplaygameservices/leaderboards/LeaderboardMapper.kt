@@ -9,7 +9,7 @@ import org.godotengine.godot.Dictionary
 import org.godotengine.godot.Godot
 
 /** @suppress */
-fun fromLeaderboardScore(godot: Godot, score: LeaderboardScore): Dictionary =
+fun fromLeaderboardScore(godot: Godot, score: LeaderboardScore) =
     Dictionary().apply {
         put("displayRank", score.displayRank)
         put("displayScore", score.displayScore)
@@ -41,7 +41,7 @@ fun fromLeaderboardScore(godot: Godot, score: LeaderboardScore): Dictionary =
     }
 
 /** @suppress */
-fun fromLeaderboard(godot: Godot, leaderboard: Leaderboard): Dictionary = Dictionary().apply {
+fun fromLeaderboard(godot: Godot, leaderboard: Leaderboard) = Dictionary().apply {
     put("leaderboardId", leaderboard.leaderboardId)
     put("displayName", leaderboard.displayName)
     put("variants", fromLeaderboardVariant(leaderboard.variants))
