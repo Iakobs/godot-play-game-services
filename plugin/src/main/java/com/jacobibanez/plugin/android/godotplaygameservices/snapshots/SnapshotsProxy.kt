@@ -99,22 +99,25 @@ class SnapshotsProxy(
         snapshotsClient.open(fileName, false, RESOLUTION_POLICY_MOST_RECENTLY_MODIFIED)
             .addOnFailureListener { exception ->
                 Log.e(tag, "Error while opening Snapshot.", exception);
-            }.continueWith { task ->
-                task.result.data?.let { snapshot ->
-                    try {
-                        val byteArray = snapshot.snapshotContents.readFully()
-                        return@continueWith String(byteArray)
-                    } catch (e: IOException) {
-                        Log.e(tag, "Error while reading Snapshot.", e)
-                    }
-                    return@continueWith ""
+            }.continueWith { dataOrConflictTask ->
+                dataOrConflictTask.result.data?.let { snapshot ->
+                    return@continueWith snapshot
                 }
             }.addOnCompleteListener { task ->
+                val snapshot = task.result
+                var contents = ""
+                try {
+                    val byteArray = snapshot.snapshotContents.readFully()
+                    contents = String(byteArray)
+                } catch (e: IOException) {
+                    Log.e(tag, "Error while reading Snapshot.", e)
+                }
                 emitSignal(
                     godot,
                     GODOT_PLUGIN_NAME,
                     gameLoaded,
-                    task.result
+                    contents,
+                    fromSnapshotMetadata(godot, snapshot.metadata)
                 )
             }
     }
