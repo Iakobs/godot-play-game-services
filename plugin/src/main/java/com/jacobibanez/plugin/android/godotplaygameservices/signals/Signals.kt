@@ -149,9 +149,9 @@ object SnapshotSignals {
      * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadGame] method
      * or after selecting a saved game in the window opened by the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.showSavedGames] method.
      *
-     * @return The content of the saved game and the loaded snapshot metadata.
+     * @return The loaded snapshot.
      */
-    val gameLoaded = SignalInfo("gameLoaded", String::class.java, Dictionary::class.java)
+    val gameLoaded = SignalInfo("gameLoaded", Dictionary::class.java)
 }
 
 object HelperSignals {

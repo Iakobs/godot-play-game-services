@@ -16,7 +16,6 @@ import com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSign
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.gameSaved
 import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin.emitSignal
-import java.io.IOException
 
 
 /** @suppress */
@@ -104,20 +103,11 @@ class SnapshotsProxy(
                     return@continueWith snapshot
                 }
             }.addOnCompleteListener { task ->
-                val snapshot = task.result
-                var contents = ""
-                try {
-                    val byteArray = snapshot.snapshotContents.readFully()
-                    contents = String(byteArray)
-                } catch (e: IOException) {
-                    Log.e(tag, "Error while reading Snapshot.", e)
-                }
                 emitSignal(
                     godot,
                     GODOT_PLUGIN_NAME,
                     gameLoaded,
-                    contents,
-                    fromSnapshotMetadata(godot, snapshot.metadata)
+                    fromSnapshot(godot, task.result)
                 )
             }
     }

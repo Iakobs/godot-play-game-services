@@ -1,11 +1,18 @@
 package com.jacobibanez.plugin.android.godotplaygameservices.snapshots
 
+import com.google.android.gms.games.snapshot.Snapshot
 import com.google.android.gms.games.snapshot.SnapshotMetadata
 import com.jacobibanez.plugin.android.godotplaygameservices.games.fromGame
 import com.jacobibanez.plugin.android.godotplaygameservices.players.fromPlayer
 import com.jacobibanez.plugin.android.godotplaygameservices.utils.toStringAndSave
 import org.godotengine.godot.Dictionary
 import org.godotengine.godot.Godot
+
+/** @suppress */
+fun fromSnapshot(godot: Godot, snapshot: Snapshot) = Dictionary().apply {
+    put("content", snapshot.snapshotContents.readFully())
+    put("metadata", fromSnapshotMetadata(godot, snapshot.metadata))
+}
 
 /** @suppress */
 fun fromSnapshotMetadata(godot: Godot, metadata: SnapshotMetadata) = Dictionary().apply {
