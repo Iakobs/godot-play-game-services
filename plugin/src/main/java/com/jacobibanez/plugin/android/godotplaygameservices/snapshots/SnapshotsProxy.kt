@@ -57,7 +57,13 @@ class SnapshotsProxy(
             }
     }
 
-    fun saveGame(fileName: String, description: String, saveData: ByteArray) {
+    fun saveGame(
+        fileName: String,
+        description: String,
+        saveData: ByteArray,
+        playedTimeMillis: Long,
+        progressValue: Long
+    ) {
         Log.d(tag, "Saving game data with name $fileName and description ${description}.")
         snapshotsClient.open(fileName, true, RESOLUTION_POLICY_HIGHEST_PROGRESS)
             .addOnSuccessListener { dataOrConflict ->
@@ -67,9 +73,11 @@ class SnapshotsProxy(
                 }
                 dataOrConflict.data?.let { snapshot ->
                     snapshot.snapshotContents.writeBytes(saveData)
-                    val metadata = SnapshotMetadataChange.Builder()
-                        .setDescription(description)
-                        .build()
+                    val metadata = SnapshotMetadataChange.Builder().apply {
+                        setDescription(description)
+                        setPlayedTimeMillis(playedTimeMillis)
+                        setProgressValue(progressValue)
+                    }.build()
 
                     snapshotsClient.commitAndClose(snapshot, metadata)
                     emitSignal(

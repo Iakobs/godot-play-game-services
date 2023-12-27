@@ -334,13 +334,17 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
      * characters (a-z, A-Z, 0-9, or the symbols "-", ".", "_", or "~").
      * @param description The description of the save file.
      * @param saveData A ByteArray with the saved data of the game.
+     * @param playedTimeMillis The played time of this snapshot in milliseconds.
+     * @param progressValue The progress value for this snapshot.
      */
     @UsedByGodot
     fun saveGame(
         fileName: String,
         description: String,
-        saveData: ByteArray
-    ) = snapshotsProxy.saveGame(fileName, description, saveData)
+        saveData: ByteArray,
+        playedTimeMillis: Long,
+        progressValue: Long
+    ) = snapshotsProxy.saveGame(fileName, description, saveData, playedTimeMillis, progressValue)
 
     /**
      * Loads game data from the Google Cloud. This method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.gameLoaded]
