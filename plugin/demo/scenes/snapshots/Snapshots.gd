@@ -48,12 +48,15 @@ func _connect_save_game_data() -> void:
 				pass
 	)
 	SnapshotsClient.game_loaded.connect(
-		func(saved_data: String, metadata: SnapshotsClient.SnapshotMetadata):
+		func(snapshot: SnapshotsClient.Snapshot):
 			_reset_save_game_data()
+			
+			var metadata = snapshot.metadata
+			var data = snapshot.content.get_string_from_utf8()
 			
 			_current_name = metadata.unique_name
 			_current_description = metadata.description
-			_current_data = saved_data
+			_current_data = data
 			
 			name_line_edit.text = _current_name
 			description_line_edit.text = _current_description

@@ -14,9 +14,8 @@ signal game_saved(is_saved: bool, save_data_name: String, save_data_description:
 ## a saved game in the window presented after calling the [method show_saved_games]
 ## method.[br]
 ## [br]
-## [param saved_data]: The contents of the saved data.[br]
-## [param metadata]: The metadata of the loaded snapshot.
-signal game_loaded(saved_data: String, metadata: SnapshotMetadata)
+## [param snapshot]: The loaded snapshot.
+signal game_loaded(snapshot: Snapshot)
 
 ## Constant passed to the [method show_saved_games] method to not limit the number of displayed saved files.  
 const DISPLAY_LIMIT_NONE := -1
@@ -27,8 +26,8 @@ func _ready() -> void:
 			func(is_saved: bool, save_data_name: String, save_data_description: String):
 				game_saved.emit(is_saved, save_data_name, save_data_description)
 		)
-		GodotPlayGameServices.android_plugin.gameLoaded.connect(func(saved_data: String, dictionary: Dictionary):
-			game_loaded.emit(saved_data, SnapshotMetadata.new(dictionary))
+		GodotPlayGameServices.android_plugin.gameLoaded.connect(func(dictionary: Dictionary):
+			game_loaded.emit(Snapshot.new(dictionary))
 		)
 
 ## Opens a new window to display the saved games for the current player. If you select
@@ -66,6 +65,23 @@ func save_game(file_name: String, save_data: String, description: String) -> voi
 func load_game(file_name: String):
 	if GodotPlayGameServices.android_plugin:
 		GodotPlayGameServices.android_plugin.loadGame(file_name)
+
+## A snapshot.
+class Snapshot:
+	var content: PackedByteArray ## A [PackedByteArray] with the contents of the snapshot.
+	var metadata: SnapshotMetadata ## The metadata of the snapshot.
+	
+	func _init(dictionary: Dictionary) -> void:
+		if dictionary.has("content"): content = dictionary.content
+		if dictionary.has("metadata"): metadata = SnapshotMetadata.new(dictionary.metadata)
+	
+	func _to_string() -> String:
+		var result := PackedStringArray()
+		
+		result.append("content: %s" % content)
+		result.append("metadata: {%s}" % metadata)
+		
+		return ", ".join(result)
 
 ## The metadata of a Snapshot.
 class SnapshotMetadata:
