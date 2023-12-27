@@ -2,8 +2,9 @@
 
 ### Saved Games
 - Display saved games in new window that allows to load and delete saved games.
-- Save game data
-- Load game data
+- Save game data.
+- Load game data.
+- Receive conflicting game data (not possible to resolve the conflict manually yet).
 
 ### Save images to device
 All properties of leaderboards, achievements, scores and players containing URI to images, where pointing to the `content://` resource, which was not accessible from Godot. This has been fixed, downloading the `content://` resource to the device, in the `user:/` Godot path, making the images available from Godot.
@@ -14,23 +15,23 @@ New signal [`imageStored`](plugin/src/main/java/com/jacobibanez/plugin/android/g
 ## v1.0.0
 
 ### Sign in
-- Authenticate
-- Sign in
+- Authenticate.
+- Sign in.
 
 ### Achievements
-- Increment and unlock achievements
-- Reveal achievements
-- Load achievements
-- Show achievements
+- Increment and unlock achievements.
+- Reveal achievements.
+- Load achievements.
+- Show achievements.
 
 ### Leaderboards
--  Show leaderboards
-- Submit scores
-- Load Scores
-- Load leaderboards
+- Show leaderboards.
+- Submit scores.
+- Load Scores.
+- Load leaderboards.
 
 ### Players
-- Load friend list
-- Compare profiles
-- Search players
-- Load current player
+- Load friend list.
+- Compare profiles.
+- Search players.
+- Load current player.
