@@ -17,6 +17,11 @@ signal game_saved(is_saved: bool, save_data_name: String, save_data_description:
 ## [param snapshot]: The loaded snapshot.
 signal game_loaded(snapshot: Snapshot)
 
+## Signal emitted after saving or loading a game, if a conflict is found.[br]
+## [br]
+## [param conflict]: The conflict containing and id and both conflicting snapshots.
+signal conflict_emitted(conflict: SnapshotConflict)
+
 ## Constant passed to the [method show_saved_games] method to not limit the number of displayed saved files.  
 const DISPLAY_LIMIT_NONE := -1
 
@@ -28,6 +33,9 @@ func _ready() -> void:
 		)
 		GodotPlayGameServices.android_plugin.gameLoaded.connect(func(dictionary: Dictionary):
 			game_loaded.emit(Snapshot.new(dictionary))
+		)
+		GodotPlayGameServices.android_plugin.conflictEmitted.connect(func(dictionary: Dictionary):
+			conflict_emitted.emit(SnapshotConflict.new(dictionary))
 		)
 
 ## Opens a new window to display the saved games for the current player. If you select
@@ -80,6 +88,26 @@ class Snapshot:
 		
 		result.append("content: %s" % content)
 		result.append("metadata: {%s}" % metadata)
+		
+		return ", ".join(result)
+
+## A class representing a conflict when saving or loading data.
+class SnapshotConflict:
+	var conflict_id: String ## The conflict id.
+	var conflicting_snapshot: Snapshot ## The modified version of the Snapshot in the case of a conflict. This may not be the same as the version that you tried to save.
+	var server_snapshot: Snapshot ## The most-up-to-date version of the Snapshot known by Google Play games services to be accurate for the player’s device.
+	
+	func _init(dictionary: Dictionary) -> void:
+		if dictionary.has("conflictId"): conflict_id = dictionary.conflictId
+		if dictionary.has("conflictingSnapshot"): conflicting_snapshot = Snapshot.new(dictionary.conflictingSnapshot)
+		if dictionary.has("serverSnapshot"): server_snapshot = Snapshot.new(dictionary.serverSnapshot)
+	
+	func _to_string() -> String:
+		var result := PackedStringArray()
+		
+		result.append("conflict_id: %s" % conflict_id)
+		result.append("conflicting_snapshot: {%s}" % conflicting_snapshot)
+		result.append("server_snapshot: {%s}" % server_snapshot)
 		
 		return ", ".join(result)
 
