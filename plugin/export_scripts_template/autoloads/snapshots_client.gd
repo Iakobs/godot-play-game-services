@@ -60,10 +60,17 @@ func show_saved_games(
 ## [br]
 ## [param fileName]: The name of the save file. Must be between 1 and 100 non-URL-reserved characters (a-z, A-Z, 0-9, or the symbols "-", ".", "_", or "~").[br]
 ## [param saveData]: A String with the saved data of the game.[br]
-## [param description]: The description of the save file.
-func save_game(file_name: String, save_data: String, description: String) -> void:
+## [param played_time_millis]: Optional. The played time of this snapshot in milliseconds.[br]
+## [param progress_value]: Optional. The progress value for this snapshot.
+func save_game(
+	file_name: String, 
+	description: String,
+	save_data: PackedByteArray, 
+	played_time_millis: int = 0,
+	progress_value: int = 0,
+) -> void:
 	if GodotPlayGameServices.android_plugin:
-		GodotPlayGameServices.android_plugin.saveGame(file_name, save_data, description)
+		GodotPlayGameServices.android_plugin.saveGame(file_name, description, save_data, played_time_millis, progress_value)
 
 ## Loads game data from the Google Cloud.[br]
 ## [br]

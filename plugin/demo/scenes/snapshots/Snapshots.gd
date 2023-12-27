@@ -37,8 +37,8 @@ func _connect_save_game_data() -> void:
 		_reset_save_game_data()
 		SnapshotsClient.save_game(
 			_current_name,
-			_current_data,
-			_current_description
+			_current_description,
+			_current_data.to_utf8_buffer()
 		)
 	)
 	SnapshotsClient.game_saved.connect(
