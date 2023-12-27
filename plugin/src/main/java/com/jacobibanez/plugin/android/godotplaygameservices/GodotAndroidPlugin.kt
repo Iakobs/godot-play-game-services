@@ -332,15 +332,15 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
      *
      * @param fileName The name of the save file. Must be between 1 and 100 non-URL-reserved
      * characters (a-z, A-Z, 0-9, or the symbols "-", ".", "_", or "~").
-     * @param saveData A String with the saved data of the game.
      * @param description The description of the save file.
+     * @param saveData A ByteArray with the saved data of the game.
      */
     @UsedByGodot
     fun saveGame(
         fileName: String,
-        saveData: String,
-        description: String
-    ) = snapshotsProxy.saveGame(fileName, saveData, description)
+        description: String,
+        saveData: ByteArray
+    ) = snapshotsProxy.saveGame(fileName, description, saveData)
 
     /**
      * Loads game data from the Google Cloud. This method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.gameLoaded]
