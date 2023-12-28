@@ -1,4 +1,5 @@
 :source-highlighter: rouge
+:imagesdir: ../../docs/images
 
 = The Demo Project
 Doc Writer <jacobibanez@jacobibanez.com>
@@ -28,3 +29,41 @@ func _ready() -> void:
 ----
 
 <1> The plugin itself calls the `initialize()` method when creating the Autoloads, which checks if the user is authenticated and emits the `user_authenticated` signal, that's why the project subscribes to it.
+
+If the user is successfully signed in, you will see the Sign In animation displayed on top of the screen:
+
+image::screenshots/main_menu/main_menu.png[alt=Screenshot of the main menu with the Signed in animation displayed on top,title=Main Menu showing a user logged in.,width=298]
+
+== Achievements
+The achievements button will open the achievements screen:
+
+image::screenshots/achievements/achievements_screen.png[alt=Screenshot of the achievements screen,title=The achievements screen.,width=298]
+
+There you will see a `Show Achievements` button and a scrollable list of the achievements of the game. Depending on the type of the achievement, you will see another button underneath every achievement to reveal, unlock or increment the achievement.
+
+The `Show Achievements` button opens a new window provided by Google with the list of achievements for the game, but you can only click on them to see a detailed description.
+
+image::screenshots/achievements/show_achievements.png[alt=Screenshot of the screen provided by google, with a list of achievements,title=The achievements screen provided by google.,width=298]
+
+Closing that window by swiping it down, you will be back at the achievements menu. The loading of the achievements inside the scrollable section, happens in the `Achievements.gd` script.
+
+.Achievements.gd
+[source,gdscript]
+----
+func _ready() -> void:
+	if _achievements_cache.is_empty():
+		AchievementsClient.load_achievements(true) ## // <1>
+	AchievementsClient.achievements_loaded.connect( ## // <2>
+		func cache_and_display(achievements: Array[AchievementsClient.Achievement]):
+			_achievements_cache = achievements
+			if not _achievements_cache.is_empty() and achievement_displays.get_child_count() == 0:
+				for achievement: AchievementsClient.Achievement in _achievements_cache: ## // <3>
+					var container := _achievement_display.instantiate() as Control
+					container.achievement = achievement
+					achievement_displays.add_child(container)
+	)
+    ## ... more code ...
+----
+<1> If the cache is empty, we call the `load_achievements` method of the plugin.
+<2> We subscribe to the `achievemets_loaded` signal to receive the achievements.
+<3> For every achievement, we instantiate an `AchievementDisplay.tscn` file and we feed it the achievement. Then, we add the control as a child of the scrollable section.
