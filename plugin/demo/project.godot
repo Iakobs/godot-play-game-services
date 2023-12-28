@@ -11,6 +11,11 @@ config_version=5
 [application]
 
 config/name="Google Play Game Services Godot Plugin"
+config/description="Demo project to show the usage of the Godot Play Game Services plugin, for integration of the Google Play Games Services for android games.
+
+You will need to configure the game integrations in your Google Play Console in order for this demo to work properly."
+config/version="v1.0.0"
+config/tags=PackedStringArray("demo", "android", "google_play_games_services")
 run/main_scene="res://scenes/MainMenu.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
@@ -33,6 +38,14 @@ window/handheld/orientation=1
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/GodotPlayGameServices/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://addons/": "red",
+"res://android/": "gray",
+"res://scenes/": "green"
+}
 
 [input_devices]
 
