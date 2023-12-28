@@ -96,9 +96,9 @@ The `Search Players` button will open a new screen provided by google where you 
 The following screenshots show the process:
 
 .Searching and comparing players.
+[frame=none,grid=none]
 |===
-|Searching a player|The player is displayed|Comparing the player
-
+|1. Searching a player|2. The player is displayed|3. Comparing the player
 a|image::screenshots/players/search_players.png[alt=Screenshot of the search players screen provided by google]
 a|image::screenshots/players/compare_player.png[alt=Screenshot of players screen, showing the searched player]
 a|image::screenshots/players/send_invite.png[alt=Screenshot of the screen provided by google to compare players]
@@ -107,3 +107,16 @@ a|image::screenshots/players/send_invite.png[alt=Screenshot of the screen provid
 Under the `Search Players` button, you have a section with the current signed in player, and below it, another section with a list of the friends of the current signed in player.
 
 Again, same as with the Achievements screen and the Leaderboards screen, you have a `Players.gd` script that controls the screen, and a `PlayerDisplay.gd` script that manages the logic for every individual player card.
+
+=== Saved Games Screen
+image::screenshots/snapshots/save_game.png[alt=Screenshot of the saved games screen,title=The Saved Games screen.,width=298,align=center]
+
+This screen presents a simple menu to load and save games. To save a game, fill the form with a file name, a description and some data to save. When all fields are filled, the `Save Game` button will be enabled and you can save your game.
+
+Pressing the `Load Saved Games` will open a new screen provided by Google with the list of saved games for this game and player.
+
+image::screenshots/snapshots/show_saved_games.png[alt=Screenshot of screen provided by google, with a list of the saved games,title=The Saved Games screen provided by Google.,width=298,align=center]
+
+When you click on `Select`, the contents of the saved game will fill the forms in the previous screen.
+
+The code for this screen is all in the `Snapshots.gd` script.
