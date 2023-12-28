@@ -100,14 +100,16 @@ text = "XP:"
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Compare" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="CompareHolder" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="CompareButton" type="Button" parent="MarginContainer/VBoxContainer/Compare"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/CompareHolder"]
+layout_mode = 2
+
+[node name="CompareButton" type="Button" parent="MarginContainer/VBoxContainer/CompareHolder"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("1_uv4o5")

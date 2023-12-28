@@ -9,13 +9,15 @@ extends Control
 @onready var level_label: Label = %LevelLabel
 @onready var xp_label: Label = %XpLabel
 
+@onready var compare_holder: VBoxContainer = %CompareHolder
 @onready var compare_button: Button = %CompareButton
 
 var player: PlayersClient.Player
+var is_comparable =  false
 
 func _ready() -> void:
 	if player:
-		_set_up_display.call_deferred()
+		_set_up_display()
 		compare_button.pressed.connect(func():
 			PlayersClient.compare_profile(player.player_id)
 		)
@@ -32,6 +34,7 @@ func _set_up_display() -> void:
 	status_label.text = PlayersClient.PlayerFriendStatus.find_key(player.friend_status)
 	level_label.text = str(player.level_info.current_level.level_number)
 	xp_label.text = str(player.level_info.current_xp_total)
+	compare_holder.visible = is_comparable
 
 func _load_and_retry(image_uri: String) -> Image:
 	var image = Image.new()

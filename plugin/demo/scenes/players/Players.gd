@@ -37,6 +37,7 @@ func _ready() -> void:
 			child.queue_free()
 		var container := _player_display.instantiate() as Control
 		container.player = player
+		container.is_comparable = true
 		search_display.add_child(container)
 	)
 	
