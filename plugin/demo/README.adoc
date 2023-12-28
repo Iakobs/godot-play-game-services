@@ -1,0 +1,30 @@
+:source-highlighter: rouge
+
+= The Demo Project
+Doc Writer <jacobibanez@jacobibanez.com>
+:toc:
+
+This folder is a Godot project that you can directly open in Godot 4.2 to see an implementation of the plugin in a real Godot game.
+
+IMPORTANT: To use this project, you have to uncompress the contents of the `addons.zip` file in the link:https://github.com/Iakobs/godot-play-game-services/releases[releases section] of the repository to the root folder of the project.
+
+== Directory Structure
+The demo project contains a `scenes` folder with all the `.tscn` and `.gd` files that you will need, everything is inside this folder.
+
+You have sub folders for every feature of the plugin, e.g. `achievements` for displaying the achievements of the game or `snapshots` for the save/load game functionalities.
+
+== Signing In
+The first thing the project does is checking if the user is authenticated, and if not, calls the `sign_in` method of the plugin.
+
+.MainMenu.gd
+[source,gdscript]
+----
+func _ready() -> void:
+	SignInClient.user_authenticated.connect(func(is_authenticated: bool): ## <1>
+		if not is_authenticated:
+			SignInClient.sign_in()
+	)
+    ## ... more code ...
+----
+
+<1> The plugin itself calls the `initialize()` method when creating the Autoloads, which checks if the user is authenticated and emits the `user_authenticated` signal, that's why the project subscribes to it.
