@@ -5,7 +5,6 @@ import com.jacobibanez.plugin.android.godotplaygameservices.utils.toStringAndSav
 import org.godotengine.godot.Dictionary
 import org.godotengine.godot.Godot
 
-/** @suppress */
 fun fromGame(godot: Godot, game: Game) = Dictionary().apply {
     put("areSnapshotsEnabled", game.areSnapshotsEnabled())
     put("achievementTotalCount", game.achievementTotalCount)

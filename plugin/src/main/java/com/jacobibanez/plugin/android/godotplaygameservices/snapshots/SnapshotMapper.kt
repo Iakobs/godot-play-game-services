@@ -9,20 +9,17 @@ import com.jacobibanez.plugin.android.godotplaygameservices.utils.toStringAndSav
 import org.godotengine.godot.Dictionary
 import org.godotengine.godot.Godot
 
-/** @suppress */
 fun fromConflict(godot: Godot, conflict: SnapshotConflict) = Dictionary().apply {
     put("conflictId", conflict.conflictId)
     put("conflictingSnapshot", fromSnapshot(godot, conflict.conflictingSnapshot))
     put("serverSnapshot", fromSnapshot(godot, conflict.snapshot))
 }
 
-/** @suppress */
 fun fromSnapshot(godot: Godot, snapshot: Snapshot) = Dictionary().apply {
     put("content", snapshot.snapshotContents.readFully())
     put("metadata", fromSnapshotMetadata(godot, snapshot.metadata))
 }
 
-/** @suppress */
 fun fromSnapshotMetadata(godot: Godot, metadata: SnapshotMetadata) = Dictionary().apply {
     put("snapshotId", metadata.snapshotId)
     put("uniqueName", metadata.uniqueName)

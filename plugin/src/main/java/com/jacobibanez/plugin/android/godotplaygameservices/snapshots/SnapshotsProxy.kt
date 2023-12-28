@@ -19,8 +19,6 @@ import com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSign
 import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin.emitSignal
 
-
-/** @suppress */
 class SnapshotsProxy(
     private val godot: Godot,
     private val snapshotsClient: SnapshotsClient = PlayGames.getSnapshotsClient(godot.getActivity()!!)
