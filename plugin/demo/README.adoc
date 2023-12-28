@@ -18,52 +18,92 @@ You have sub folders for every feature of the plugin, e.g. `achievements` for di
 The first thing the project does is checking if the user is authenticated, and if not, calls the `sign_in` method of the plugin.
 
 .MainMenu.gd
-[source,gdscript]
+[source,gdscript,linenums]
 ----
 func _ready() -> void:
-	SignInClient.user_authenticated.connect(func(is_authenticated: bool): ## <1>
+	SignInClient.user_authenticated.connect(func(is_authenticated: bool): # <1>
 		if not is_authenticated:
 			SignInClient.sign_in()
 	)
-    ## ... more code ...
+    # ... more code ...
 ----
 
-<1> The plugin itself calls the `initialize()` method when creating the Autoloads, which checks if the user is authenticated and emits the `user_authenticated` signal, that's why the project subscribes to it.
+<1> The plugin itself calls the `initialize()` method when creating the Autoloads, which checks if the user is authenticated and emits the `user_authenticated` signal, that's why we subscribe to it here.
 
 If the user is successfully signed in, you will see the Sign In animation displayed on top of the screen:
 
-image::screenshots/main_menu/main_menu.png[alt=Screenshot of the main menu with the Signed in animation displayed on top,title=Main Menu showing a user logged in.,width=298]
+image::screenshots/main_menu/main_menu.png[alt=Screenshot of the main menu with the Signed in animation displayed on top,title=Main Menu showing a user logged in.,width=298,align=center]
 
-== Achievements
-The achievements button will open the achievements screen:
+IMPORTANT: If the user is not signed in, any of the following features *WON'T* work.
 
-image::screenshots/achievements/achievements_screen.png[alt=Screenshot of the achievements screen,title=The achievements screen.,width=298]
+== Screens
 
-There you will see a `Show Achievements` button and a scrollable list of the achievements of the game. Depending on the type of the achievement, you will see another button underneath every achievement to reveal, unlock or increment the achievement.
+Now you will find a description of all the screens that you can navigate from the main menu. You can always go back to the main menu with the `Back` button in every sub-screen.
+
+=== Achievements Screen
+image::screenshots/achievements/achievements_screen.png[alt=Screenshot of the achievements screen,title=The achievements screen.,width=298,align=center]
+
+In the achievements screen you will see a `Show Achievements` button and a scrollable list of the achievements of the game. Depending on the type of the achievement, you will see another button underneath every achievement to *reveal*, *unlock* or *increment* the achievement.
 
 The `Show Achievements` button opens a new window provided by Google with the list of achievements for the game, but you can only click on them to see a detailed description.
 
-image::screenshots/achievements/show_achievements.png[alt=Screenshot of the screen provided by google, with a list of achievements,title=The achievements screen provided by google.,width=298]
+image::screenshots/achievements/show_achievements.png[alt=Screenshot of the screen provided by google, with a list of achievements,title=The achievements screen provided by google.,width=298,align=center]
 
 Closing that window by swiping it down, you will be back at the achievements menu. The loading of the achievements inside the scrollable section, happens in the `Achievements.gd` script.
 
 .Achievements.gd
-[source,gdscript]
+[source,gdscript,linenums]
 ----
 func _ready() -> void:
 	if _achievements_cache.is_empty():
-		AchievementsClient.load_achievements(true) ## // <1>
-	AchievementsClient.achievements_loaded.connect( ## // <2>
+		AchievementsClient.load_achievements(true) # <1>
+	AchievementsClient.achievements_loaded.connect( # <2>
 		func cache_and_display(achievements: Array[AchievementsClient.Achievement]):
 			_achievements_cache = achievements
 			if not _achievements_cache.is_empty() and achievement_displays.get_child_count() == 0:
-				for achievement: AchievementsClient.Achievement in _achievements_cache: ## // <3>
+				for achievement: AchievementsClient.Achievement in _achievements_cache: # <3>
 					var container := _achievement_display.instantiate() as Control
 					container.achievement = achievement
 					achievement_displays.add_child(container)
 	)
-    ## ... more code ...
+    # ... more code ...
 ----
 <1> If the cache is empty, we call the `load_achievements` method of the plugin.
 <2> We subscribe to the `achievemets_loaded` signal to receive the achievements.
 <3> For every achievement, we instantiate an `AchievementDisplay.tscn` file and we feed it the achievement. Then, we add the control as a child of the scrollable section.
+
+In the `AchievementDisplay.gd` script, you will find the code with the logic to *reveal*, *unlock* or *increment* a specific achievement, depending on its type and state.
+
+=== Leaderboards Screen
+image::screenshots/leaderboards/leaderboards_screen.png[alt=Screenshot of the leaderboards screen,title=The leaderboards screen.,width=298,align=center]
+
+This screen has a `Show Leaderboards` button at the top, and a scrollable list of the leaderboards of the game. Sames as with the achievements screen, the button will open a new screen provided by Google where you can see the leaderboards and interact with them.
+
+Every item in the scrollable list has options to:
+
+* Submit a score to the leaderboard.
+* Display a specific variant of that leaderboard, based on it's time span and collection type.
+
+The code that manages all of this behaviour, can be found in the `LeaderboardDisplay.gd` script.
+
+=== Players Screen
+image::screenshots/players/current_player.png[alt=Screenshot of the players screen,title=The players screen.,width=298,align=center]
+
+In this screen you can see information about players of Play Game Services.
+
+The `Search Players` button will open a new screen provided by google where you can find other players by their username. If you select them, they will appear in the Players Screen with a button to compare them. This button will open a new window provided by Google where you can compare this player to the signed in player, and also send an invitation to become friends.
+
+The following screenshots show the process:
+
+.Searching and comparing players.
+|===
+|Searching a player|The player is displayed|Comparing the player
+
+a|image::screenshots/players/search_players.png[alt=Screenshot of the search players screen provided by google]
+a|image::screenshots/players/compare_player.png[alt=Screenshot of players screen, showing the searched player]
+a|image::screenshots/players/send_invite.png[alt=Screenshot of the screen provided by google to compare players]
+|===
+
+Under the `Search Players` button, you have a section with the current signed in player, and below it, another section with a list of the friends of the current signed in player.
+
+Again, same as with the Achievements screen and the Leaderboards screen, you have a `Players.gd` script that controls the screen, and a `PlayerDisplay.gd` script that manages the logic for every individual player card.
