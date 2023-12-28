@@ -13,7 +13,9 @@ Godot 4.2+ plugin for integration of the latest version of [Google Play Game Ser
 
 ## Table of contents
 - [Forewords](#forewords)
-- [How to use the plugin](#how-to-use-the-plugin)
+- [Install the plugin](#install-the-plugin)
+- [The Demo project](#the-demo-project)
+- [Building the plugin yourself](#building-the-plugin-yourself)
   - [Downloading the plugin](#downloading-the-plugin)
   - [Building the plugin](#building-the-plugin)
   - [Testing the plugin](#testing-the-plugin)
@@ -29,23 +31,29 @@ The whole project started as a collaboration with [Rafa Laguna](https://github.c
 
 With Godot 4.2+, the way android plugins work [has changed](https://docs.godotengine.org/en/stable/tutorials/platform/android/android_plugin.html), so I had to update this plugin to match the new requirements. Now there's only one editor plugin (this one), instead of having two separate plugins like before, one android plugin and one godot plugin.
 
-## How to use the plugin
-Using the plugin requires downloading the repository, generating the sources, and making some configuration steps. I'm working to provide a more user-friendly way of using the plugin, but for now I'm afraid this is the only way of using it.
+## Install the plugin
+Using the plugin requires downloading the assets in the [releases section](https://github.com/Iakobs/godot-play-game-services/releases) of the repository and following the steps described there to copy the plugin folder to your Godot project.
 
-### Downloading the plugin
-To download the plugin you can use `git` to clone it, or just download the repository in a zip file from GitHub.
+## The Demo project
+There is a Godot Project in the [demo folder](plugin/demo) of the repository. It contains its own documentation on how to use it, so please, take a look if you want to see how I implemented the basic features of this plugin in a real Godot game.
+
+## Building the plugin yourself
+If you want to modify something in the code or collaborate, and then you want to try your changes, you can also build the plugin files for yourself.
+
+### Downloading the repository
+To download the repository you can use `git` to clone it, or just download the repository in a zip file from GitHub.
 
 ![Screenshot of GitHub's menu to download the repository as a zip file](docs/images/download_repo.png)
 
 ### Building the plugin
-In a terminal window, navigate to the project's root directory and run the following command:
+After making your changes, or if you just want to manually build the plugin, follow these steps. In a terminal window, navigate to the project's root directory and run the following command:
 ```
 ./gradlew assemble
 ```
 The output files can be found in [`plugin/demo/addons`](plugin/demo/addons). The plugin itself, that you can copy to your project to use, is in the [`plugin/demo/addons/GodotPlayGameServices`](plugin/demo/addons/GodotPlayGameServices), just copy the whole `GodotPlayGameServices` folder into the `addons` folder of your Godot project and activate the plugin in `Project` -> `Project Settings...` -> `Plugins`
 
 ### Testing the plugin
-You can also use the included [Godot demo project](plugin/demo/project.godot) to test the built Android plugin.
+You can also use the included [Godot demo project](plugin/demo) to test the built Android plugin.
 
 - Open the demo in Godot (4.2 or higher)
 - Navigate to `Project` -> `Project Settings...` -> `Plugins`, and ensure the plugin is enabled
