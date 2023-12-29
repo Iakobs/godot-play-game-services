@@ -6,7 +6,6 @@ import org.godotengine.godot.plugin.SignalInfo
 /** @suppress */
 fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
     SignInSignals.userAuthenticated,
-    SignInSignals.userSignedIn,
 
     AchievementsSignals.achievementUnlocked,
     AchievementsSignals.achievementsLoaded,
@@ -33,18 +32,21 @@ fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
  */
 object SignInSignals {
     /**
-     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.isAuthenticated] method.
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.isAuthenticated]
+     * and [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.signIn] methods.
      *
      * @return `true` if the user is authenticated. `false` otherwise.
      */
     val userAuthenticated = SignalInfo("userAuthenticated", Boolean::class.javaObjectType)
 
     /**
-     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.signIn] method.
+     * This signal was emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.signIn] method.
+     * Now the method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.SignInSignals.userAuthenticated] signal instead.
      *
      * @return `true` if the user is signed in. `false` otherwise.
      *
      */
+    @Deprecated("This signal is not emitted anymore. The userAuthenticated signal is emitted instead.")
     val userSignedIn = SignalInfo("userSignedIn", Boolean::class.javaObjectType)
 }
 
@@ -144,7 +146,12 @@ object SnapshotSignals {
      *
      * @return A boolean indicating if the game was saved or not, and the name and description of the save file.
      */
-    val gameSaved = SignalInfo("gameSaved", Boolean::class.javaObjectType, String::class.java, String::class.java)
+    val gameSaved = SignalInfo(
+        "gameSaved",
+        Boolean::class.javaObjectType,
+        String::class.java,
+        String::class.java
+    )
 
     /**
      * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadGame] method

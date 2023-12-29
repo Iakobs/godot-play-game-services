@@ -85,7 +85,7 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
     /**
      * Use this method to provide a manual way to the user for signing in.
      *
-     * The method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.SignInSignals.userSignedIn] signal.
+     * The method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.SignInSignals.userAuthenticated] signal.
      */
     @UsedByGodot
     fun signIn() = signInProxy.signIn()
