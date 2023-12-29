@@ -1,3 +1,4 @@
+class_name PlayGamesPlayersClient
 extends Node
 ## Client with player functionality.
 ##
@@ -148,6 +149,7 @@ class Player:
 	var has_hi_res_image: bool ## Whether this player has a hi-res profile image to display.
 	var has_icon_image: bool ## Whether this player has an icon-size profile image to display.
 	
+	## Constructor that creates a Player from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
 		if dictionary.has("bannerImageLandscapeUri"): banner_image_landscape_uri = dictionary.bannerImageLandscapeUri
 		if dictionary.has("bannerImagePortraitUri"): banner_image_portrait_uri = dictionary.bannerImagePortraitUri
@@ -190,6 +192,7 @@ class PlayerLevelInfo:
 	var next_level: PlayerLevel ## The player's next level object.
 	var is_max_level: bool ## True if the player reached the maximum level ([member PlayerLevelInfo.current_level] is the same as [member PlayerLevelInfo.next_level]).
 	
+	## Constructor that creates a PlayerLevelInfo from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
 		if dictionary.has("currentLevel"): current_level = PlayerLevel.new(dictionary.currentLevel)
 		if dictionary.has("currentXpTotal"): current_xp_total = dictionary.currentXpTotal
@@ -214,6 +217,7 @@ class PlayerLevel:
 	var max_xp: int ## The maximum XP value represented by this level, exclusive.
 	var min_xp: int ## The minimum XP value needed to attain this level, inclusive.
 	
+	## Constructor that creates a PlayerLevel from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
 		if dictionary.has("levelNumber"): level_number = dictionary.levelNumber
 		if dictionary.has("maxXp"): max_xp = dictionary.maxXp

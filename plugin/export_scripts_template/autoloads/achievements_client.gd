@@ -1,3 +1,4 @@
+class_name PlayGamesAchievementsClient
 extends Node
 ## Client with achievements functionality.
 ##

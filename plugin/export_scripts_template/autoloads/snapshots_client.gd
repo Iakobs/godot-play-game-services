@@ -1,3 +1,4 @@
+class_name PlayGamesSnapshotsClient
 extends Node
 ## Client with save and load games functionality.
 ##
@@ -86,6 +87,7 @@ class Snapshot:
 	var content: PackedByteArray ## A [PackedByteArray] with the contents of the snapshot.
 	var metadata: SnapshotMetadata ## The metadata of the snapshot.
 	
+	## Constructor that creates a Snapshot from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
 		if dictionary.has("content"): content = dictionary.content
 		if dictionary.has("metadata"): metadata = SnapshotMetadata.new(dictionary.metadata)
@@ -104,6 +106,7 @@ class SnapshotConflict:
 	var conflicting_snapshot: Snapshot ## The modified version of the Snapshot in the case of a conflict. This may not be the same as the version that you tried to save.
 	var server_snapshot: Snapshot ## The most-up-to-date version of the Snapshot known by Google Play games services to be accurate for the player’s device.
 	
+	## Constructor that creates a SnapshotConflict from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
 		if dictionary.has("conflictId"): conflict_id = dictionary.conflictId
 		if dictionary.has("conflictingSnapshot"): conflicting_snapshot = Snapshot.new(dictionary.conflictingSnapshot)
@@ -133,6 +136,7 @@ class SnapshotMetadata:
 	var device_name: String ## The name of the device that wrote this snapshot, if known.
 	var cover_image_uri: String ## The snapshot cover image.
 	
+	## Constructor that creates a SnapshotMetadata from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
 		if dictionary.has("snapshotId"): snapshot_id = dictionary.snapshotId
 		if dictionary.has("uniqueName"): unique_name = dictionary.uniqueName
@@ -182,6 +186,7 @@ class Game:
 	var icon_image_uri: String ## The game's icon.
 	var featured_image_uri: String ## The game's featured (banner) image from Google Play.
 	
+	## Constructor that creates a Game from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
 		if dictionary.has("areSnapshotsEnabled"): are_snapshots_enabled = dictionary.areSnapshotsEnabled
 		if dictionary.has("achievementTotalCount"): achievement_total_count = dictionary.achievementTotalCount

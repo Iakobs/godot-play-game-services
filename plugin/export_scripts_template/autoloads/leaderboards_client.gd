@@ -1,3 +1,4 @@
+class_name PlayGamesLeaderboardsClient
 extends Node
 ## Client with  leaderboards functionality.
 ##
@@ -173,7 +174,7 @@ class Score:
 	var score_tag: String ## Optional score tag associated with this score.
 	var timestamp_millis: int ## Timestamp (in milliseconds from epoch) at which this score was achieved. 
 	
-	## Constructor that creates a Score froma [Dictionary] containing the properties.
+	## Constructor that creates a Score from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
 		if dictionary.has("displayRank"): display_rank = dictionary.displayRank 
 		if dictionary.has("displayScore"): display_score = dictionary.displayScore
