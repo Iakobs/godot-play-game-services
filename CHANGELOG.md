@@ -1,3 +1,11 @@
+## v1.2.0
+
+### Deprecated signal
+The `userSignedIn` signal is deprecated in favor of the already existing `userAuthenticated` signal. Now both `isAuthenticated` and `signIn` methods, emit the same signal.
+
+### Fake Logging
+Added some fake logging to the main menu. The Title of the screen shows different messages to show some common problems, like plugin not loaded or user not signed in.
+
 ## v1.1.0
 
 ### Saved Games

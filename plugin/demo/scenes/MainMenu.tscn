@@ -31,7 +31,8 @@ theme_override_constants/separation = 50
 [node name="NavBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/NavBar"]
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/NavBar"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
 theme = ExtResource("2_aajnr")
