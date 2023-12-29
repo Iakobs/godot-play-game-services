@@ -120,3 +120,16 @@ image::screenshots/snapshots/show_saved_games.png[alt=Screenshot of screen provi
 When you click on `Select`, the contents of the saved game will fill the forms in the previous screen.
 
 The code for this screen is all in the `Snapshots.gd` script.
+
+== Troubleshooting
+In order to ease the troubleshooting process, the main menu of the app uses the title at the top to display common error messages.
+
+=== Plugin not found
+If the plugin is not found, the title will display this text: #Plugin Not Found!#
+
+=== Signing in
+If the user is not signed in, the game automatically tries to sign them in with a retry mechanism.
+
+While trying to sign in, the title will display the #Trying to sign in!# text. After the maximum number of retries (5), if the user wasn't logged in, it will display this text: #Sign in attemps expired!#.
+
+In this case, you should look at the logs of the application. Doing so with Android Studio's logcat is easier. Use this regex to filter the logs: `package:com.jacobibanez.godot.test.game package:com.google.android.gms`
