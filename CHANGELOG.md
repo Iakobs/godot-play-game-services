@@ -6,6 +6,9 @@ The `userSignedIn` signal is deprecated in favor of the already existing `userAu
 ### Fake Logging
 Added some fake logging to the main menu. The Title of the screen shows different messages to show some common problems, like plugin not loaded or user not signed in.
 
+### Bug fixing
+The `leaderboards_client.gd` script had a wrong call to the android plugin in the `show_leaderboard` function. Thanks to [mrbut1995](https://github.com/Iakobs/godot-play-game-services/issues/5) for finding it and notifying!
+
 ## v1.1.0
 
 ### Saved Games
