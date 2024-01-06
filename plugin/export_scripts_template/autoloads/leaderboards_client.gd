@@ -83,7 +83,7 @@ func show_all_leaderboards() -> void:
 ## [param leaderboard_id]: The leaderboard id.
 func show_leaderboard(leaderboard_id: String) -> void:
 	if GodotPlayGameServices.android_plugin:
-		GodotPlayGameServices.android_plugin.showAllLeaderboards(leaderboard_id)
+		GodotPlayGameServices.android_plugin.showLeaderboard(leaderboard_id)
 
 ## Use this method to show a specific leaderboard for a given time span in a new screen.[br]
 ## [br]
