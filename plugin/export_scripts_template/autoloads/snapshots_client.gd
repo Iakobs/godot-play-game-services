@@ -132,7 +132,7 @@ class SnapshotMetadata:
 	var played_time: int ## The played time of this snapshot in milliseconds.
 	var has_change_pending: bool ## Indicates whether or not this snapshot has any changes pending that have not been uploaded to the server.
 	var owner: PlayersClient.Player ## The player that owns this snapshot.
-	var game: Game ## The game associated with this snapshot.
+	var game: GameInfo ## The game information associated with this snapshot.
 	var device_name: String ## The name of the device that wrote this snapshot, if known.
 	var cover_image_uri: String ## The snapshot cover image.
 	
@@ -147,7 +147,7 @@ class SnapshotMetadata:
 		if dictionary.has("playedTime"): played_time = dictionary.playedTime
 		if dictionary.has("hasChangePending"): has_change_pending = dictionary.hasChangePending
 		if dictionary.has("owner"): owner = PlayersClient.Player.new(dictionary.owner)
-		if dictionary.has("game"): game = Game.new(dictionary.game)
+		if dictionary.has("game"): game = GameInfo.new(dictionary.game)
 		if dictionary.has("deviceName"): device_name = dictionary.deviceName
 		if dictionary.has("coverImageUri"): cover_image_uri = dictionary.coverImageUri
 	
@@ -169,8 +169,8 @@ class SnapshotMetadata:
 		
 		return ", ".join(result)
 
-## Alass with information about a game.
-class Game:
+## A class with information about a game.
+class GameInfo:
 	var are_snapshots_enabled: bool ## Indicates whether or not this game supports snapshots.
 	var achievement_total_count: int ## The number of achievements registered for this game.
 	var application_id: String ## The application ID for this game.

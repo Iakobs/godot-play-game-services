@@ -1,3 +1,7 @@
+## v1.2.1
+### Rename the `Game` class in `snapshots_client.gd` to `GameInfo`
+The `Game` inner class in the `SnapshotsClient` autoload was renamed to `GameInfo` to avoid possible common clashes with games who might already use that name in their own namespace, as suggested by @g-libardi in [this issue](https://github.com/Iakobs/godot-play-game-services/issues/9).
+
 ## v1.2.0
 
 ### Deprecated signal
