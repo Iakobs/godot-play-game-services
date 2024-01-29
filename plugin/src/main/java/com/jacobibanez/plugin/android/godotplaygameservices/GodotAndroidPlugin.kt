@@ -92,6 +92,21 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
     fun signIn() = signInProxy.signIn()
 
     /**
+     * Requests server-side access to Play Games Services for the currently signed-in player.
+     *
+     * When requested, an authorization code is returned that can be used by your server to exchange
+     * for an access token that can be used by your server to access the Play Games Services web APIs.
+     *
+     * @param serverClientId The client ID of the server that will perform the authorization code flow exchange.
+     * @param forceRefreshToken If true, when the returned authorization code is exchanged, a refresh
+     * token will be included in addition to an access token.
+     *
+     */
+    @UsedByGodot
+    fun requestServerSideAccess(serverClientId: String, forceRefreshToken: Boolean) =
+        signInProxy.signInRequestServerSideAccess(serverClientId, forceRefreshToken)
+
+    /**
      * Use this method to increment a given achievement in the given amount. For normal achievements,
      * use the [unlockAchievement] method instead.
      *
