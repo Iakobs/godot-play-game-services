@@ -28,6 +28,8 @@ func _load_config() -> void:
 		printerr("Error loading configuration for Game Services! Error: %s" % err)
 
 func _save_config() -> void:
+	var clean_user_input := str(game_id.text.to_int())
+	game_id.text = clean_user_input
 	if _config:
-		_config.set_value(CONFIG_SECTION, GAME_ID_KEY, game_id.text)
+		_config.set_value(CONFIG_SECTION, GAME_ID_KEY, clean_user_input)
 		_config.save(CONFIG_FILE_NAME)

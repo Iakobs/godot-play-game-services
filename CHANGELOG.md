@@ -1,3 +1,11 @@
+## v1.4.0
+### Increase max length of Game ID
+In the new dock that the plugin adds to the bottom bar, the max length of the Game ID has been increased from 12 to 20 characters.
+
+Also, the input of the user is now converted to a number, stripping any letters or symbols from it.
+
+Thanks to @godfryd for pointing this issue out in [this issue](https://github.com/Iakobs/godot-play-game-services/issues/13).
+
 ## v1.3.0
 ### Add method to request a server side access token
 Added the `requestServerSideAccess` method to the plugin to request a server side access token, in case the users of the plugin want to develop a backend to communicate with the [web REST API](https://developers.google.com/games/services/web/api/rest) that Google provides.
