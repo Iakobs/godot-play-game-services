@@ -1,4 +1,3 @@
-class_name PlayGamesPlayersClient
 extends Node
 ## Client with player functionality.
 ##

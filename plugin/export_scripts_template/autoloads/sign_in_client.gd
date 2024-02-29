@@ -1,4 +1,3 @@
-class_name PlayGamesSignInClient
 extends Node
 ## Client with sign in functionality.
 ##

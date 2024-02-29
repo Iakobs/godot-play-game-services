@@ -1,4 +1,3 @@
-class_name PlayGamesSnapshotsClient
 extends Node
 ## Client with save and load games functionality.
 ##

@@ -1,3 +1,7 @@
+## v1.5.0
+### Order of autoloads
+The autoloads where causing errors on first launch of the project, due to the load order and dependencies between them. The load order has now been fixed to avoid this errors.
+
 ## v1.4.0
 ### Increase max length of Game ID
 In the new dock that the plugin adds to the bottom bar, the max length of the Game ID has been increased from 12 to 20 characters.

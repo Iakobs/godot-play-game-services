@@ -1,4 +1,3 @@
-class_name PlayGamesEntryPoint
 extends Node
 ## Main Autoload of the plugin, which contains a reference to the android plugin itself.
 ##

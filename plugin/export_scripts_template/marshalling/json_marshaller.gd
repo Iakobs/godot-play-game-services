@@ -1,5 +1,4 @@
-class_name JsonMarshaller
-extends Object
+class_name JsonMarshaller extends RefCounted
 ## A Class for encapsulating JSON parsing
 ##
 ## This class exposes methods to parse JSON arrays and dictionaries.
