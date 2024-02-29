@@ -7,7 +7,7 @@ Doc Writer <jacobibanez@jacobibanez.com>
 
 This folder is a Godot project that you can directly open in Godot 4.2 to see an implementation of the plugin in a real Godot game.
 
-IMPORTANT: To use this project, you have to uncompress the contents of the `addons.zip` file in the link:https://github.com/Iakobs/godot-play-game-services/releases[releases section] of the repository to the root folder of the project.
+IMPORTANT: To use this project, you have to uncompress the contents of the `addons.zip` file in the link:https://github.com/Iakobs/godot-play-game-services/releases[releases section] of the repository to the root folder of the project. Alternatively, you can run the `./gradlew assemble` command from the root of the repository. This command will install the plugin in the `addons` directory of the godot project.
 
 == Directory Structure
 The demo project contains a `scenes` folder with all the `.tscn` and `.gd` files that you will need, everything is inside this folder.
@@ -22,6 +22,15 @@ This is an android project with a custom build, so in order to run your game fro
 You also have to create an `Export Configuration` for Android. Refer to the https://github.com/Iakobs/godot-play-game-services#export-configuration[README] of the repository.
 
 Finally, you can not run the game as a normal game. Instead, you have to run it in an android device (real or emulated) via the `Remote Debug` button in the top right corner of the Godot editor.
+
+== First time opening the demo project
+The first time you open the demo project, you will see this error in the Godot editor:
+
+image::demo_project_error.png[alt="Screenshot of an error in the Godot editor that says:\"Failed to load script \"res://scenes/MainMenu.gd\" with error \"Parse Error\".",title=Error loading script at first run of the project.width=298,aligb=center]
+
+This is completely normal, because the plugin is not yet activated. Simply go to `Project > Project Settings > Plugins` and enable the plugin, which should appear there if you have installed it in the `addons` folder.
+
+After enabling the plugin, confirm that the autoloads appear in the `Autoload` tab. Then simply reload your project from `Project > Reload Current Project`, and you are good to go!
 
 == Signing In
 The first thing the project does is checking if the user is authenticated, and if not, calls the `sign_in` method of the plugin.
