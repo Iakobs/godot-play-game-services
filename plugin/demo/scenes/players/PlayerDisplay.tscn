@@ -10,7 +10,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme = ExtResource("1_uv4o5")
 script = ExtResource("2_87phy")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
