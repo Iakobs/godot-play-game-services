@@ -1,6 +1,12 @@
 ## v1.5.0
 ### Order of autoloads
-The autoloads where causing errors on first launch of the project, due to the load order and dependencies between them. The load order has now been fixed to avoid this errors.
+The autoloads where causing errors on first launch of the project, due to the load order and dependencies between them. The load order has now been fixed to avoid this errors. Also, the plugin is now disabled by default in the demo project. Look at the [demo project documentation](https://github.com/Iakobs/godot-play-game-services/tree/main/plugin/demo) for further info.
+
+### Load player centered scores
+The [loadPlayerCenteredScores](https://developers.google.com/android/reference/com/google/android/gms/games/LeaderboardsClient#loadPlayerCenteredScores(java.lang.String,%20int,%20int,%20int,%20boolean)) method from Google's API has been added to the plugin. This method returns a list of scores, centered in the signed in player, for a given leaderboard. There's no example in the demo app yet, but it's usage is documented in the code itself.
+
+### Load top scores
+The [loadTopScores](https://developers.google.com/android/reference/com/google/android/gms/games/LeaderboardsClient#loadTopScores(java.lang.String,%20int,%20int,%20int,%20boolean)) method from Google's API has been added to the plugin. This method returns the top scores of a leaderboard for a given leaderboard. There's no example in the demo app yet, but it's usage is documented in the code itself.
 
 ## v1.4.0
 ### Increase max length of Game ID

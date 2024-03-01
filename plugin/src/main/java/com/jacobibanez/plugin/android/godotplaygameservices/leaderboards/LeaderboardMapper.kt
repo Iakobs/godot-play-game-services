@@ -1,5 +1,6 @@
 package com.jacobibanez.plugin.android.godotplaygameservices.leaderboards
 
+import com.google.android.gms.games.LeaderboardsClient
 import com.google.android.gms.games.leaderboard.Leaderboard
 import com.google.android.gms.games.leaderboard.LeaderboardScore
 import com.google.android.gms.games.leaderboard.LeaderboardVariant
@@ -73,3 +74,10 @@ fun fromLeaderboardVariant(variants: ArrayList<LeaderboardVariant>): List<Dictio
             put("hasPlayerInfo", variant.hasPlayerInfo())
         }
     }.toList()
+
+/** @suppress */
+fun fromLeaderboardScores(godot: Godot, scores: LeaderboardsClient.LeaderboardScores) = Dictionary().apply {
+    put("leaderboard", fromLeaderboard(godot, scores.leaderboard!!))
+    val scoresMapped = scores.scores.map { fromLeaderboardScore(godot, it) }.toList()
+    put("scores", scoresMapped)
+}

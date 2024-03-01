@@ -17,6 +17,18 @@ signal score_submitted(is_submitted: bool, leaderboard_id: String)
 ## retrieving it.
 signal score_loaded(leaderboard_id: String, score: Score)
 
+## Signal emitted after calling the [method load_player_centered_scores] method.[br]
+## [br]
+## [param leaderboard_id]: The leaderboard id.[br]
+## [param leaderboard_scores]: The scores for the leaderboard, centered in the player.
+signal player_centered_scores_loaded(leaderboard_id: String, leaderboard_scores: LeaderboardScores)
+
+## Signal emitted after calling the [method load_top_scores] method.[br]
+## [br]
+## [param leaderboard_id]: The leaderboard id.[br]
+## [param leaderboard_scores]: The top scores for the leaderboard.
+signal top_scores_loaded(leaderboard_id: String, leaderboard_scores: LeaderboardScores)
+
 ## Signal emitted after calling the [method load_all_leaderboards] method.[br]
 ## [br]
 ## [param leaderboards]: An array containing all the leaderboards for the game.
@@ -70,6 +82,14 @@ func _connect_signals() -> void:
 		GodotPlayGameServices.android_plugin.leaderboardLoaded.connect(func(json_data: String):
 			var safe_dictionary := GodotPlayGameServices.json_marshaller.safe_parse_dictionary(json_data)
 			leaderboard_loaded.emit(Leaderboard.new(safe_dictionary))
+		)
+		GodotPlayGameServices.android_plugin.playerCenteredScoresLoaded.connect(func(leaderboard_id: String, json_data: String):
+			var safe_dictionary := GodotPlayGameServices.json_marshaller.safe_parse_dictionary(json_data)
+			player_centered_scores_loaded.emit(leaderboard_id, LeaderboardScores.new(safe_dictionary))
+		)
+		GodotPlayGameServices.android_plugin.topScoresLoaded.connect(func(leaderboard_id: String, json_data: String):
+			var safe_dictionary := GodotPlayGameServices.json_marshaller.safe_parse_dictionary(json_data)
+			top_scores_loaded.emit(leaderboard_id, LeaderboardScores.new(safe_dictionary))
 		)
 
 ## Use this method to show all leaderbords for this game in a new screen.
@@ -160,6 +180,65 @@ func load_leaderboard(leaderboard_id: String, force_reload: bool) -> void:
 	if GodotPlayGameServices.android_plugin:
 		GodotPlayGameServices.android_plugin.loadLeaderboard(leaderboard_id, force_reload)
 
+## Use this method and subscribe to the emitted signal to receive an object containing
+## the selected leaderboard and an array of scores for that leaderboard, centered in the
+## currently signed in player.[br]
+## [br]
+## The method emits the [signal player_centered_scores_loaded] signal.[br]
+## [br]
+## [param leaderboard_id]: The leaderboard id.[br]
+## [param time_span]: The time span for the leaderboard. See the [enum TimeSpan] enum.[br]
+## [param collection]: The collection type for the leaderboard. See the [enum Collection] enum.[br]
+## [param max_results]: The maximum number of scores to fetch per page. Must be between 1 and 25.
+## [param force_reload]: If true, this call will clear any locally cached 
+## data and attempt to fetch the latest data from the server. Send it set to [code]true[/code]
+## the first time, and [code]false[/code] in subsequent calls, or when you want
+## to clear the cache.
+func load_player_centered_scores(
+	leaderboard_id: String,
+	time_span: TimeSpan,
+	collection: Collection,
+	max_results: int,
+	force_reload: bool
+) -> void:
+	if GodotPlayGameServices.android_plugin:
+		GodotPlayGameServices.android_plugin.loadPlayerCenteredScores(
+			leaderboard_id,
+			time_span,
+			collection,
+			max_results,
+			force_reload
+		)
+
+## Use this method and subscribe to the emitted signal to receive an object containing
+## the selected leaderboard and an array of the top scores for that leaderboard.[br]
+## [br]
+## The method emits the [signal top_scores_loaded] signal.[br]
+## [br]
+## [param leaderboard_id]: The leaderboard id.[br]
+## [param time_span]: The time span for the leaderboard. See the [enum TimeSpan] enum.[br]
+## [param collection]: The collection type for the leaderboard. See the [enum Collection] enum.[br]
+## [param max_results]: The maximum number of scores to fetch per page. Must be between 1 and 25.
+## [param force_reload]: If true, this call will clear any locally cached 
+## data and attempt to fetch the latest data from the server. Send it set to [code]true[/code]
+## the first time, and [code]false[/code] in subsequent calls, or when you want
+## to clear the cache.
+func load_top_scores(
+	leaderboard_id: String,
+	time_span: TimeSpan,
+	collection: Collection,
+	max_results: int,
+	force_reload: bool
+) -> void:
+	if GodotPlayGameServices.android_plugin:
+		GodotPlayGameServices.android_plugin.loadTopScores(
+			leaderboard_id,
+			time_span,
+			collection,
+			max_results,
+			force_reload
+		)
+
 ## The score of a player for a specific leaderboard.
 class Score:
 	var display_rank: String ## Formatted string for the rank of the player.
@@ -171,11 +250,11 @@ class Score:
 	var score_holder_hi_res_image_uri: String ## Hi-res image of the player.
 	var score_holder_icon_image_uri: String ## Icon image of the player.
 	var score_tag: String ## Optional score tag associated with this score.
-	var timestamp_millis: int ## Timestamp (in milliseconds from epoch) at which this score was achieved. 
+	var timestamp_millis: int ## Timestamp (in milliseconds from epoch) at which this score was achieved.
 	
 	## Constructor that creates a Score from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
-		if dictionary.has("displayRank"): display_rank = dictionary.displayRank 
+		if dictionary.has("displayRank"): display_rank = dictionary.displayRank
 		if dictionary.has("displayScore"): display_score = dictionary.displayScore
 		if dictionary.has("rank"): rank = dictionary.rank
 		if dictionary.has("rawScore"): raw_score = dictionary.rawScore
@@ -273,5 +352,28 @@ class LeaderboardVariant:
 		result.append("has_player_info: %s" % has_player_info)
 		result.append("collection: %s" % str(collection))
 		result.append("time_span: %s" % str(time_span))
+		
+		return ", ".join(result)
+
+## A class holding a list of scores for a leaderboard.
+class LeaderboardScores:
+	var leaderboard: Leaderboard ## The leaderboard.
+	var scores: Array[Score] ## The list of scores for this leaderboard.
+	
+	## Constructor that creates a LeaderboardScores from a [Dictionary] containting
+	## the properties.
+	func _init(dictionary: Dictionary) -> void:
+		if dictionary.has("leaderboard"): leaderboard = Leaderboard.new(dictionary.leaderboard)
+		if dictionary.has("scores"):
+			for score: Dictionary in dictionary.scores:
+				scores.append(Score.new(score))
+	
+	func _to_string() -> String:
+		var result := PackedStringArray()
+		
+		result.append("leaderboard: %s" % leaderboard)
+		
+		for score: Score in scores:
+			result.append("{%s}" % str(score))
 		
 		return ", ".join(result)

@@ -26,4 +26,3 @@ func _ready() -> void:
 	show_leaderboards_button.pressed.connect(func():
 		LeaderboardsClient.show_all_leaderboards()
 	)
-	

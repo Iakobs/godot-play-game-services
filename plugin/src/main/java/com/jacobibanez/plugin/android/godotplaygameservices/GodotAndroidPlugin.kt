@@ -258,6 +258,61 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
         leaderboardsProxy.loadLeaderboard(leaderboardId, forceReload)
 
     /**
+     * Call this method and subscribe to the emitted signal to receive the selected leaderboard and an
+     * array of scores for that leaderboard, centered in the currently signed in player. The JSON received
+     * from the [com.jacobibanez.plugin.android.godotplaygameservices.signals.LeaderboardSignals.playerCenteredScoresLoaded]
+     * signal, contains a representation of the [com.google.android.gms.games.LeaderboardsClient.LeaderboardScores](https://developers.google.com/android/reference/com/google/android/gms/games/LeaderboardsClient.LeaderboardScores) class.
+     *
+     * @param leaderboardId The leaderboard id.
+     * @param timeSpan The time span for the leaderboard refresh. It can be any of the [com.jacobibanez.plugin.android.godotplaygameservices.leaderboards.TimeSpan] values.
+     * @param collection The collection type for the leaderboard. It can be any of the [[com.jacobibanez.plugin.android.godotplaygameservices.leaderboards.Collection]] values.
+     * @param maxResults The maximum number of scores to fetch per page. Must be between 1 and 25.
+     * @param forceReload If true, this call will clear any locally cached data and attempt to fetch
+     * the latest data from the server.
+     */
+    @UsedByGodot
+    fun loadPlayerCenteredScores(
+        leaderboardId: String,
+        timeSpan: Int,
+        collection: Int,
+        maxResults: Int,
+        forceReload: Boolean
+    ) = leaderboardsProxy.loadPlayerCenteredScores(
+        leaderboardId,
+        timeSpan,
+        collection,
+        maxResults,
+        forceReload
+    )
+
+    /**
+     * Call this method and subscribe to the emitted signal to receive the selected leaderboard and an
+     * array of the top scores for that leaderboard. The JSON received from the [com.jacobibanez.plugin.android.godotplaygameservices.signals.LeaderboardSignals.playerCenteredScoresLoaded]
+     * signal, contains a representation of the [com.google.android.gms.games.LeaderboardsClient.LeaderboardScores](https://developers.google.com/android/reference/com/google/android/gms/games/LeaderboardsClient.LeaderboardScores) class.
+     *
+     * @param leaderboardId The leaderboard id.
+     * @param timeSpan The time span for the leaderboard refresh. It can be any of the [com.jacobibanez.plugin.android.godotplaygameservices.leaderboards.TimeSpan] values.
+     * @param collection The collection type for the leaderboard. It can be any of the [[com.jacobibanez.plugin.android.godotplaygameservices.leaderboards.Collection]] values.
+     * @param maxResults The maximum number of scores to fetch per page. Must be between 1 and 25.
+     * @param forceReload If true, this call will clear any locally cached data and attempt to fetch
+     * the latest data from the server.
+     */
+    @UsedByGodot
+    fun loadTopScores(
+        leaderboardId: String,
+        timeSpan: Int,
+        collection: Int,
+        maxResults: Int,
+        forceReload: Boolean
+    ) = leaderboardsProxy.loadTopScores(
+        leaderboardId,
+        timeSpan,
+        collection,
+        maxResults,
+        forceReload
+    )
+
+    /**
      * Call this method and subscribe to the emitted signal to receive the list of friends for the
      * currently signed in player in JSON format. The JSON received from the [com.jacobibanez.plugin.android.godotplaygameservices.signals.PlayerSignals.friendsLoaded]
      * signal, contains a list of elements representing the [com.google.android.gms.games.Player](https://developers.google.com/android/reference/com/google/android/gms/games/Player) class.
