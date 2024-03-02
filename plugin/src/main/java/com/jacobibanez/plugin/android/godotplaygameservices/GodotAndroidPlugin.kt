@@ -423,9 +423,11 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
      *
      * @param fileName The name of the save file. Must be between 1 and 100 non-URL-reserved
      * characters (a-z, A-Z, 0-9, or the symbols "-", ".", "_", or "~").
+     * @param createIfNotFound False by default. If true, the snapshot will be created if one cannot be found.
      */
     @UsedByGodot
-    fun loadGame(fileName: String) = snapshotsProxy.loadGame(fileName)
+    fun loadGame(fileName: String, createIfNotFound: Boolean = false) =
+        snapshotsProxy.loadGame(fileName, createIfNotFound)
 
     /**
      * Loads the list of [com.google.android.gms.games.snapshot.SnapshotMetadata](https://developers.google.com/android/reference/com/google/android/gms/games/snapshot/SnapshotMetadata)

@@ -88,10 +88,11 @@ func save_game(
 ## [br]
 ## This method emits the [signal game_loaded] signal.[br]
 ## [br]
-## [param fileName]: The name of the save file. Must be between 1 and 100 non-URL-reserved charactes (a-z, A-Z, 0-9, or the symbols "-", ".", "_", or "~").
-func load_game(file_name: String) -> void:
+## [param fileName]: The name of the save file. Must be between 1 and 100 non-URL-reserved charactes (a-z, A-Z, 0-9, or the symbols "-", ".", "_", or "~").[br]
+## [param create_if_not_found]: False by default. If true, the snapshot will be created if one cannot be found.
+func load_game(file_name: String, create_if_not_found := false) -> void:
 	if GodotPlayGameServices.android_plugin:
-		GodotPlayGameServices.android_plugin.loadGame(file_name)
+		GodotPlayGameServices.android_plugin.loadGame(file_name, create_if_not_found)
 
 ## Loads the list of [SnapshotMetadata] of the current signed in player.[br]
 ## [br]

@@ -36,7 +36,7 @@ class SnapshotsProxy(
                 if (intent.hasExtra(EXTRA_SNAPSHOT_METADATA)) {
                     val snapshotMetadata = intent.extras
                         ?.get(EXTRA_SNAPSHOT_METADATA) as SnapshotMetadata
-                    loadGame(snapshotMetadata.uniqueName)
+                    loadGame(snapshotMetadata.uniqueName, false)
                 }
             }
         }
@@ -93,9 +93,9 @@ class SnapshotsProxy(
             }
     }
 
-    fun loadGame(fileName: String) {
+    fun loadGame(fileName: String, createIfNotFound: Boolean) {
         Log.d(tag, "Loading snapshot with name $fileName.")
-        snapshotsClient.open(fileName, false, RESOLUTION_POLICY_MOST_RECENTLY_MODIFIED)
+        snapshotsClient.open(fileName, createIfNotFound, RESOLUTION_POLICY_MOST_RECENTLY_MODIFIED)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val dataOrConflict = task.result
