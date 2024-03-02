@@ -28,6 +28,9 @@ fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
     SnapshotSignals.conflictEmitted,
     SnapshotSignals.snapshotsLoaded,
 
+    EventsSignals.eventsLoaded,
+    EventsSignals.eventsLoadedByIds,
+
     HelperSignals.imageStored,
 )
 
@@ -114,7 +117,8 @@ object LeaderboardSignals {
      *
      * @return The leaderboard id and a JSON with a [com.google.android.gms.games.LeaderboardsClient.LeaderboardScores](https://developers.google.com/android/reference/com/google/android/gms/games/LeaderboardsClient.LeaderboardScores).
      */
-    val playerCenteredScoresLoaded = SignalInfo("playerCenteredScoresLoaded", String::class.java, String::class.java)
+    val playerCenteredScoresLoaded =
+        SignalInfo("playerCenteredScoresLoaded", String::class.java, String::class.java)
 
     /**
      * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadTopScores] method.
@@ -199,6 +203,25 @@ object SnapshotSignals {
      * @return A [List] of [com.google.android.gms.games.snapshot.SnapshotMetadata](https://developers.google.com/android/reference/com/google/android/gms/games/snapshot/SnapshotMetadata).
      */
     val snapshotsLoaded = SignalInfo("snapshotsLoaded", String::class.java)
+}
+
+/**
+ * Signals emitted by Events methods.
+ */
+object EventsSignals {
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadEvents] method.
+     *
+     * @return A JSON with the list of [com.google.android.gms.games.event.Event](https://developers.google.com/android/reference/com/google/android/gms/games/event/Event).
+     */
+    val eventsLoaded = SignalInfo("eventsLoaded", String::class.java)
+
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadEventsByIds] method.
+     *
+     * @return A JSON with the list of [com.google.android.gms.games.event.Event](https://developers.google.com/android/reference/com/google/android/gms/games/event/Event).
+     */
+    val eventsLoadedByIds = SignalInfo("eventsLoadedByIds", String::class.java)
 }
 
 object HelperSignals {

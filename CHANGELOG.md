@@ -11,6 +11,12 @@ Added the `createIfNotFound` parameter to the `loadGame` method, with a default 
 ### Add method to delete snapshots
 Added new method to delete snapshots by snapshot id.
 
+### Add methods for events API
+Added three new methods for events API:
+- incrementEvent
+- loadEvents
+- loadEventsByIds
+
 ## v1.5.0
 ### Order of autoloads
 The autoloads where causing errors on first launch of the project, due to the load order and dependencies between them. The load order has now been fixed to avoid this errors. Also, the plugin is now disabled by default in the demo project. Look at the [demo project documentation](https://github.com/Iakobs/godot-play-game-services/tree/main/plugin/demo) for further info.

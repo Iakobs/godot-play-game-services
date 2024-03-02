@@ -8,6 +8,7 @@ const ACHIEVEMENTS_AUTOLOAD := "AchievementsClient"
 const LEADERBOARDS_AUTOLOAD := "LeaderboardsClient"
 const PLAYERS_AUTOLOAD := "PlayersClient"
 const SNAPSHOTS_AUTOLOAD := "SnapshotsClient"
+const EVENTS_AUTOLOAD := "EventsClient"
 
 var _export_plugin : AndroidExportPlugin
 var _dock : Node
@@ -48,8 +49,10 @@ func _add_autoloads() -> void:
 	add_autoload_singleton(ACHIEVEMENTS_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/achievements_client.gd")
 	add_autoload_singleton(LEADERBOARDS_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/leaderboards_client.gd")
 	add_autoload_singleton(SNAPSHOTS_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/snapshots_client.gd")
+	add_autoload_singleton(EVENTS_AUTOLOAD, "res://addons/GodotPlayGameServices/autoloads/events_client.gd")
 
 func _remove_autoloads() -> void:
+	remove_autoload_singleton(EVENTS_AUTOLOAD)
 	remove_autoload_singleton(SNAPSHOTS_AUTOLOAD)
 	remove_autoload_singleton(LEADERBOARDS_AUTOLOAD)
 	remove_autoload_singleton(ACHIEVEMENTS_AUTOLOAD)

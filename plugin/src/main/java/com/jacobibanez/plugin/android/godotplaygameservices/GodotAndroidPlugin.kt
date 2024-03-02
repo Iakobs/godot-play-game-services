@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import com.google.android.gms.games.PlayGamesSdk
 import com.jacobibanez.plugin.android.godotplaygameservices.achievements.AchievementsProxy
+import com.jacobibanez.plugin.android.godotplaygameservices.events.EventsProxy
 import com.jacobibanez.plugin.android.godotplaygameservices.leaderboards.LeaderboardsProxy
 import com.jacobibanez.plugin.android.godotplaygameservices.players.PlayersProxy
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.getSignals
@@ -30,6 +31,7 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
     private val leaderboardsProxy = LeaderboardsProxy(godot)
     private val playersProxy = PlayersProxy(godot)
     private val snapshotsProxy = SnapshotsProxy(godot)
+    private val eventsProxy = EventsProxy(godot)
 
     /** @suppress */
     override fun getPluginSignals(): MutableSet<SignalInfo> {
@@ -446,6 +448,39 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
      * @param snapshotId The snapshot identifier.
      */
     @UsedByGodot
-    fun deleteSnapshot(snapshotId: String) =
-        snapshotsProxy.deleteSnapshot(snapshotId)
+    fun deleteSnapshot(snapshotId: String) = snapshotsProxy.deleteSnapshot(snapshotId)
+
+    /**
+     * Increments an event specified by eventId by the given number of steps.
+     *
+     * This is the fire-and-forget API. Event increments are cached locally and flushed to the server in batches.
+     *
+     * @param eventId The event ID to increment.
+     * @param incrementAmount The amount increment by. Must be greater than or equal to 0.
+     */
+    @UsedByGodot
+    fun incrementEvent(eventId: String, incrementAmount: Int) =
+        eventsProxy.incrementEvent(eventId, incrementAmount)
+
+    /**
+     * Loads a list of events for the currently signed-in player. This method emits the
+     * [com.jacobibanez.plugin.android.godotplaygameservices.signals.EventsSignals.eventsLoaded] signal.
+     *
+     * @param forceReload If true, this call will clear any locally cached data and attempt to fetch
+     * the latest data from the server.
+     */
+    @UsedByGodot
+    fun loadEvents(forceReload: Boolean) = eventsProxy.loadEvents(forceReload)
+
+    /**
+     * Loads a specific list of events for the currently signed-in player. This method emits the
+     * [com.jacobibanez.plugin.android.godotplaygameservices.signals.EventsSignals.eventsLoadedByIds] signal.
+     *
+     * @param forceReload If true, this call will clear any locally cached data and attempt to fetch
+     * the latest data from the server.
+     * @param eventIds The IDs of the events to load.
+     */
+    @UsedByGodot
+    fun loadEventsByIds(forceReload: Boolean, eventIds: Array<String>) =
+        eventsProxy.loadEventsByIds(forceReload, eventIds)
 }
