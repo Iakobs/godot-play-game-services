@@ -96,25 +96,23 @@ class SnapshotsProxy(
     fun loadGame(fileName: String) {
         Log.d(tag, "Loading snapshot with name $fileName.")
         snapshotsClient.open(fileName, false, RESOLUTION_POLICY_MOST_RECENTLY_MODIFIED)
-            .addOnFailureListener { exception ->
-                Log.e(tag, "Error while opening Snapshot $fileName for loading.", exception);
-            }.continueWith { task ->
-                val dataOrConflict = task.result
-                if (dataOrConflict.isConflict) {
-                    handleConflict(dataOrConflict.conflict)
-                    return@continueWith null
-                }
-                dataOrConflict.data?.let { snapshot ->
-                    return@continueWith snapshot
-                }
-            }.addOnCompleteListener { task ->
-                task.result?.let { snapshot ->
-                    emitSignal(
-                        godot,
-                        GODOT_PLUGIN_NAME,
-                        gameLoaded,
-                        fromSnapshot(godot, snapshot)
-                    )
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val dataOrConflict = task.result
+                    if (dataOrConflict.isConflict) {
+                        handleConflict(dataOrConflict.conflict)
+                        return@addOnCompleteListener
+                    }
+                    dataOrConflict.data?.let { snapshot ->
+                        emitSignal(
+                            godot,
+                            GODOT_PLUGIN_NAME,
+                            gameLoaded,
+                            fromSnapshot(godot, snapshot)
+                        )
+                    }
+                } else {
+                    Log.e(tag, "Error while opening Snapshot $fileName for loading. Cause: ${task.exception}")
                 }
             }
     }
