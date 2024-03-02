@@ -22,6 +22,11 @@ signal game_loaded(snapshot: Snapshot)
 ## [param conflict]: The conflict containing and id and both conflicting snapshots.
 signal conflict_emitted(conflict: SnapshotConflict)
 
+## Signal emitted after calling the [method load_snapshots] method.[br]
+## [br]
+## [param snapshots]: The list of snapshots for the current signed in player.
+signal snapshots_loaded(snapshots: Array[SnapshotMetadata])
+
 ## Constant passed to the [method show_saved_games] method to not limit the number of displayed saved files.  
 const DISPLAY_LIMIT_NONE := -1
 
@@ -36,6 +41,13 @@ func _ready() -> void:
 		)
 		GodotPlayGameServices.android_plugin.conflictEmitted.connect(func(dictionary: Dictionary):
 			conflict_emitted.emit(SnapshotConflict.new(dictionary))
+		)
+		GodotPlayGameServices.android_plugin.snapshotsLoaded.connect(func(json_data: String):
+			var safe_array := GodotPlayGameServices.json_marshaller.safe_parse_array(json_data)
+			var snapshots: Array[SnapshotMetadata] = []
+			for dictionary: Dictionary in safe_array:
+				snapshots.append(SnapshotMetadata.new(dictionary))
+			snapshots_loaded.emit(snapshots)
 		)
 
 ## Opens a new window to display the saved games for the current player. If you select
@@ -77,9 +89,19 @@ func save_game(
 ## This method emits the [signal game_loaded] signal.[br]
 ## [br]
 ## [param fileName]: The name of the save file. Must be between 1 and 100 non-URL-reserved charactes (a-z, A-Z, 0-9, or the symbols "-", ".", "_", or "~").
-func load_game(file_name: String):
+func load_game(file_name: String) -> void:
 	if GodotPlayGameServices.android_plugin:
 		GodotPlayGameServices.android_plugin.loadGame(file_name)
+
+## Loads the list of [SnapshotMetadata] of the current signed in player.[br]
+## [br]
+## [param force_reload]: If true, this call will clear any locally cached 
+## data and attempt to fetch the latest data from the server. Send it set to [code]true[/code]
+## the first time, and [code]false[/code] in subsequent calls, or when you want
+## to clear the cache.
+func load_snapshots(force_reload: bool) -> void:
+	if GodotPlayGameServices.android_plugin:
+		GodotPlayGameServices.android_plugin.loadSnapshots(force_reload)
 
 ## A snapshot.
 class Snapshot:

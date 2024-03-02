@@ -1,3 +1,7 @@
+## v1.6.0
+### Load Snapshots
+The [loadPlayerCenteredScores](https://developers.google.com/android/reference/com/google/android/gms/games/SnapshotsClient#load(boolean)) method from Google's API has been added, returning the list of Snapshots for the current signed in player.
+
 ## v1.5.0
 ### Order of autoloads
 The autoloads where causing errors on first launch of the project, due to the load order and dependencies between them. The load order has now been fixed to avoid this errors. Also, the plugin is now disabled by default in the demo project. Look at the [demo project documentation](https://github.com/Iakobs/godot-play-game-services/tree/main/plugin/demo) for further info.

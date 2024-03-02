@@ -12,10 +12,13 @@ import com.google.android.gms.games.SnapshotsClient.RESOLUTION_POLICY_MOST_RECEN
 import com.google.android.gms.games.SnapshotsClient.SnapshotConflict
 import com.google.android.gms.games.snapshot.SnapshotMetadata
 import com.google.android.gms.games.snapshot.SnapshotMetadataChange
+import com.google.gson.Gson
 import com.jacobibanez.plugin.android.godotplaygameservices.BuildConfig.GODOT_PLUGIN_NAME
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.conflictEmitted
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.gameLoaded
 import com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.gameSaved
+import com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.snapshotsLoaded
+import org.godotengine.godot.Dictionary
 import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin.emitSignal
 
@@ -114,6 +117,41 @@ class SnapshotsProxy(
                     )
                 }
             }
+    }
+
+    fun loadSnapshots(forceReload: Boolean) {
+        Log.d(tag, "Loading snapshots")
+        snapshotsClient.load(forceReload).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d(
+                    tag,
+                    "Snapshots loaded successfully. Data is stale? ${task.result.isStale}"
+                )
+                val snapshots = task.result.get()!!
+                val result: List<Dictionary> = snapshots.map { snapshotMetadata ->
+                    fromSnapshotMetadata(godot, snapshotMetadata)
+                }.toList()
+                snapshots.release()
+                emitSignal(
+                    godot,
+                    GODOT_PLUGIN_NAME,
+                    snapshotsLoaded,
+                    Gson().toJson(result)
+                )
+            } else {
+                Log.e(
+                    tag,
+                    "Failed to load snapshots. Cause: ${task.exception}",
+                    task.exception
+                )
+                emitSignal(
+                    godot,
+                    GODOT_PLUGIN_NAME,
+                    snapshotsLoaded,
+                    Gson().toJson(null)
+                )
+            }
+        }
     }
 
     private fun handleConflict(conflict: SnapshotConflict?) {

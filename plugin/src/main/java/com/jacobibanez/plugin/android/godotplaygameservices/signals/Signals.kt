@@ -26,6 +26,7 @@ fun getSignals(): MutableSet<SignalInfo> = mutableSetOf(
     SnapshotSignals.gameSaved,
     SnapshotSignals.gameLoaded,
     SnapshotSignals.conflictEmitted,
+    SnapshotSignals.snapshotsLoaded,
 
     HelperSignals.imageStored,
 )
@@ -191,6 +192,13 @@ object SnapshotSignals {
      * @return A [Dictionary] representing a [com.google.android.gms.games.SnapshotsClient.SnapshotConflict](https://developers.google.com/android/reference/com/google/android/gms/games/SnapshotsClient.SnapshotConflict).
      */
     val conflictEmitted = SignalInfo("conflictEmitted", Dictionary::class.java)
+
+    /**
+     * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadSnapshots] method.
+     *
+     * @return A [List] of [com.google.android.gms.games.snapshot.SnapshotMetadata](https://developers.google.com/android/reference/com/google/android/gms/games/snapshot/SnapshotMetadata).
+     */
+    val snapshotsLoaded = SignalInfo("snapshotsLoaded", String::class.java)
 }
 
 object HelperSignals {

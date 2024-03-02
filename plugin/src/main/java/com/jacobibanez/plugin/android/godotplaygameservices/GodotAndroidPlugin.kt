@@ -426,4 +426,15 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
      */
     @UsedByGodot
     fun loadGame(fileName: String) = snapshotsProxy.loadGame(fileName)
+
+    /**
+     * Loads the list of [com.google.android.gms.games.snapshot.SnapshotMetadata](https://developers.google.com/android/reference/com/google/android/gms/games/snapshot/SnapshotMetadata)
+     * for the current signed in Player. This method emits the [com.jacobibanez.plugin.android.godotplaygameservices.signals.SnapshotSignals.snapshotsLoaded]
+     * signal.
+     *
+     * @param forceReload If true, this call will clear any locally cached data and attempt to fetch
+     * the latest data from the server.
+     */
+    @UsedByGodot
+    fun loadSnapshots(forceReload: Boolean) = snapshotsProxy.loadSnapshots(forceReload)
 }
