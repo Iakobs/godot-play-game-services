@@ -8,6 +8,9 @@ When calling the `loadGame` method with a non existing file name, the app crashe
 ### Add new parameter to loadGame method
 Added the `createIfNotFound` parameter to the `loadGame` method, with a default value of `false` to not break backwards compatibility. This parameter creates a new snapshot if the file name does not exist.
 
+### Add method to delete snapshots
+Added new method to delete snapshots by snapshot id.
+
 ## v1.5.0
 ### Order of autoloads
 The autoloads where causing errors on first launch of the project, due to the load order and dependencies between them. The load order has now been fixed to avoid this errors. Also, the plugin is now disabled by default in the demo project. Look at the [demo project documentation](https://github.com/Iakobs/godot-play-game-services/tree/main/plugin/demo) for further info.

@@ -112,7 +112,10 @@ class SnapshotsProxy(
                         )
                     }
                 } else {
-                    Log.e(tag, "Error while opening Snapshot $fileName for loading. Cause: ${task.exception}")
+                    Log.e(
+                        tag,
+                        "Error while opening Snapshot $fileName for loading. Cause: ${task.exception}"
+                    )
                 }
             }
     }
@@ -149,6 +152,37 @@ class SnapshotsProxy(
                     Gson().toJson(null)
                 )
             }
+        }
+    }
+
+    fun deleteSnapshot(snapshotId: String) {
+        var isDeleted = false
+        snapshotsClient.load(true).addOnSuccessListener { annotatedData ->
+            annotatedData.get()?.let { buffer ->
+                buffer
+                    .toList()
+                    .firstOrNull { it.snapshotId == snapshotId }?.let { snapshotMetadata ->
+                        Log.d(tag, "Deleting snapshot with id $snapshotId")
+                        snapshotsClient.delete(snapshotMetadata).addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Log.d(
+                                    tag,
+                                    "Snapshot with id $snapshotId deleted successfully."
+                                )
+                                isDeleted = true
+                            } else {
+                                Log.e(
+                                    tag,
+                                    "Failed to delete snapshot with id $snapshotId. Cause: ${task.exception}",
+                                    task.exception
+                                )
+                            }
+                        }
+                    }
+            }
+        }
+        if (!isDeleted) {
+            Log.d(tag, "Snapshot with id $snapshotId not found!")
         }
     }
 

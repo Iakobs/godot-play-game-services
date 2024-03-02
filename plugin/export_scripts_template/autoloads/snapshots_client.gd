@@ -96,6 +96,8 @@ func load_game(file_name: String, create_if_not_found := false) -> void:
 
 ## Loads the list of [SnapshotMetadata] of the current signed in player.[br]
 ## [br]
+## This method emits the [signal snapshots_loaded] signal.[br]
+## [br]
 ## [param force_reload]: If true, this call will clear any locally cached 
 ## data and attempt to fetch the latest data from the server. Send it set to [code]true[/code]
 ## the first time, and [code]false[/code] in subsequent calls, or when you want
@@ -103,6 +105,13 @@ func load_game(file_name: String, create_if_not_found := false) -> void:
 func load_snapshots(force_reload: bool) -> void:
 	if GodotPlayGameServices.android_plugin:
 		GodotPlayGameServices.android_plugin.loadSnapshots(force_reload)
+
+## Deletes a snapshot. This will delete the data of the snapshot locally and on the server.[br]
+## [br]
+## [param snapshot_id]: The snapshot identifier.
+func delete_snapshot(snapshot_id: String) -> void:
+	if GodotPlayGameServices.android_plugin:
+		GodotPlayGameServices.android_plugin.deleteSnapshot(snapshot_id)
 
 ## A snapshot.
 class Snapshot:

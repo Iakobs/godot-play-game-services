@@ -439,4 +439,13 @@ class GodotAndroidPlugin(godot: Godot) : GodotPlugin(godot) {
      */
     @UsedByGodot
     fun loadSnapshots(forceReload: Boolean) = snapshotsProxy.loadSnapshots(forceReload)
+
+    /**
+     * Deletes the given snapshot. This will delete the data of the snapshot locally and on the server.
+     *
+     * @param snapshotId The snapshot identifier.
+     */
+    @UsedByGodot
+    fun deleteSnapshot(snapshotId: String) =
+        snapshotsProxy.deleteSnapshot(snapshotId)
 }
