@@ -108,7 +108,7 @@ class SnapshotsProxy(
                             godot,
                             GODOT_PLUGIN_NAME,
                             gameLoaded,
-                            fromSnapshot(godot, snapshot)
+                            Gson().toJson(fromSnapshot(godot, snapshot))
                         )
                     }
                 } else {
@@ -199,7 +199,7 @@ class SnapshotsProxy(
                 godot,
                 GODOT_PLUGIN_NAME,
                 conflictEmitted,
-                fromConflict(godot, it)
+                Gson().toJson(fromConflict(godot, it))
             )
         }
     }

@@ -1,3 +1,7 @@
+## v1.7.0
+### Send JSON strings instead of Dictionaries
+The `gameLoaded` and `conflictEmitted` signals where sending an instance of the Dictionary class. Instead, they send a JSON string now, as suggested by @nepalisameer in [this issue](https://github.com/Iakobs/godot-play-game-services/issues/22).
+
 ## v1.6.0
 ### Load Snapshots
 The [loadPlayerCenteredScores](https://developers.google.com/android/reference/com/google/android/gms/games/SnapshotsClient#load(boolean)) method from Google's API has been added, returning the list of Snapshots for the current signed in player.

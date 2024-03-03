@@ -188,14 +188,14 @@ object SnapshotSignals {
      *
      * @return A [Dictionary] representing a [com.google.android.gms.games.snapshot.Snapshot](https://developers.google.com/android/reference/com/google/android/gms/games/snapshot/Snapshot).
      */
-    val gameLoaded = SignalInfo("gameLoaded", Dictionary::class.java)
+    val gameLoaded = SignalInfo("gameLoaded", String::class.java)
 
     /**
      * This signal is emitted when saving or loading a game, whenever a conflict occurs.
      *
      * @return A [Dictionary] representing a [com.google.android.gms.games.SnapshotsClient.SnapshotConflict](https://developers.google.com/android/reference/com/google/android/gms/games/SnapshotsClient.SnapshotConflict).
      */
-    val conflictEmitted = SignalInfo("conflictEmitted", Dictionary::class.java)
+    val conflictEmitted = SignalInfo("conflictEmitted", String::class.java)
 
     /**
      * This signal is emitted when calling the [com.jacobibanez.plugin.android.godotplaygameservices.GodotAndroidPlugin.loadSnapshots] method.

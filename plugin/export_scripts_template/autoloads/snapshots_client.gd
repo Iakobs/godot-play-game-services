@@ -36,11 +36,13 @@ func _ready() -> void:
 			func(is_saved: bool, save_data_name: String, save_data_description: String):
 				game_saved.emit(is_saved, save_data_name, save_data_description)
 		)
-		GodotPlayGameServices.android_plugin.gameLoaded.connect(func(dictionary: Dictionary):
-			game_loaded.emit(Snapshot.new(dictionary))
+		GodotPlayGameServices.android_plugin.gameLoaded.connect(func(json_data: String):
+			var safe_dictionary := GodotPlayGameServices.json_marshaller.safe_parse_dictionary(json_data)
+			game_loaded.emit(Snapshot.new(safe_dictionary))
 		)
-		GodotPlayGameServices.android_plugin.conflictEmitted.connect(func(dictionary: Dictionary):
-			conflict_emitted.emit(SnapshotConflict.new(dictionary))
+		GodotPlayGameServices.android_plugin.conflictEmitted.connect(func(json_data: String):
+			var safe_dictionary := GodotPlayGameServices.json_marshaller.safe_parse_dictionary(json_data)
+			conflict_emitted.emit(SnapshotConflict.new(safe_dictionary))
 		)
 		GodotPlayGameServices.android_plugin.snapshotsLoaded.connect(func(json_data: String):
 			var safe_array := GodotPlayGameServices.json_marshaller.safe_parse_array(json_data)
@@ -58,9 +60,9 @@ func _ready() -> void:
 ## [param allow_delete]: Whether or not to provide a delete overflow menu option for each snapshot in the selection UI.[br]
 ## [param max_snapshots]: The maximum number of snapshots to display in the UI. Use [constant DISPLAY_LIMIT_NONE] to display all snapshots.
 func show_saved_games(
-	title: String, 
-	allow_add_button: bool, 
-	allow_delete: bool, 
+	title: String,
+	allow_add_button: bool,
+	allow_delete: bool,
 	max_snapshots: int
 ) -> void:
 	if GodotPlayGameServices.android_plugin:
@@ -75,9 +77,9 @@ func show_saved_games(
 ## [param played_time_millis]: Optional. The played time of this snapshot in milliseconds.[br]
 ## [param progress_value]: Optional. The progress value for this snapshot.
 func save_game(
-	file_name: String, 
+	file_name: String,
 	description: String,
-	save_data: PackedByteArray, 
+	save_data: PackedByteArray,
 	played_time_millis: int = 0,
 	progress_value: int = 0,
 ) -> void:
