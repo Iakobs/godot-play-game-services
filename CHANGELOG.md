@@ -1,3 +1,10 @@
+## v1.8.0
+### Update plugin for Godot 4.3
+Thanks to [TheSkyOne](https://github.com/TheSkyOne) for bringing to my attention that [the plugin wasn't working for Godot 4.3](https://github.com/Iakobs/godot-play-game-services/issues/32). I've update it to use version 4.3 of the Godot Library Dependency.
+
+### Update Google Play Games Library version
+Google's `play-services-games-v2` dependency was updated from version `19.0.0` to version `20.1.2`.
+
 ## v1.7.0
 ### Send JSON strings instead of Dictionaries
 The `gameLoaded` and `conflictEmitted` signals where sending an instance of the Dictionary class. Instead, they send a JSON string now, as suggested by @nepalisameer in [this issue](https://github.com/Iakobs/godot-play-game-services/issues/22).

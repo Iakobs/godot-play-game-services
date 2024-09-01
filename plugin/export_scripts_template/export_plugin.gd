@@ -80,7 +80,7 @@ class AndroidExportPlugin extends EditorExportPlugin:
 		
 		return PackedStringArray([
 			"com.google.code.gson:gson:2.10.1", 
-			"com.google.android.gms:play-services-games-v2:19.0.0"
+			"com.google.android.gms:play-services-games-v2:20.1.2"
 			])
 	
 	func _get_android_manifest_application_element_contents(platform: EditorExportPlatform, debug: bool) -> String:

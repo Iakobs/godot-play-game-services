@@ -37,8 +37,8 @@ android {
 
 dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("com.google.android.gms:play-services-games-v2:19.0.0")
-    implementation("org.godotengine:godot:4.2.0.stable")
+    implementation("com.google.android.gms:play-services-games-v2:20.1.2")
+    implementation("org.godotengine:godot:4.3.0.stable")
 
     dokkaPlugin("org.jetbrains.dokka:android-documentation-plugin:1.9.10")
 }
