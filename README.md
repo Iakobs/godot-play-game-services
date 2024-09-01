@@ -1,4 +1,4 @@
-# Godot Play Game ServicesK
+# Godot Play Game Services
 Godot 4.3+ plugin for integration of the latest version of [Google Play Game Services SDK](https://developers.google.com/games/services/android/quickstart).
 
 If you want to download the plugin for a previous version of Godot 4.x, use the branch selector in the repository. For Godot 3.x versions, [look here](https://github.com/Iakobs/godot-google-play-game-services-android-plugin)!
