@@ -15,7 +15,7 @@ The `gameLoaded` and `conflictEmitted` signals where sending an instance of the 
 
 ## v1.6.0
 ### Load Snapshots
-The [loadPlayerCenteredScores](https://developers.google.com/android/reference/com/google/android/gms/games/SnapshotsClient#load(boolean)) method from Google's API has been added, returning the list of Snapshots for the current signed in player.
+The [SnapshotsClient.load](https://developers.google.com/android/reference/com/google/android/gms/games/SnapshotsClient#load(boolean)) method from Google's API has been added, returning the list of Snapshots for the current signed in player.
 
 ### Fix crash when loading non existing save game
 When calling the `loadGame` method with a non existing file name, the app crashed. This is fixed now, the app just prints a log with the error and continues execution.
