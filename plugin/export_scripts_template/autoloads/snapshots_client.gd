@@ -135,12 +135,14 @@ class Snapshot:
 
 ## A class representing a conflict when saving or loading data.
 class SnapshotConflict:
+	var origin: String ## The original caller of the method, either "SAVE" or "LOAD"
 	var conflict_id: String ## The conflict id.
 	var conflicting_snapshot: Snapshot ## The modified version of the Snapshot in the case of a conflict. This may not be the same as the version that you tried to save.
 	var server_snapshot: Snapshot ## The most-up-to-date version of the Snapshot known by Google Play games services to be accurate for the player’s device.
 	
 	## Constructor that creates a SnapshotConflict from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
+		if dictionary.has("origin"): origin = dictionary.origin
 		if dictionary.has("conflictId"): conflict_id = dictionary.conflictId
 		if dictionary.has("conflictingSnapshot"): conflicting_snapshot = Snapshot.new(dictionary.conflictingSnapshot)
 		if dictionary.has("serverSnapshot"): server_snapshot = Snapshot.new(dictionary.serverSnapshot)
@@ -148,6 +150,7 @@ class SnapshotConflict:
 	func _to_string() -> String:
 		var result := PackedStringArray()
 		
+		result.append("origin: %s" % origin)
 		result.append("conflict_id: %s" % conflict_id)
 		result.append("conflicting_snapshot: {%s}" % conflicting_snapshot)
 		result.append("server_snapshot: {%s}" % server_snapshot)

@@ -22,6 +22,10 @@ import org.godotengine.godot.Dictionary
 import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin.emitSignal
 
+private enum class Origin {
+    SAVE, LOAD
+}
+
 class SnapshotsProxy(
     private val godot: Godot,
     private val snapshotsClient: SnapshotsClient = PlayGames.getSnapshotsClient(godot.getActivity()!!)
@@ -69,7 +73,7 @@ class SnapshotsProxy(
         snapshotsClient.open(fileName, true, RESOLUTION_POLICY_HIGHEST_PROGRESS)
             .addOnSuccessListener { dataOrConflict ->
                 if (dataOrConflict.isConflict) {
-                    handleConflict(dataOrConflict.conflict)
+                    handleConflict(Origin.SAVE.name, dataOrConflict.conflict)
                     return@addOnSuccessListener
                 }
                 dataOrConflict.data?.let { snapshot ->
@@ -100,7 +104,7 @@ class SnapshotsProxy(
                 if (task.isSuccessful) {
                     val dataOrConflict = task.result
                     if (dataOrConflict.isConflict) {
-                        handleConflict(dataOrConflict.conflict)
+                        handleConflict(Origin.LOAD.name, dataOrConflict.conflict)
                         return@addOnCompleteListener
                     }
                     dataOrConflict.data?.let { snapshot ->
@@ -186,7 +190,7 @@ class SnapshotsProxy(
         }
     }
 
-    private fun handleConflict(conflict: SnapshotConflict?) {
+    private fun handleConflict(origin: String, conflict: SnapshotConflict?) {
         conflict?.let {
             val snapshot = it.snapshot
             val fileName = snapshot.metadata.uniqueName
@@ -199,7 +203,7 @@ class SnapshotsProxy(
                 godot,
                 GODOT_PLUGIN_NAME,
                 conflictEmitted,
-                Gson().toJson(fromConflict(godot, it))
+                Gson().toJson(fromConflict(godot, origin, it))
             )
         }
     }

@@ -1,3 +1,7 @@
+## v1.8.2
+### Add origin field to SnapshotConflict object
+As suggested by @RProduction in [this issue](https://github.com/Iakobs/godot-play-game-services/issues/35), I added an `origin` field to the `SnapshotConflict` object coming in the `SnapshotClient.conflict_emitted` signal. This field value is either `SAVE` or `LOAD`, indicating what method originally triggered the Snapshot conflict.
+
 ## v1.8.1
 ### Update version in `plugin.cfg` file
 The plugin version was not updated in `v1.8.0`, causing confusion to users of the plugin. This patch fixes it.

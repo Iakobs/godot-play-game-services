@@ -9,7 +9,8 @@ import com.jacobibanez.plugin.android.godotplaygameservices.utils.toStringAndSav
 import org.godotengine.godot.Dictionary
 import org.godotengine.godot.Godot
 
-fun fromConflict(godot: Godot, conflict: SnapshotConflict) = Dictionary().apply {
+fun fromConflict(godot: Godot, origin: String, conflict: SnapshotConflict) = Dictionary().apply {
+    put("origin", origin)
     put("conflictId", conflict.conflictId)
     put("conflictingSnapshot", fromSnapshot(godot, conflict.conflictingSnapshot))
     put("serverSnapshot", fromSnapshot(godot, conflict.snapshot))

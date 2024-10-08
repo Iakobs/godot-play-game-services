@@ -193,7 +193,7 @@ object SnapshotSignals {
     /**
      * This signal is emitted when saving or loading a game, whenever a conflict occurs.
      *
-     * @return A [Dictionary] representing a [com.google.android.gms.games.SnapshotsClient.SnapshotConflict](https://developers.google.com/android/reference/com/google/android/gms/games/SnapshotsClient.SnapshotConflict).
+     * @return A [Dictionary] representing a [com.google.android.gms.games.SnapshotsClient.SnapshotConflict](https://developers.google.com/android/reference/com/google/android/gms/games/SnapshotsClient.SnapshotConflict), with an additional field `origin` which indicates whether the `SAVE` or `LOAD` method triggered this conflict.
      */
     val conflictEmitted = SignalInfo("conflictEmitted", String::class.java)
 
