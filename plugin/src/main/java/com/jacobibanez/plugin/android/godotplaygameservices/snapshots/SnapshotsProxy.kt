@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.games.PlayGames
 import com.google.android.gms.games.SnapshotsClient
 import com.google.android.gms.games.SnapshotsClient.EXTRA_SNAPSHOT_METADATA
@@ -33,6 +34,7 @@ class SnapshotsProxy(
     private val tag = SnapshotsProxy::class.java.simpleName
 
     private val showSavedGamesRequestCode = 9010
+    private val snapshotNotFoundCode = 26570
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == showSavedGamesRequestCode && resultCode == Activity.RESULT_OK) {
@@ -116,10 +118,19 @@ class SnapshotsProxy(
                         )
                     }
                 } else {
+                    val exception = task.exception
                     Log.e(
                         tag,
-                        "Error while opening Snapshot $fileName for loading. Cause: ${task.exception}"
+                        "Error while opening Snapshot $fileName for loading. Cause: $exception"
                     )
+                    if (exception is ApiException && exception.statusCode == snapshotNotFoundCode) {
+                        emitSignal(
+                            godot,
+                            GODOT_PLUGIN_NAME,
+                            gameLoaded,
+                            Gson().toJson(null)
+                        )
+                    }
                 }
             }
     }

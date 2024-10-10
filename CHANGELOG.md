@@ -1,3 +1,7 @@
+## v1.8.3
+### Return null when Snapshot is not found
+Ass suggested by @TheSkyOne in [this issue](https://github.com/Iakobs/godot-play-game-services/issues/38), when calling to `SnapshotClient.load_game()` and the snapshot is not found, the `game_loaded` signal will now return a null, instead of not being emitted at all as before.
+
 ## v1.8.2
 ### Add origin field to SnapshotConflict object
 As suggested by @RProduction in [this issue](https://github.com/Iakobs/godot-play-game-services/issues/35), I added an `origin` field to the `SnapshotConflict` object coming in the `SnapshotClient.conflict_emitted` signal. This field value is either `SAVE` or `LOAD`, indicating what method originally triggered the Snapshot conflict.

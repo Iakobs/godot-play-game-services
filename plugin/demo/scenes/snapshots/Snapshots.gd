@@ -49,6 +49,10 @@ func _connect_save_game_data() -> void:
 	)
 	SnapshotsClient.game_loaded.connect(
 		func(snapshot: SnapshotsClient.Snapshot):
+			if snapshot == null:
+				print("Snapshot not found!")
+				return
+			
 			_reset_save_game_data()
 			
 			var metadata = snapshot.metadata

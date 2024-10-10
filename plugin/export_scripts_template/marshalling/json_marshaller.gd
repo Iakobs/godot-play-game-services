@@ -34,6 +34,8 @@ func safe_parse_dictionary(json_dictionary: String) -> Dictionary:
 		var data_received = _json.data
 		if typeof(data_received) == TYPE_DICTIONARY:
 			return data_received
+		elif typeof(data_received) == TYPE_NIL:
+			return {}
 		else:
 			printerr("Unexpected data received from JSON Dictionary:\n%s" % json_dictionary)
 	else:

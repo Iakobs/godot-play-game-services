@@ -14,7 +14,7 @@ signal game_saved(is_saved: bool, save_data_name: String, save_data_description:
 ## a saved game in the window presented after calling the [method show_saved_games]
 ## method.[br]
 ## [br]
-## [param snapshot]: The loaded snapshot.
+## [param snapshot]: The loaded snapshot, or null if the snapshot wasn't found.
 signal game_loaded(snapshot: Snapshot)
 
 ## Signal emitted after saving or loading a game, if a conflict is found.[br]
@@ -38,7 +38,10 @@ func _ready() -> void:
 		)
 		GodotPlayGameServices.android_plugin.gameLoaded.connect(func(json_data: String):
 			var safe_dictionary := GodotPlayGameServices.json_marshaller.safe_parse_dictionary(json_data)
-			game_loaded.emit(Snapshot.new(safe_dictionary))
+			if safe_dictionary.is_empty():
+				game_loaded.emit(null)
+			else:
+				game_loaded.emit(Snapshot.new(safe_dictionary))
 		)
 		GodotPlayGameServices.android_plugin.conflictEmitted.connect(func(json_data: String):
 			var safe_dictionary := GodotPlayGameServices.json_marshaller.safe_parse_dictionary(json_data)
