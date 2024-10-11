@@ -111,7 +111,7 @@ class Achievement:
 	var achievement_id: String ## The achievement id.
 	var achievement_name: String ## The achievement name.
 	var description: String ## The description of the achievement.
-	var player: PlayersClient.Player ## The player associated to this achievement.
+	var player: PlayersClient.PlayGamesPlayer ## The player associated to this achievement.
 	var type: Type ## The achievement type.
 	var state: State ## The achievement state.
 	var xp_value: int ## The XP value of this achievement.
@@ -140,7 +140,7 @@ class Achievement:
 		if dictionary.has("achievementId"): achievement_id = dictionary.achievementId
 		if dictionary.has("name"): achievement_name = dictionary.name
 		if dictionary.has("description"): description = dictionary.description
-		if dictionary.has("player"): player = PlayersClient.Player.new(dictionary.player)
+		if dictionary.has("player"): player = PlayersClient.PlayGamesPlayer.new(dictionary.player)
 		if dictionary.has("type"): type = Type[dictionary.type]
 		if dictionary.has("state"): state = State[dictionary.state]
 		if dictionary.has("xpValue"): xp_value = dictionary.xpValue

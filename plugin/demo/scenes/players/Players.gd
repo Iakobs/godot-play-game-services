@@ -9,14 +9,14 @@ extends Control
 
 @onready var friends_display: VBoxContainer = %FriendsDisplay
 
-var _current_player: PlayersClient.Player
-var _friends_cache: Array[PlayersClient.Player] = []
+var _current_player: PlayersClient.PlayGamesPlayer
+var _friends_cache: Array[PlayersClient.PlayGamesPlayer] = []
 var _player_display := preload("res://scenes/players/PlayerDisplay.tscn")
 
 func _ready() -> void:
 	if not _current_player:
 		PlayersClient.load_current_player(true)
-	PlayersClient.current_player_loaded.connect(func(current_player: PlayersClient.Player):
+	PlayersClient.current_player_loaded.connect(func(current_player: PlayersClient.PlayGamesPlayer):
 		var container := _player_display.instantiate() as Control
 		container.player = current_player
 		current_player_display.add_child(container)
@@ -24,15 +24,15 @@ func _ready() -> void:
 	if _friends_cache.is_empty():
 		PlayersClient.load_friends(10, true, true)
 	PlayersClient.friends_loaded.connect(
-		func cache_and_display(friends: Array[PlayersClient.Player]):
+		func cache_and_display(friends: Array[PlayersClient.PlayGamesPlayer]):
 			_friends_cache = friends
 			if not _friends_cache.is_empty() and friends_display.get_child_count() == 0:
-				for friend: PlayersClient.Player in _friends_cache:
+				for friend: PlayersClient.PlayGamesPlayer in _friends_cache:
 					var container := _player_display.instantiate() as Control
 					container.player = friend
 					friends_display.add_child(container)
 	)
-	PlayersClient.player_searched.connect(func(player: PlayersClient.Player):
+	PlayersClient.player_searched.connect(func(player: PlayersClient.PlayGamesPlayer):
 		for child in search_display.get_children():
 			child.queue_free()
 		var container := _player_display.instantiate() as Control

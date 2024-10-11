@@ -245,7 +245,7 @@ class Score:
 	var display_score: String ## Formatted string for the score of the player.
 	var rank: int ## Rank of the player.
 	var raw_score: int ## Raw score of the player.
-	var score_holder: PlayersClient.Player ## The player object who holds the score.
+	var score_holder: PlayersClient.PlayGamesPlayer ## The player object who holds the score.
 	var score_holder_display_name: String ## Formatted string for the name of the player.
 	var score_holder_hi_res_image_uri: String ## Hi-res image of the player.
 	var score_holder_icon_image_uri: String ## Icon image of the player.
@@ -258,7 +258,7 @@ class Score:
 		if dictionary.has("displayScore"): display_score = dictionary.displayScore
 		if dictionary.has("rank"): rank = dictionary.rank
 		if dictionary.has("rawScore"): raw_score = dictionary.rawScore
-		if dictionary.has("scoreHolder"): score_holder = PlayersClient.Player.new(dictionary.scoreHolder)
+		if dictionary.has("scoreHolder"): score_holder = PlayersClient.PlayGamesPlayer.new(dictionary.scoreHolder)
 		if dictionary.has("scoreHolderDisplayName"): score_holder_display_name = dictionary.scoreHolderDisplayName
 		if dictionary.has("scoreHolderHiResImageUri"): score_holder_hi_res_image_uri = dictionary.scoreHolderHiResImageUri
 		if dictionary.has("scoreHolderIconImageUri"): score_holder_icon_image_uri = dictionary.scoreHolderIconImageUri

@@ -8,19 +8,19 @@ extends Node
 ## [br]
 ## [param friends]: An array containing the friends for the current player.
 ## The array will be empty if there was an error loading the friends list.
-signal friends_loaded(friends: Array[Player])
+signal friends_loaded(friends: Array[PlayGamesPlayer])
 
 ## Signal emitted after selecting a player in the search window opened by the
 ## [method search_player] method.[br]
 ## [br]
 ## [param player]: The selected player.
-signal player_searched(player: Player)
+signal player_searched(player: PlayGamesPlayer)
 
 ## Signal emitted after calling the [method load_current_player] method.[br]
 ## [br]
 ## [param current_player]: The currently signed-in player, or null if there where
 ## any errors loading the player.
-signal current_player_loaded(current_player: Player)
+signal current_player_loaded(current_player: PlayGamesPlayer)
 
 ## Friends list visibility statuses.
 enum FriendsListVisibilityStatus {
@@ -31,7 +31,7 @@ enum FriendsListVisibilityStatus {
 }
 
 ## This player's friend status relative to the currently signed in player.
-enum PlayerFriendStatus {
+enum PlayGamesPlayerFriendStatus {
 	FRIEND = 4, ## The currently signed in player and this player are friends.
 	NO_RELATIONSHIP = 0, ## The currently signed in player is not a friend of this player.
 	UNKNOWN = -1 ## The currently signed in player's friend status with this player is unknown.
@@ -44,19 +44,19 @@ func _connect_signals() -> void:
 	if GodotPlayGameServices.android_plugin:
 		GodotPlayGameServices.android_plugin.friendsLoaded.connect(func(friends_json: String):
 			var safe_array := GodotPlayGameServices.json_marshaller.safe_parse_array(friends_json)
-			var friends: Array[Player] = []
+			var friends: Array[PlayGamesPlayer] = []
 			for dictionary: Dictionary in safe_array:
-				friends.append(Player.new(dictionary))
+				friends.append(PlayGamesPlayer.new(dictionary))
 			
 			friends_loaded.emit(friends)
 		)
 		GodotPlayGameServices.android_plugin.playerSearched.connect(func(friend_json: String):
 			var safe_dictionary := GodotPlayGameServices.json_marshaller.safe_parse_dictionary(friend_json)
-			player_searched.emit(Player.new(safe_dictionary))
+			player_searched.emit(PlayGamesPlayer.new(safe_dictionary))
 		)
 		GodotPlayGameServices.android_plugin.currentPlayerLoaded.connect(func(friend_json: String):
 			var safe_dictionary := GodotPlayGameServices.json_marshaller.safe_parse_dictionary(friend_json)
-			current_player_loaded.emit(Player.new(safe_dictionary))
+			current_player_loaded.emit(PlayGamesPlayer.new(safe_dictionary))
 		)
 
 ## Use this method and subscribe to the emitted signal to receive the list of friends
@@ -132,23 +132,23 @@ func load_current_player(force_reload: bool) -> void:
 	if GodotPlayGameServices.android_plugin:
 		GodotPlayGameServices.android_plugin.loadCurrentPlayer(force_reload)
 
-## Player information.
-class Player:
+## PlayGamesPlayer information.
+class PlayGamesPlayer:
 	var banner_image_landscape_uri: String ## Banner image of the player in landscape.
 	var banner_image_portrait_uri: String ## Banner image of the player in portrait.
 	var friends_list_visibility_status: FriendsListVisibilityStatus ## Visibility status of this player's friend list.
 	var display_name: String ## The display name of the player.
 	var hi_res_image_uri: String ## The hi-res image of the player.
 	var icon_image_uri: String ## The icon image of the player.
-	var level_info: PlayerLevelInfo ## Information about the player level.
+	var level_info: PlayGamesPlayerLevelInfo ## Information about the player level.
 	var player_id: String ## The player id.
-	var friend_status: PlayerFriendStatus ## The friend status of this player with the signed in player.
+	var friend_status: PlayGamesPlayerFriendStatus ## The friend status of this player with the signed in player.
 	var retrieved_timestamp: int ## The timestamp at which this player record was last updated locally.
 	var title: String ## The title of the player.
 	var has_hi_res_image: bool ## Whether this player has a hi-res profile image to display.
 	var has_icon_image: bool ## Whether this player has an icon-size profile image to display.
 	
-	## Constructor that creates a Player from a [Dictionary] containing the properties.
+	## Constructor that creates a PlayGamesPlayer from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
 		if dictionary.has("bannerImageLandscapeUri"): banner_image_landscape_uri = dictionary.bannerImageLandscapeUri
 		if dictionary.has("bannerImagePortraitUri"): banner_image_portrait_uri = dictionary.bannerImagePortraitUri
@@ -156,9 +156,9 @@ class Player:
 		if dictionary.has("displayName"): display_name = dictionary.displayName
 		if dictionary.has("hiResImageUri"): hi_res_image_uri = dictionary.hiResImageUri
 		if dictionary.has("iconImageUri"): icon_image_uri = dictionary.iconImageUri
-		if dictionary.has("levelInfo"): level_info = PlayerLevelInfo.new(dictionary.levelInfo)
+		if dictionary.has("levelInfo"): level_info = PlayGamesPlayerLevelInfo.new(dictionary.levelInfo)
 		if dictionary.has("playerId"): player_id = dictionary.playerId
-		if dictionary.has("friendStatus"): friend_status = PlayerFriendStatus.get(dictionary.friendStatus)
+		if dictionary.has("friendStatus"): friend_status = PlayGamesPlayerFriendStatus.get(dictionary.friendStatus)
 		if dictionary.has("retrievedTimestamp"): retrieved_timestamp = dictionary.retrievedTimestamp
 		if dictionary.has("title"): title = dictionary.title
 		if dictionary.has("hasHiResImage"): has_hi_res_image = dictionary.hasHiResImage
@@ -175,7 +175,7 @@ class Player:
 		result.append("icon_image_uri: %s" % icon_image_uri)
 		result.append("level_info: {%s}" % str(level_info))
 		result.append("player_id: %s" % player_id)
-		result.append("friend_status: %s" % PlayerFriendStatus.find_key(friend_status))
+		result.append("friend_status: %s" % PlayGamesPlayerFriendStatus.find_key(friend_status))
 		result.append("retrieved_timestamp: %s" % retrieved_timestamp)
 		result.append("title: %s" % title)
 		result.append("has_hi_res_image: %s" % has_hi_res_image)
@@ -184,19 +184,19 @@ class Player:
 		return ", ".join(result)
 
 ## The current level information of a player.
-class PlayerLevelInfo:
-	var current_level: PlayerLevel ## The player's current level object.
+class PlayGamesPlayerLevelInfo:
+	var current_level: PlayGamesPlayerLevel ## The player's current level object.
 	var current_xp_total: int ## The player's current XP value.
 	var last_level_up_timestamp: int ## The timestamp of the player's last level-up.
-	var next_level: PlayerLevel ## The player's next level object.
-	var is_max_level: bool ## True if the player reached the maximum level ([member PlayerLevelInfo.current_level] is the same as [member PlayerLevelInfo.next_level]).
+	var next_level: PlayGamesPlayerLevel ## The player's next level object.
+	var is_max_level: bool ## True if the player reached the maximum level ([member PlayGamesPlayerLevelInfo.current_level] is the same as [member PlayGamesPlayerLevelInfo.next_level]).
 	
-	## Constructor that creates a PlayerLevelInfo from a [Dictionary] containing the properties.
+	## Constructor that creates a PlayGamesPlayerLevelInfo from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
-		if dictionary.has("currentLevel"): current_level = PlayerLevel.new(dictionary.currentLevel)
+		if dictionary.has("currentLevel"): current_level = PlayGamesPlayerLevel.new(dictionary.currentLevel)
 		if dictionary.has("currentXpTotal"): current_xp_total = dictionary.currentXpTotal
 		if dictionary.has("lastLevelUpTimestamp"): last_level_up_timestamp = dictionary.lastLevelUpTimestamp
-		if dictionary.has("nextLevel"): next_level = PlayerLevel.new(dictionary.nextLevel)
+		if dictionary.has("nextLevel"): next_level = PlayGamesPlayerLevel.new(dictionary.nextLevel)
 		if dictionary.has("isMaxLevel"): is_max_level = dictionary.isMaxLevel
 	
 	func _to_string() -> String:
@@ -211,12 +211,12 @@ class PlayerLevelInfo:
 		return ", ".join(result)
 
 ## The level of a player.
-class PlayerLevel:
+class PlayGamesPlayerLevel:
 	var level_number: int ## The number for this level.
 	var max_xp: int ## The maximum XP value represented by this level, exclusive.
 	var min_xp: int ## The minimum XP value needed to attain this level, inclusive.
 	
-	## Constructor that creates a PlayerLevel from a [Dictionary] containing the properties.
+	## Constructor that creates a PlayGamesPlayerLevel from a [Dictionary] containing the properties.
 	func _init(dictionary: Dictionary) -> void:
 		if dictionary.has("levelNumber"): level_number = dictionary.levelNumber
 		if dictionary.has("maxXp"): max_xp = dictionary.maxXp

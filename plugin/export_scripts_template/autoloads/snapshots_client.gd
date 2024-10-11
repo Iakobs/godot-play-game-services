@@ -170,7 +170,7 @@ class SnapshotMetadata:
 	var last_modified_timestamp: int ## The last time this snapshot was modified, in millis since epoch.
 	var played_time: int ## The played time of this snapshot in milliseconds.
 	var has_change_pending: bool ## Indicates whether or not this snapshot has any changes pending that have not been uploaded to the server.
-	var owner: PlayersClient.Player ## The player that owns this snapshot.
+	var owner: PlayersClient.PlayGamesPlayer ## The player that owns this snapshot.
 	var game: GameInfo ## The game information associated with this snapshot.
 	var device_name: String ## The name of the device that wrote this snapshot, if known.
 	var cover_image_uri: String ## The snapshot cover image.
@@ -185,7 +185,7 @@ class SnapshotMetadata:
 		if dictionary.has("lastModifiedTimestamp"): last_modified_timestamp = dictionary.lastModifiedTimestamp
 		if dictionary.has("playedTime"): played_time = dictionary.playedTime
 		if dictionary.has("hasChangePending"): has_change_pending = dictionary.hasChangePending
-		if dictionary.has("owner"): owner = PlayersClient.Player.new(dictionary.owner)
+		if dictionary.has("owner"): owner = PlayersClient.PlayGamesPlayer.new(dictionary.owner)
 		if dictionary.has("game"): game = GameInfo.new(dictionary.game)
 		if dictionary.has("deviceName"): device_name = dictionary.deviceName
 		if dictionary.has("coverImageUri"): cover_image_uri = dictionary.coverImageUri

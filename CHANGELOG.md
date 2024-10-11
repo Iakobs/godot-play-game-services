@@ -1,3 +1,14 @@
+## v2.0.0
+### Rename all Player related class names
+The Player namespace used in the `PlayersClient` autoload is a very common name for games of all sorts, so I renamed it to be `PlayGamesPlayer` instead. This is a new major version since it breaks backward compatibility, make sure to update your code if you were using a previous version of this plugin.
+
+The GDScript classes and enums renamed are:
+
+* `Player` class turned into `PlayGamesPlayer`
+* `PlayerLevelInfo` class turned into `PlayGamesPlayerLevelInfo`
+* `PlayerLevel` class turned into `PlayGamesPlayerLevel`
+* `PlayerFriendStatus` enum turned into `PlayGamesPlayerFriendStatus`
+
 ## v1.8.3
 ### Return null when Snapshot is not found
 Ass suggested by @TheSkyOne in [this issue](https://github.com/Iakobs/godot-play-game-services/issues/38), when calling to `SnapshotClient.load_game()` and the snapshot is not found, the `game_loaded` signal will now return a null, instead of not being emitted at all as before.

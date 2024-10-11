@@ -68,7 +68,7 @@ class PlayGamesEvent:
 	var formatted_value: String ## The sum of increments have been made to this event (formatted for the user's locale).
 	var icon_image_uri: String ## The URI to the event's image icon.
 	var name: String ## The name of this event.
-	var player: PlayersClient.Player ## The player information associated with this event.
+	var player: PlayersClient.PlayGamesPlayer ## The player information associated with this event.
 	var value: int ## The number of increments this user has made to this event.
 	var is_visible: bool ## Whether the event should be displayed to the user in any event related UIs.
 	
@@ -80,7 +80,7 @@ class PlayGamesEvent:
 		if dictionary.has("formattedValue"): formatted_value = dictionary.formattedValue
 		if dictionary.has("iconImageUri"): icon_image_uri = dictionary.iconImageUri
 		if dictionary.has("name"): name = dictionary.name
-		if dictionary.has("player"): player = PlayersClient.Player.new(dictionary.player)
+		if dictionary.has("player"): player = PlayersClient.PlayGamesPlayer.new(dictionary.player)
 		if dictionary.has("value"): value = dictionary.value
 		if dictionary.has("isVisible"): is_visible = dictionary.isVisible
 	

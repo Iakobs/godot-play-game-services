@@ -12,7 +12,7 @@ extends Control
 @onready var compare_holder: VBoxContainer = %CompareHolder
 @onready var compare_button: Button = %CompareButton
 
-var player: PlayersClient.Player
+var player: PlayersClient.PlayGamesPlayer
 var is_comparable =  false
 
 func _ready() -> void:
@@ -31,7 +31,7 @@ func _set_up_display() -> void:
 	id_label.text = player.player_id
 	name_label.text = player.display_name
 	title_label.text = player.title
-	status_label.text = PlayersClient.PlayerFriendStatus.find_key(player.friend_status)
+	status_label.text = PlayersClient.PlayGamesPlayerFriendStatus.find_key(player.friend_status)
 	level_label.text = str(player.level_info.current_level.level_number)
 	xp_label.text = str(player.level_info.current_xp_total)
 	compare_holder.visible = is_comparable
